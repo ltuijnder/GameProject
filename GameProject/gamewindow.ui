@@ -36,6 +36,55 @@
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:100pt; font-weight:600; font-style:italic; color:#ff0000;&quot;&gt;Game Title&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
+   <widget class="QGraphicsView" name="graphicsView">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>250</y>
+      <width>601</width>
+      <height>331</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>980</x>
+      <y>250</y>
+      <width>191</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Scene1</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_2">
+    <property name="geometry">
+     <rect>
+      <x>980</x>
+      <y>330</y>
+      <width>181</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Scene2</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_3">
+    <property name="geometry">
+     <rect>
+      <x>980</x>
+      <y>440</y>
+      <width>181</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Advance</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -59,8 +108,59 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>GameWindow</receiver>
+   <slot>TESTChangeto1()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1085</x>
+     <y>329</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1105</x>
+     <y>237</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>GameWindow</receiver>
+   <slot>TESTChangeto2()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1091</x>
+     <y>466</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1128</x>
+     <y>589</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_3</sender>
+   <signal>clicked()</signal>
+   <receiver>GameWindow</receiver>
+   <slot>TESTAdvance()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1130</x>
+     <y>514</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1215</x>
+     <y>513</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
  <slots>
-  <slot>triggerTest()</slot>
+  <slot>TESTChangeto1()</slot>
+  <slot>TESTChangeto2()</slot>
+  <slot>TESTAdvance()</slot>
  </slots>
 </ui>

@@ -27,12 +27,14 @@ SOURCES += \
         main.cpp \
         gamewindow.cpp \
     testclass.cpp \
-    eventhandeler.cpp
+    eventhandeler.cpp \
+    graphicsitems.cpp
 
 HEADERS += \
         gamewindow.h \
     testclass.h \
-    eventhandeler.h
+    eventhandeler.h \
+    graphicsitems.h
 
 FORMS += \
         gamewindow.ui
