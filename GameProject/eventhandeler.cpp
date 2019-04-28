@@ -20,4 +20,5 @@ void EventHandeler::KeyInput(QKeyEvent *event){
 void EventHandeler::Link(GameWindow *gamewindow){
     // Here we place all the connections of key input to the different slots of objects in gamewindow;
     // this the objects don't need to think about the event handeling and focus and so on...
+    QObject::connect(this,SIGNAL(PKeyPressed()),gamewindow,SLOT(PauzeGame()));
 }

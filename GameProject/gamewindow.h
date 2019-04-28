@@ -20,14 +20,11 @@ public:
     void keyPressEvent(QKeyEvent *event);// I Can't seem to get the KeyPressEvent focus not to work the other, So we will imidiatily send it off to an eventhandler class we wrote our self.
 
 public slots:
-    void ChangeScene(QGraphicsScene *Scene);
-    void TESTChangeto1();// these are all just TEST slots, who need to be removed later.
-    void TESTChangeto2();
-    void TESTAdvance();
-
-signals:
-    void Advance();//Put this is a seperate class ownd not by the GameWindow but by some game class. (needs to be created)
-
+    void GoToStartPage();
+    void GoToGameSelectPage();
+    void GoToGamePage();
+    void GoToPauzePage();
+    void PauzeGame();
 
 private:
     Ui::GameWindow *ui;
