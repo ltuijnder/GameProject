@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1242</width>
-    <height>644</height>
+    <height>817</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -620,8 +620,8 @@ test        </string>
    <slot>GoToGameSelectPage()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>637</x>
-     <y>363</y>
+     <x>821</x>
+     <y>514</y>
     </hint>
     <hint type="destinationlabel">
      <x>1156</x>
@@ -636,28 +636,12 @@ test        </string>
    <slot>GoToGamePage()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>565</x>
-     <y>385</y>
+     <x>821</x>
+     <y>514</y>
     </hint>
     <hint type="destinationlabel">
      <x>1060</x>
      <y>331</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButton_3</sender>
-   <signal>clicked()</signal>
-   <receiver>GameWindow</receiver>
-   <slot>GoToGamePage()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1090</x>
-     <y>572</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1216</x>
-     <y>558</y>
     </hint>
    </hints>
   </connection>
@@ -668,8 +652,8 @@ test        </string>
    <slot>GoToStartPage()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>460</x>
-     <y>484</y>
+     <x>310</x>
+     <y>643</y>
     </hint>
     <hint type="destinationlabel">
      <x>1204</x>
@@ -684,8 +668,8 @@ test        </string>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>673</x>
-     <y>481</y>
+     <x>821</x>
+     <y>646</y>
     </hint>
     <hint type="destinationlabel">
      <x>1181</x>
@@ -700,8 +684,8 @@ test        </string>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>301</x>
-     <y>576</y>
+     <x>330</x>
+     <y>747</y>
     </hint>
     <hint type="destinationlabel">
      <x>1237</x>
@@ -709,10 +693,45 @@ test        </string>
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>NewGameButton</sender>
+   <signal>clicked()</signal>
+   <receiver>GameWindow</receiver>
+   <slot>SlotStartGame()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>810</x>
+     <y>469</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1239</x>
+     <y>445</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_3</sender>
+   <signal>clicked()</signal>
+   <receiver>GameWindow</receiver>
+   <slot>PauzeGame()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1155</x>
+     <y>708</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1238</x>
+     <y>661</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
+  <signal>SignalStartGame()</signal>
   <slot>GoToStartPage()</slot>
   <slot>GoToGameSelectPage()</slot>
   <slot>GoToGamePage()</slot>
+  <slot>SlotStartGame()</slot>
+  <slot>PauzeGame()</slot>
  </slots>
 </ui>

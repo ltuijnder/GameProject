@@ -1,38 +1,49 @@
 #ifndef GAMEWINDOW_H
 #define GAMEWINDOW_H
 
+// For some weird reason we can not include our own projects file here in the header file...
+// This creates a whole lot of problems in the linking phase: it could not find the implentation of functions and all that kind of stuff...
+// For that reason we take the same approach as the QT Wizard: Include the header file of the code we want to use in the .cpp file,
+// But still declare in this .h file that that class exist such that we can use it.
 #include <QMainWindow>
 #include <QKeyEvent>
 #include <QGraphicsScene>
 
+// Declare that the following classes exist with there respectif name space and such. Only include the .h file in the .cpp file (see explanation above)
 namespace Ui {
-class GameWindow;
+class GameWindow; // UI::GameWindow contains all the graphical elements/widgets, edit this in the .ui file. This class is not to be confused with "GameWindow" which is declared below.
 }
-class TestClass;
-class EventHandeler;
+class TestClass; // With this class we just first test out some ideas, before really implementing its own class.
+class EventHandeler; // We want events to be handled by a seperate class
+class GameClass; // This is where the reall magic happens.
 
 class GameWindow : public QMainWindow{
-    Q_OBJECT
+    Q_OBJECT// Declares it to be a QObject. which we want it to be, since now we can use signals and slots. Want this on ANY Class in this project.
 
 public:
     explicit GameWindow(QWidget *parent = 0);
     ~GameWindow();
-    void keyPressEvent(QKeyEvent *event);// I Can't seem to get the KeyPressEvent focus not to work the other, So we will imidiatily send it off to an eventhandler class we wrote our self.
+    void keyPressEvent(QKeyEvent *event);// Only QMainWindow can directly receive QEvents. So imediatly pass these events towards EventHandler.
+
+signals:
+    void SignalStartGame();
+    void SignalPauzeGame();
+    void SignalUnPauzeGame();
 
 public slots:
+    // Change Page Slots.
     void GoToStartPage();
     void GoToGameSelectPage();
     void GoToGamePage();
     void GoToPauzePage();
-    void PauzeGame();
+    void PauzeGame();// And Unpauze!
+    void SlotStartGame();
 
 private:
     Ui::GameWindow *ui;
     TestClass *Test;
     EventHandeler *EventH;
-    // We also inherent class the CentralWidget, since the class "GameWindow" get the public members of UI_gamewindow.h Class.
-    // Weirdly enough the class GameWindow has an GameWindow object. So this GameWindow object should be able to reference it self. via ui->ui But this not seem possible.
-    // AAAH The reason for this is becaus it are two different Classes!! You have the Ui::GameWindow and the GameWindow class. the GameWindow class contains an Ui::GameWindow
+    GameClass *Game;
 
 
 };

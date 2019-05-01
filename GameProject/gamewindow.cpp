@@ -2,19 +2,20 @@
 #include "ui_gamewindow.h"
 #include "testclass.h"
 #include "eventhandeler.h"
+#include "Game/gameclass.h"
 
 GameWindow::GameWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::GameWindow),
     Test(new TestClass),
-    EventH(new EventHandeler){
+    EventH(new EventHandeler),
+    Game(new GameClass){
 
-    ui->setupUi(this);// So the Ui is a reference to its self.
+    ui->setupUi(this);// initiate all the graphical elements. !!
+    Game->Setup(this);
     Test->Setup(this);
     setFocusPolicy(Qt::StrongFocus);// Important the GameWindow get's focus. Such that it can receive input from key and mouse
-    //this->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
 
-    //QObject::connect(this,SIGNAL(Advance()),Test->CurrentScene,SLOT(advance()));// Use current scene!! such that if you switch scenes the scene that we see at the moment evolves.
     // Do this as last operatorion once everything is defind.
     EventH->Link(this);
 }
@@ -23,6 +24,7 @@ GameWindow::~GameWindow(){
     delete ui;
     delete Test;
     delete EventH;
+    delete Game;
 }
 
 void GameWindow::keyPressEvent(QKeyEvent *event){
@@ -37,13 +39,16 @@ void GameWindow::GoToGameSelectPage(){ui->stackedWidget->setCurrentWidget(ui->Ga
 void GameWindow::GoToPauzePage(){ui->stackedWidget->setCurrentWidget(ui->PauzePage);}
 
 void GameWindow::PauzeGame(){
-    std::cout<<"P Key Pressed"<<std::endl;
-    if(ui->stackedWidget->currentWidget()==ui->GamePage){
+    if(ui->stackedWidget->currentWidget()==ui->GamePage){// Check if we are first on the correct Page, since "P" should not be called from everywhere.
         GameWindow::GoToPauzePage();
-        // emit PauzeGame ( to let game pauze)
+        emit SignalPauzeGame();
     }else if(ui->stackedWidget->currentWidget()==ui->PauzePage){
         GameWindow::GoToGamePage();
-        // emit UnPauzeGame ( to let te game play again)
+        emit SignalUnPauzeGame();
     }
 
+}
+
+void GameWindow::SlotStartGame(){
+    emit SignalStartGame();// Why this complication? A QButton can only link to slots.
 }
