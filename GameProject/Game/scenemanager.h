@@ -11,7 +11,6 @@ class GameClass;
 class SceneManager : public QObject
 {
     Q_OBJECT
-
 signals:
     void CurrentSceneChanged(QGraphicsScene *NewScene);
 

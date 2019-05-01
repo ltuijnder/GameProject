@@ -1,6 +1,7 @@
 #include "gameclass.h"
 #include "gamewindow.h"
 #include "scenemanager.h"
+#include "labyrinthclass.h"
 
 /******* Essential Functions *******/
 GameClass::GameClass(QObject *parent) : QObject(parent){
@@ -15,7 +16,9 @@ GameClass::~GameClass(){
 void GameClass::Setup(GameWindow *gamewindow){
     // Create variables:
     SManager=new SceneManager;
+    Labyrinth=new LabyrinthClass;
     SManager->Setup(this);
+    Labyrinth->Setup(this);
 
     IsRunning=0;// The Game is not running, It has just been Setup, Nothing more.
     // Create the needed links towards the gamewindow (always let the object that is last created make the link)

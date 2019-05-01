@@ -30,7 +30,8 @@ SOURCES += \
     eventhandeler.cpp \
     graphicsitems.cpp \
     Game/gameclass.cpp \
-    Game/scenemanager.cpp
+    Game/scenemanager.cpp \
+    Game/labyrinthclass.cpp
 
 HEADERS += \
         gamewindow.h \
@@ -38,7 +39,8 @@ HEADERS += \
     eventhandeler.h \
     graphicsitems.h \
     Game/gameclass.h \
-    Game/scenemanager.h
+    Game/scenemanager.h \
+    Game/labyrinthclass.h
 
 FORMS += \
         gamewindow.ui
