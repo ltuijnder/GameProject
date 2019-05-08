@@ -20,11 +20,6 @@ class GameClass; // This is where the reall magic happens.
 class GameWindow : public QMainWindow{
     Q_OBJECT// Declares it to be a QObject. which we want it to be, since now we can use signals and slots. Want this on ANY Class in this project.
 
-public:
-    explicit GameWindow(QWidget *parent = 0);
-    ~GameWindow();
-    void keyPressEvent(QKeyEvent *event);// Only QMainWindow can directly receive QEvents. So imediatly pass these events towards EventHandler.
-
 signals:
     void SignalStartGame();
     void SignalPauzeGame();
@@ -38,13 +33,21 @@ public slots:
     void GoToPauzePage();
     void PauzeGame();// And Unpauze!
     void SlotStartGame();
+    void ChangeCurrentScene(QGraphicsScene* NewScene);
 
 private:
     Ui::GameWindow *ui;
     TestClass *Test;
     EventHandeler *EventH;
+
+
+public:
+    // For now make them public But They actually have to be private, but when they make connection they need to be linked
     GameClass *Game;
 
+    explicit GameWindow(QWidget *parent = 0);
+    ~GameWindow();
+    void keyPressEvent(QKeyEvent *event);// Only QMainWindow can directly receive QEvents. So imediatly pass these events towards EventHandler.
 
 };
 

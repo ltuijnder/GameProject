@@ -15,16 +15,19 @@ signals:
     void ChangeScene(QGraphicsScene * NewScene);
 
 public slots:
-    //void StartLayout
+    void StartLayout();
+    void TESTPressedC();// This is a TEST Remove Later
 
 private:
     // Flags
     bool LayoutIsGenerated;
     bool RoomsAreFilled;
+    bool IsStarted;
 
     // Variables
     unsigned Level;// Level keep track of the difficulty.
     std::vector<QGraphicsScene *> *VRooms;//VRooms=Vector of Rooms, A pointer to a Vector of pointers!!.
+    int TESTCurrentNumber;
 
     // Functions
     void GenerateLayout();

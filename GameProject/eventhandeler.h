@@ -14,6 +14,7 @@ class EventHandeler:public QObject{
 signals:
     void UpKeyPressed();
     void PKeyPressed();
+    void CKeyPressed();
 
 public:
     EventHandeler();

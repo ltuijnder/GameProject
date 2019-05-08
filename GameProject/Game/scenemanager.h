@@ -19,14 +19,12 @@ public slots:
     void StartClock();
     void StopClock();
     void ChangeCurrentScene(QGraphicsScene *NewScene);
-    void ChangePrint();// Represents ChangeCurrentSceneTo(QGraphicsScene)
-    void TestPrint();// Represents Advance() of Scene 1
-    void TestPrint2();// Represents Advance() of scene 2
 private:
     //Flags
     bool IsStarted;
     bool ClockIsRunning;
     bool SceneIsConnected;
+    bool SceneIsSet;
 
     // Variables
     QTimer *GameClock;
@@ -37,7 +35,7 @@ private:
 
     // Functions
     void CreateConnection();
-    void CreateConnection2();// This is just for printing sake.
+    //void CreateConnection2();// This is just for printing sake.
     void BreakConnection();
     void TransferPlayer(QGraphicsScene *NewScene);// Player should be transferd. To the new scene
     bool SetCurrentScene(QGraphicsScene *NewScene);// Have a bool to tell if it was succesful.

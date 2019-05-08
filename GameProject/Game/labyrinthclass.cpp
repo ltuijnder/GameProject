@@ -24,13 +24,34 @@ void LabyrinthClass::Setup(GameClass *Game){
     //Variables
     Level=0;
     VRooms=new std::vector<QGraphicsScene*>;// In begin empty
+    TESTCurrentNumber=0;
+
+    // Generate SUch that VRoom is filled:
+    GenerateLayout();
 
     //Links
     QObject::connect(this,SIGNAL(ChangeScene(QGraphicsScene*)),Game->SManager,SLOT(ChangeCurrentScene(QGraphicsScene*)));
-    //Qobject::connect(Game,SIGNAL(GameHasStarted()),this,)
+    QObject::connect(Game,SIGNAL(GameHasStarted()),this,SLOT(StartLayout()));
 }
 
 /******* SLOTS *******/
+
+void LabyrinthClass::StartLayout(){
+    // The we send the StartSecen to Scene Maneger
+    emit ChangeScene(VRooms->at(TESTCurrentNumber));
+    IsStarted=1;
+}
+
+
+void LabyrinthClass::TESTPressedC(){
+    if(TESTCurrentNumber==0){
+        emit ChangeScene(VRooms->at(1));
+        TESTCurrentNumber=1;
+    }else{
+        emit ChangeScene(VRooms->at(0));
+        TESTCurrentNumber=0;
+    }
+}
 
 
 /******* Functions *******/
