@@ -26,21 +26,23 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         gamewindow.cpp \
-    testclass.cpp \
     eventhandeler.cpp \
-    graphicsitems.cpp \
     Game/gameclass.cpp \
     Game/scenemanager.cpp \
-    Game/labyrinthclass.cpp
+    Game/labyrinthclass.cpp \
+    Game/room.cpp \
+    Game/SceneObjects/sceneobject.cpp \
+    Game/SceneObjects/dummyellipse.cpp
 
 HEADERS += \
         gamewindow.h \
-    testclass.h \
     eventhandeler.h \
-    graphicsitems.h \
     Game/gameclass.h \
     Game/scenemanager.h \
-    Game/labyrinthclass.h
+    Game/labyrinthclass.h \
+    Game/room.h \
+    Game/SceneObjects/sceneobject.h \
+    Game/SceneObjects/dummyellipse.h
 
 FORMS += \
         gamewindow.ui

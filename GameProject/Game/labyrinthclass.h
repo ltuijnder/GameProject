@@ -5,7 +5,8 @@
 #include <vector>
 #include <QGraphicsScene>// Not needed this is just for the demo right now
 
-class GameClass;
+class GameClass;// Declare that these classes exist, since the header is contained in the .cpp file
+class Room;
 
 class LabyrinthClass : public QObject
 {
@@ -13,24 +14,29 @@ class LabyrinthClass : public QObject
 
 signals:
     void ChangeScene(QGraphicsScene * NewScene);
+    void GenerateRooms(); //Let all the Rooms generate/Fill up
 
 public slots:
     void StartLayout();
     void TESTPressedC();// This is a TEST Remove Later
+    void RoomTransfer(char Direction);
 
 private:
     // Flags
     bool LayoutIsGenerated;
-    bool RoomsAreFilled;
+    bool FloorIsGenerated;
     bool IsStarted;
 
     // Variables
-    unsigned Level;// Level keep track of the difficulty.
-    std::vector<QGraphicsScene *> *VRooms;//VRooms=Vector of Rooms, A pointer to a Vector of pointers!!.
-    int TESTCurrentNumber;
+    unsigned NextLevel;// Level keep track of the difficulty.
+    std::vector<Room *> *Floor;//A pointer to a Vector of pointers!!.
+    // Add a variable layout? Maybe handy if we need to find next room?
+    int TESTCurrentNumber;// REMOVE
 
     // Functions
     void GenerateLayout();
+    void BuildFloor();
+    void ClearFloor();// If we go to the next floor we should be able to delete the previous.
 
 
 public:

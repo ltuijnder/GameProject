@@ -14,7 +14,7 @@ void SceneManager::Setup(GameClass *Game){
     // Create Variables
     Fps=1;
     GameClock=new QTimer;
-    CurrentPrint=1;
+    CurrentScene=nullptr;// Set the Start up Scene to null pointer, for if something would go wrong we don't acces random memory.
 
     // Flags
     ClockIsRunning=0;
@@ -23,7 +23,7 @@ void SceneManager::Setup(GameClass *Game){
     SceneIsSet=0;
     // Create links
 
-    QObject::connect(Game,SIGNAL(GameHasStarted()),this,SLOT(StartSceneManager()));
+    QObject::connect(Game,SIGNAL(GameHasStarted()),this,SLOT(StartSceneManager()));// important else nothing works
 }
 
 /******* SLOTS *******/
@@ -32,7 +32,7 @@ void SceneManager::StartSceneManager(){
     if(SceneIsSet){// It could be that StartSceneManger is called BEFORE the scene is set by Layout.
         // Establish Connection
         if(SceneIsConnected==0){
-            SceneManager::CreateConnection();
+            SceneManager::CreateConnection();// If Scene was not Set. Then Qt
         }
         // Start Clock
         if(ClockIsRunning==0){
@@ -43,25 +43,24 @@ void SceneManager::StartSceneManager(){
 }
 
 void SceneManager::StartClock(){
-    GameClock->start(1000/Fps);
+    GameClock->start(1000/Fps);// value is in ms, while Fps= frame per second.
     ClockIsRunning=1;
 }
 
 void SceneManager::StopClock(){
     GameClock->stop();
     ClockIsRunning=0;
-    //SceneManager::ChangePrint();// Every time we stop the timer we change scenes.
 }
 
 void SceneManager::ChangeCurrentScene(QGraphicsScene *NewScene){
-    if(ClockIsRunning) StopClock();// These first to checks are done in the case that a scene was not set at all.
+    if(ClockIsRunning) StopClock();// These firsts checks are done in the case that a scene was not set at all.
     if(SceneIsConnected) BreakConnection();
     // Transfer Player to the new: TransferPlayer(NewScene);
     SetCurrentScene(NewScene);// Set the scene
-    if(SceneIsSet==0) SceneIsSet=1;
+    if(SceneIsSet==0) SceneIsSet=1;// Now we can say for sure that the scene is set.
     CreateConnection();// Connect the new Scene to the clock
     emit CurrentSceneChanged(NewScene); // Update the GraphicsView in UI::GameWindow to the new Scene:
-    StartClock();// Start the clock
+    if(IsStarted) StartClock();// Only start the clock if the game has started. StartSceneManager will automaticly call startclock.
 }
 
 
@@ -72,7 +71,6 @@ void SceneManager::CreateConnection(){
         std::cout<<"Error: a connection is already established, Clear the connection first to reconnect"<<std::endl;
         return;
     }
-    //connection=QObject::connect(GameClock,SIGNAL(timeout()),this,SLOT(TestPrint()));// Put here CurrentScene!!
     connection=QObject::connect(GameClock,SIGNAL(timeout()),CurrentScene,SLOT(advance()));
     SceneIsConnected=1;
 }

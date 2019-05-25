@@ -1,6 +1,6 @@
 #include "gamewindow.h"
 #include "ui_gamewindow.h"
-#include "testclass.h"
+//#include "testclass.h"
 #include "eventhandeler.h"
 #include "Game/gameclass.h"
 #include "Game/scenemanager.h"
@@ -8,13 +8,13 @@
 GameWindow::GameWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::GameWindow),
-    Test(new TestClass),
+    //Test(new TestClass),
     EventH(new EventHandeler),
     Game(new GameClass){
 
     ui->setupUi(this);// initiate all the graphical elements. !!
     Game->Setup(this);
-    Test->Setup(this);
+    //Test->Setup(this);
     setFocusPolicy(Qt::StrongFocus);// Important the GameWindow get's focus. Such that it can receive input from key and mouse
 
     // LINKS
@@ -25,7 +25,7 @@ GameWindow::GameWindow(QWidget *parent) :
 
 GameWindow::~GameWindow(){
     delete ui;
-    delete Test;
+    //delete Test;
     delete EventH;
     delete Game;
 }

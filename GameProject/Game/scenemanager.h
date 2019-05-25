@@ -29,13 +29,11 @@ private:
     // Variables
     QTimer *GameClock;
     float Fps;
-    QMetaObject::Connection connection;
+    QMetaObject::Connection connection;// We need to have a hold of the connection if we want to specificly disconnect it again.
     QGraphicsScene *CurrentScene;
-    int CurrentPrint;// represent current scene
 
     // Functions
     void CreateConnection();
-    //void CreateConnection2();// This is just for printing sake.
     void BreakConnection();
     void TransferPlayer(QGraphicsScene *NewScene);// Player should be transferd. To the new scene
     bool SetCurrentScene(QGraphicsScene *NewScene);// Have a bool to tell if it was succesful.

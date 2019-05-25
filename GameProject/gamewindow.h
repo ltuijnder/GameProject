@@ -13,7 +13,7 @@
 namespace Ui {
 class GameWindow; // UI::GameWindow contains all the graphical elements/widgets, edit this in the .ui file. This class is not to be confused with "GameWindow" which is declared below.
 }
-class TestClass; // With this class we just first test out some ideas, before really implementing its own class.
+//class TestClass; // With this class we just first test out some ideas, before really implementing its own class.
 class EventHandeler; // We want events to be handled by a seperate class
 class GameClass; // This is where the reall magic happens.
 
@@ -37,7 +37,7 @@ public slots:
 
 private:
     Ui::GameWindow *ui;
-    TestClass *Test;
+    //TestClass *Test;
     EventHandeler *EventH;
 
 
