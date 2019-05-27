@@ -48,6 +48,7 @@ public:
     explicit GameWindow(QWidget *parent = 0);
     ~GameWindow();
     void keyPressEvent(QKeyEvent *event);// Only QMainWindow can directly receive QEvents. So imediatly pass these events towards EventHandler.
+    void keyReleaseEvent(QKeyEvent *event);
 
 };
 

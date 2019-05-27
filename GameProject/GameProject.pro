@@ -32,7 +32,8 @@ SOURCES += \
     Game/labyrinthclass.cpp \
     Game/room.cpp \
     Game/SceneObjects/sceneobject.cpp \
-    Game/SceneObjects/dummyellipse.cpp
+    Game/SceneObjects/testqobject.cpp \
+    Game/SceneObjects/player.cpp
 
 HEADERS += \
         gamewindow.h \
@@ -42,7 +43,8 @@ HEADERS += \
     Game/labyrinthclass.h \
     Game/room.h \
     Game/SceneObjects/sceneobject.h \
-    Game/SceneObjects/dummyellipse.h
+    Game/SceneObjects/testqobject.h \
+    Game/SceneObjects/player.h
 
 FORMS += \
         gamewindow.ui

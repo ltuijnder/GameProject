@@ -7,6 +7,8 @@
 class GameWindow;
 class SceneManager;
 class LabyrinthClass;
+#include "Game/SceneObjects/player.h"
+#include "Game/SceneObjects/testqobject.h"
 
 class GameClass : public QObject
 {
@@ -28,6 +30,10 @@ public:
     // For now make them public But They actually have to be private, but when they make connection they need to be linked
     SceneManager *SManager;
     LabyrinthClass *Labyrinth;
+    Player *Lennart;
+    //DummyEllipse *Ellli;
+    TestQobject *plswork;
+
 
     explicit GameClass(QObject *parent = nullptr);
     ~GameClass();

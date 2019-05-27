@@ -1,5 +1,6 @@
 #include "scenemanager.h"
 #include "gameclass.h"
+#include "Game/SceneObjects/player.h"// since we transfer players
 
 /******* Essential Functions *******/
 SceneManager::SceneManager(QObject *parent) : QObject(parent){
@@ -12,9 +13,10 @@ SceneManager::~SceneManager(){
 
 void SceneManager::Setup(GameClass *Game){
     // Create Variables
-    Fps=1;
+    Fps=30;
     GameClock=new QTimer;
     CurrentScene=nullptr;// Set the Start up Scene to null pointer, for if something would go wrong we don't acces random memory.
+    PointerToGame=Game;
 
     // Flags
     ClockIsRunning=0;
@@ -55,7 +57,7 @@ void SceneManager::StopClock(){
 void SceneManager::ChangeCurrentScene(QGraphicsScene *NewScene){
     if(ClockIsRunning) StopClock();// These firsts checks are done in the case that a scene was not set at all.
     if(SceneIsConnected) BreakConnection();
-    // Transfer Player to the new: TransferPlayer(NewScene);
+    TransferPlayer(NewScene);// Transfer Player to the new:
     SetCurrentScene(NewScene);// Set the scene
     if(SceneIsSet==0) SceneIsSet=1;// Now we can say for sure that the scene is set.
     CreateConnection();// Connect the new Scene to the clock
@@ -90,6 +92,9 @@ void SceneManager::TransferPlayer(QGraphicsScene *NewScene){
     // Do something like, Remove QgraphicsItem from scene. (Player QgraphicsItem is hold by GameClass)
     // Then add in to then new scene
     // Change it position. Depending on it's original position.
+
+    // For now just add it.
+    NewScene->addItem(PointerToGame->Lennart); // Actually we don't need to worry that To first remove it from another scene since this is done (maybe)
 }
 
 bool SceneManager::SetCurrentScene(QGraphicsScene *NewScene){

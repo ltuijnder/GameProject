@@ -6,6 +6,7 @@
 #include <QGraphicsItem>
 #include <QGraphicsObject>
 #include <vector>
+#include <QList>
 
 #include "labyrinthclass.h" //This is needed to declare friendships!
 

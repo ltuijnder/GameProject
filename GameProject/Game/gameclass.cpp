@@ -2,6 +2,7 @@
 #include "gamewindow.h"
 #include "scenemanager.h"
 #include "labyrinthclass.h"
+//#include "Game/SceneObjects/player.h"
 
 /******* Essential Functions *******/
 GameClass::GameClass(QObject *parent) : QObject(parent){
@@ -11,14 +12,22 @@ GameClass::GameClass(QObject *parent) : QObject(parent){
 
 GameClass::~GameClass(){
     delete SManager;
+    delete Labyrinth;
+    //delete Lennart; We do not delete lennart since items in a scena automaticlly get deleted.
 }
 
 void GameClass::Setup(GameWindow *gamewindow){
     // Create variables:
     SManager=new SceneManager;
     Labyrinth=new LabyrinthClass;
+    Lennart=new Player;
+    //Ellli= new DummyEllipse;
+    plswork= new TestQobject;
     SManager->Setup(this);
     Labyrinth->Setup(this);
+    Lennart->Init();
+    plswork->Init();
+    //Ellli->Init();
 
     IsRunning=0;// The Game is not running, It has just been Setup, Nothing more.
     // Create the needed links towards the gamewindow (always let the object that is last created make the link)

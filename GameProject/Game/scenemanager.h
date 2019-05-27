@@ -31,6 +31,7 @@ private:
     float Fps;
     QMetaObject::Connection connection;// We need to have a hold of the connection if we want to specificly disconnect it again.
     QGraphicsScene *CurrentScene;
+    GameClass *PointerToGame;// Because we need to acces Player.
 
     // Functions
     void CreateConnection();

@@ -31,7 +31,11 @@ GameWindow::~GameWindow(){
 }
 
 void GameWindow::keyPressEvent(QKeyEvent *event){
-    EventH->KeyInput(event);
+    EventH->PressInput(event);
+}
+
+void GameWindow::keyReleaseEvent(QKeyEvent *event){
+    EventH->ReleaseInput(event);
 }
 
 /*** GoTo SLOTS ***/
