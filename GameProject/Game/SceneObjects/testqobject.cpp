@@ -29,7 +29,7 @@ void TestQobject::Init(){
     y=h/2;
     color.setRgb(QRandomGenerator::global()->bounded(256),QRandomGenerator::global()->bounded(256),QRandomGenerator::global()->bounded(256));
 
-    setTransformOriginPoint(w,h);// This gives the correct behaviour
+    //setTransformOriginPoint(w,h);// This gives the correct behaviour
     // The reason why this is wrong is because bounding rect is starts at +x and +y while
     // the coördinate system is positif to right under. while the first coordinates are the top left corner
     // So top left should be negatif. hence We need to move our transformation origin now twice in the other direction
@@ -37,12 +37,12 @@ void TestQobject::Init(){
 }
 
 QRectF TestQobject::boundingRect() const {
-    return QRectF(x,y,w,h);
+    return QRectF(-x,-y,w,h);
 }
 
 void TestQobject::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *){
     painter->setBrush(color);
-    painter->drawEllipse(x,y,w,h);
+    painter->drawEllipse(-x,-y,w,h);
 }
 
 

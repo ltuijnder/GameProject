@@ -1,5 +1,5 @@
 #include "player.h"
-
+#include "wall.h"
 
 /******* Essential Functions *******/
 
@@ -11,7 +11,9 @@ Player::Player(QObject *parent) : SceneObject(parent)
 void Player::Init(){
     SceneObject::Init();
     if(IsInit) return;
-    speed=1; // Let 1 By normal
+
+    // Set Default Values
+    speed=10; // Let 1 By normal
     size=50;
     health=5;
     strength=1.5;
@@ -22,6 +24,7 @@ void Player::Init(){
     down=0;
     left=0;
     right=0;
+    RoomIsSet=0;
 }
 
 
@@ -55,16 +58,31 @@ void Player::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget 
 
 void Player::advance(int Phase){
     if(!Phase) return;// At Phase 0 we don't do anything
+    if(!RoomIsSet) return; //In case an error was made, and the pointer was not set.
     // Calculate movement
     // We should also watch out for the fps!
-    double dx=1*left-1*right;
-    double dy=1*up-1*down;
-    double modulo=sqrt(dx*dx-dy*dy);
-    std::cout<<modulo<<std::endl;
-    if(modulo!=0){// We don't want devision by zero
-        dx=speed/modulo;
-        dy=speed/modulo;
+    float dx=1*right-1*left;
+    float dy=1*down-1*up;
+    float modulo=sqrt(dx*dx+dy*dy);
+
+    if(modulo!=0){// The player does not stand still so we are going to move
+        dx*=speed/modulo;
+        dy*=speed/modulo;
         QPointF DiffPoint(dx,dy);
         setPos(pos()+DiffPoint);// Get position alter is by Diffpoint and then set it equal to that.
     }
+    // Now check if collisions are happening
+    QList<QGraphicsItem *> CollideList=CurrentScene->collidingItems(this);
+    for(auto CollidingItem: CollideList){
+        if(CollidingItem->type()==Wall::Type){
+            std::cout<<"Collision!!"<<std::endl;
+        }
+    }
+    std::cout<<"yup"<<std::endl;
+}
+
+
+void Player::SetRoom(QGraphicsScene *NewCurrentScene){
+    CurrentScene=NewCurrentScene;
+    RoomIsSet=1;
 }

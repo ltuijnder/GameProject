@@ -8,6 +8,9 @@
 #include <QMainWindow>
 #include <QKeyEvent>
 #include <QGraphicsScene>
+#include <QRectF>
+#include <iostream>
+
 
 // Declare that the following classes exist with there respectif name space and such. Only include the .h file in the .cpp file (see explanation above)
 namespace Ui {
@@ -39,6 +42,7 @@ private:
     Ui::GameWindow *ui;
     //TestClass *Test;
     EventHandeler *EventH;
+    QRectF SceneRect;// Dimensions of the Scene that will be vieuwed.
 
 
 public:
@@ -49,6 +53,7 @@ public:
     ~GameWindow();
     void keyPressEvent(QKeyEvent *event);// Only QMainWindow can directly receive QEvents. So imediatly pass these events towards EventHandler.
     void keyReleaseEvent(QKeyEvent *event);
+    QRectF GetSceneRect() const;
 
 };
 

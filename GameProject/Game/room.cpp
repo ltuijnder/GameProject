@@ -3,6 +3,7 @@
 //#include "SceneObjects/dummyellipse.h"
 #include "SceneObjects/testqobject.h"
 #include "SceneObjects/player.h"
+#include "SceneObjects/wall.h"
 
 /******* Essential Functions *******/
 
@@ -43,18 +44,28 @@ void Room::FillUp(){
     // For now just use 2 rooms, With room 0 being type 0 and room 1 being type 1;
     if(RoomType==0){
         TestQobject *Elli0=new TestQobject;
-        //Player *Lennart=new Player;
-        Elli0->Init();// Important
-        //Lennart->Init();
+        Elli0->Init();// Important     
         Objects->push_back(Elli0);// Here DummyEllipse gets converted to SceneObject
-        //Objects->push_back(Lennart);
+        Elli0->setPos(200,-200);
         addItem(Elli0);
-        //addItem(Lennart);
+
+        Wall *Brick=new Wall;
+        Brick->Init();
+        Objects->push_back(Brick);
+        Brick->setPos(125,125);
+        addItem(Brick);
     }else{
         TestQobject *Elli1=new TestQobject;
         Elli1->Init();// Important
+        Elli1->setPos(200,-200);
         Objects->push_back(Elli1);// Here DummyEllipse gets converted to SceneObject
         addItem(Elli1);
+
+        Wall *Brick=new Wall;
+        Brick->Init();
+        Objects->push_back(Brick);
+        Brick->setPos(-125,-125);
+        addItem(Brick);
     }
     IsFilled=1;
 }

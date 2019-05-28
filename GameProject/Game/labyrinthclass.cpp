@@ -92,6 +92,9 @@ void LabyrinthClass::BuildFloor(){
     if(FloorIsGenerated) ClearFloor(); //Clear previous floor (if there is one)
     GenerateLayout();
     emit GenerateRooms();
+
+    QRectF getrekt=Floor->at(0)->sceneRect();
+    std::cout<<"SceneRect: "<<getrekt.y()<<std::endl;
     FloorIsGenerated=1;
 }
 

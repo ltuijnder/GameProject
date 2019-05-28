@@ -4,6 +4,7 @@
 #include <QObject>
 #include <vector>
 #include <QGraphicsScene>// Not needed this is just for the demo right now
+#include <QRectF>
 
 class GameClass;// Declare that these classes exist, since the header is contained in the .cpp file
 class Room;

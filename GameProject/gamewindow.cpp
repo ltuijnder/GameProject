@@ -5,6 +5,9 @@
 #include "Game/gameclass.h"
 #include "Game/scenemanager.h"
 
+#include <QDataStream>
+
+
 GameWindow::GameWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::GameWindow),
@@ -13,7 +16,11 @@ GameWindow::GameWindow(QWidget *parent) :
     Game(new GameClass){
 
     ui->setupUi(this);// initiate all the graphical elements. !!
+    //SceneRect=ui->graphicsView->sceneRect();
     Game->Setup(this);
+    SceneRect.setRect(0,0,100,100);// Its unclear what happens when I change this , I do not understand it. But it fixes the vieuw, which is what I wanted.
+    //std::cout<<SceneRect.height()<<std::endl;
+    ui->graphicsView->setSceneRect(SceneRect);
     //Test->Setup(this);
     setFocusPolicy(Qt::StrongFocus);// Important the GameWindow get's focus. Such that it can receive input from key and mouse
 

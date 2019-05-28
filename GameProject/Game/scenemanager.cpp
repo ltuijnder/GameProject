@@ -94,7 +94,8 @@ void SceneManager::TransferPlayer(QGraphicsScene *NewScene){
     // Change it position. Depending on it's original position.
 
     // For now just add it.
-    NewScene->addItem(PointerToGame->Lennart); // Actually we don't need to worry that To first remove it from another scene since this is done (maybe)
+    NewScene->addItem(PointerToGame->Lennart); // Actually we don't need to worry that To first remove it from another scene since this is done
+    PointerToGame->Lennart->SetRoom(NewScene);
 }
 
 bool SceneManager::SetCurrentScene(QGraphicsScene *NewScene){

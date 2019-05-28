@@ -3,11 +3,13 @@
 
 #include <QObject>
 #include "sceneobject.h"
+#include <QGraphicsScene>
 #include <QRectF>
 #include <QPointF>
 #include <QPainter>
 #include <QColor>
 #include <math.h>
+#include <QList>
 
 class Player : public SceneObject
 {
@@ -26,18 +28,23 @@ public slots:
     void RightKeyReleased();
 
 private:
-    double health;
-    double speed;
-    double size;
-    double strength;
+    float health;
+    float speed;
+    float size;
+    float strength;
     QColor color;
+    QGraphicsScene *CurrentScene;
 
     // Flags
     // Movement
-    bool up;
-    bool down;
-    bool left;
-    bool right;
+    int up;// let it be an intiger (easy for calculation and allows to be flexible)
+    int down;
+    int left;
+    int right;
+
+    bool RoomIsSet;
+
+
 
 protected:
     void advance(int) override;
@@ -54,6 +61,9 @@ public:
     // typing
     enum{Type=UserType+2};// Let 2 be Players
     int type() const override {return Type;}
+
+    // The rest
+    void SetRoom(QGraphicsScene *NewCurrentScene);
 };
 
 #endif // PLAYER_H
