@@ -7,6 +7,7 @@
 #include <QGraphicsScene>
 
 class GameClass;
+class Room;
 
 class SceneManager : public QObject
 {
@@ -18,7 +19,7 @@ public slots:
     void StartSceneManager();
     void StartClock();
     void StopClock();
-    void ChangeCurrentScene(QGraphicsScene *NewScene);
+    void ChangeCurrentScene(Room *NewRoom);
 private:
     //Flags
     bool IsStarted;
@@ -36,7 +37,7 @@ private:
     // Functions
     void CreateConnection();
     void BreakConnection();
-    void TransferPlayer(QGraphicsScene *NewScene);// Player should be transferd. To the new scene
+    void TransferPlayer(Room *NewRoom);// Player should be transferd. To the new scene
     bool SetCurrentScene(QGraphicsScene *NewScene);// Have a bool to tell if it was succesful.
 public:
     explicit SceneManager(QObject *parent = nullptr);

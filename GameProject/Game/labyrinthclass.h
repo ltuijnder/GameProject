@@ -14,7 +14,7 @@ class LabyrinthClass : public QObject
     Q_OBJECT
 
 signals:
-    void ChangeScene(QGraphicsScene * NewScene);
+    void ChangeScene(Room * NewScene);
     void GenerateRooms(); //Let all the Rooms generate/Fill up
 
 public slots:

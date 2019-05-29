@@ -1,7 +1,6 @@
 #include "labyrinthclass.h"
 #include "gameclass.h"
 #include "scenemanager.h"
-//#include "graphicsitems.h" // Just for the test to include the ellipse
 #include "room.h"
 
 /******* Essential Functions *******/
@@ -35,10 +34,9 @@ void LabyrinthClass::Setup(GameClass *Game){
     BuildFloor();
 
     //Links
-    QObject::connect(this,SIGNAL(ChangeScene(QGraphicsScene*)),Game->SManager,SLOT(ChangeCurrentScene(QGraphicsScene*)));
+    QObject::connect(this,SIGNAL(ChangeScene(Room*)),Game->SManager,SLOT(ChangeCurrentScene(Room*)));
     QObject::connect(Game,SIGNAL(GameHasStarted()),this,SLOT(StartLayout()));
 
-    Floor->at(0)->TESTdx(10);
 }
 
 /******* SLOTS *******/
@@ -98,7 +96,7 @@ void LabyrinthClass::BuildFloor(){
     FloorIsGenerated=1;
 }
 
-void LabyrinthClass::ClearFloor(){
+void LabyrinthClass::ClearFloor(){// Probabibly some deletes here.
     if(LayoutIsGenerated){// clear Layout
         //Pass
     }

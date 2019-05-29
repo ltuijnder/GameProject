@@ -45,3 +45,8 @@ float Wall::Width() const{
 float Wall::Height() const{
     return height;
 }
+
+void Wall::SetGeometry(float newwidth, float newheight){
+    width=newwidth;
+    height=newheight;
+}

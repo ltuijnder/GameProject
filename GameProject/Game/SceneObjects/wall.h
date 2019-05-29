@@ -38,6 +38,7 @@ public:
 
     float Width() const;
     float Height() const;
+    void SetGeometry(float newwidth, float newheight);
 
 };
 

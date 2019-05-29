@@ -1,6 +1,7 @@
 #include "scenemanager.h"
 #include "gameclass.h"
 #include "Game/SceneObjects/player.h"// since we transfer players
+#include "Game/room.h"
 
 /******* Essential Functions *******/
 SceneManager::SceneManager(QObject *parent) : QObject(parent){
@@ -54,14 +55,14 @@ void SceneManager::StopClock(){
     ClockIsRunning=0;
 }
 
-void SceneManager::ChangeCurrentScene(QGraphicsScene *NewScene){
+void SceneManager::ChangeCurrentScene(Room *NewRoom){// We need to have a room since we want to setRoom in player.
     if(ClockIsRunning) StopClock();// These firsts checks are done in the case that a scene was not set at all.
     if(SceneIsConnected) BreakConnection();
-    TransferPlayer(NewScene);// Transfer Player to the new:
-    SetCurrentScene(NewScene);// Set the scene
+    TransferPlayer(NewRoom);// Transfer Player to the new:
+    SetCurrentScene(NewRoom);// Here upcast Room to QGraphicsScene
     if(SceneIsSet==0) SceneIsSet=1;// Now we can say for sure that the scene is set.
     CreateConnection();// Connect the new Scene to the clock
-    emit CurrentSceneChanged(NewScene); // Update the GraphicsView in UI::GameWindow to the new Scene:
+    emit CurrentSceneChanged(NewRoom); // Update the GraphicsView in UI::GameWindow to the new Scene:
     if(IsStarted) StartClock();// Only start the clock if the game has started. StartSceneManager will automaticly call startclock.
 }
 
@@ -87,15 +88,15 @@ void SceneManager::BreakConnection(){
 }
 
 
-void SceneManager::TransferPlayer(QGraphicsScene *NewScene){
+void SceneManager::TransferPlayer(Room *NewRoom){
     // Get position of player.
     // Do something like, Remove QgraphicsItem from scene. (Player QgraphicsItem is hold by GameClass)
     // Then add in to then new scene
     // Change it position. Depending on it's original position.
 
     // For now just add it.
-    NewScene->addItem(PointerToGame->Lennart); // Actually we don't need to worry that To first remove it from another scene since this is done
-    PointerToGame->Lennart->SetRoom(NewScene);
+    NewRoom->addItem(PointerToGame->Lennart); // Actually we don't need to worry that To first remove it from another scene since this is done
+    PointerToGame->Lennart->SetRoom(NewRoom);
 }
 
 bool SceneManager::SetCurrentScene(QGraphicsScene *NewScene){

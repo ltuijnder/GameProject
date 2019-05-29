@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include "sceneobject.h"
-#include <QGraphicsScene>
+#include "../room.h"
 #include <QRectF>
 #include <QPointF>
 #include <QPainter>
@@ -27,20 +27,39 @@ public slots:
     void RightKeyPressed();
     void RightKeyReleased();
 
+    void ShotRightPressed();
+    void ShotRightReleased();
+    void ShotLeftPressed();
+    void ShotLeftReleased();
+    void ShotUpPressed();
+    void ShotUpReleased();
+    void ShotDownPressed();
+    void ShotDownReleased();
+
+
 private:
     float health;
     float speed;
     float size;
     float strength;
+    float ShotSpeed;
+    float FireRate;
     QColor color;
-    QGraphicsScene *CurrentScene;
+    Room *CurrentRoom;
+    //enum direction{Non,Right,Left,Up,Down} // Let it Only shoot in 1 direction
+    //int ShootDirection;
 
     // Flags
     // Movement
-    int up;// let it be an intiger (easy for calculation and allows to be flexible)
+    int up;// let it be an intiger (easy for calculation and allows to be flexible, for accelaration and stuff like that)
     int down;
     int left;
     int right;
+
+    bool ShootRight;
+    bool ShootLeft;
+    bool ShootUp;
+    bool ShootDown;
 
     bool RoomIsSet;
 
@@ -63,7 +82,7 @@ public:
     int type() const override {return Type;}
 
     // The rest
-    void SetRoom(QGraphicsScene *NewCurrentScene);
+    void SetRoom(Room *NewRoom);
 };
 
 #endif // PLAYER_H

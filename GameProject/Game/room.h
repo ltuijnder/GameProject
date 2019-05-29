@@ -45,10 +45,14 @@ private:
     void SetRoomPosition(int Pos);// Let the type be what it needs to be.
 
 public:
+    // Essential
     explicit Room(QObject *parent = nullptr);
     ~Room();
     void Setup();
-    void TESTdx(double dxnew);// Will not work
+
+    // Functions
+    void addSceneObject(SceneObject *);
+
 };
 
 #endif // ROOM_H

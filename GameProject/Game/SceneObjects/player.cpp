@@ -25,6 +25,10 @@ void Player::Init(){
     down=0;
     left=0;
     right=0;
+    ShootRight=0;
+    ShootLeft=0;
+    ShootUp=0;
+    ShootDown=0;
     RoomIsSet=0;
 }
 
@@ -41,6 +45,15 @@ void Player::DownKeyReleased(){down=0;}
 void Player::LeftKeyReleased(){left=0;}
 void Player::RightKeyReleased(){right=0;}
 
+// Shooting
+void Player::ShotRightPressed(){ShootRight=1;}// Come up with a method such that only 1 direction can be shot at a time
+void Player::ShotLeftPressed(){ShootLeft=1;}
+void Player::ShotUpPressed(){ShootUp=1;}
+void Player::ShotDownPressed(){ShootDown=1;}
+void Player::ShotRightReleased(){ShootRight=0;}
+void Player::ShotLeftReleased(){ShootLeft=0;}
+void Player::ShotUpReleased(){ShootUp=0;}
+void Player::ShotDownReleased(){ShootDown=0;}
 
 /******* Functions *******/
 
@@ -77,7 +90,7 @@ void Player::advance(int Phase){
     }
 
     // Now check if collisions are happening
-    QList<QGraphicsItem *> CollideList=CurrentScene->collidingItems(this);
+    QList<QGraphicsItem *> CollideList=CurrentRoom->collidingItems(this);
     for(auto CollidingItem: CollideList){
         if(CollidingItem->type()==Wall::Type){
             // Look for the smallest error.
@@ -85,19 +98,36 @@ void Player::advance(int Phase){
             double Errorx=(wall->Width()+size)/2-abs(wall->pos().x()-pos().x());
             double Errory=(wall->Height()+size)/2-abs(wall->pos().y()-pos().y());
             if(Errory>Errorx){
-                QPointF DiffPoint((wall->pos().x()<pos().x())?Errorx:-1*Errorx,0);
+                QPointF DiffPoint((wall->pos().x()<pos().x())?Errorx:-1*Errorx,0);// Just some conditional statement if it should be + or -
                 setPos(pos()+DiffPoint);
             }else{
                 QPointF DiffPoint(0,(wall->pos().y()<pos().y())?Errory:-1*Errory);
                 setPos(pos()+DiffPoint);
             }
-
         }
+    }
+    // Now we check the shooting.
+
+    if(ShootUp||ShootDown||ShootRight||ShootLeft){// Do this better then ifs
+        std::cout<<ShootUp<<ShootDown<<ShootRight<<ShootLeft<<std::endl;
+        // then We should do a case study.
+        Wall *TESTWALL=new Wall;
+        TESTWALL->Init();// First load everything to a default state
+        TESTWALL->SetGeometry(30,30);// Small walls;
+        if(ShootUp||ShootDown){
+            QPointF RelPos(0,(ShootUp)?-1*(size+25):size+25);// Remember y-axis is inverted
+            TESTWALL->setPos(pos()+RelPos);
+        }else{
+            QPointF RelPos((ShootLeft)?-1*(size+25):size+25,0);
+            TESTWALL->setPos(pos()+RelPos);
+        }
+        CurrentRoom->addSceneObject(TESTWALL);
     }
 }
 
 
-void Player::SetRoom(QGraphicsScene *NewCurrentScene){
-    CurrentScene=NewCurrentScene;
+void Player::SetRoom(Room *NewRoom){
+    CurrentRoom=NewRoom;
     RoomIsSet=1;
 }
+

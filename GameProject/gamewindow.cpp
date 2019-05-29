@@ -21,6 +21,7 @@ GameWindow::GameWindow(QWidget *parent) :
     SceneRect.setRect(0,0,100,100);// Its unclear what happens when I change this , I do not understand it. But it fixes the vieuw, which is what I wanted.
     //std::cout<<SceneRect.height()<<std::endl;
     ui->graphicsView->setSceneRect(SceneRect);
+    ui->graphicsView->setFocusPolicy(Qt::NoFocus);// We don't want the graphicsview to gain input. This may result in no reaction of some buttons (arrow keys)
     //Test->Setup(this);
     setFocusPolicy(Qt::StrongFocus);// Important the GameWindow get's focus. Such that it can receive input from key and mouse
 

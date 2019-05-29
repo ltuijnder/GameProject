@@ -51,15 +51,13 @@ void Room::FillUp(){
 
         Wall *Brick=new Wall;
         Brick->Init();
-        Objects->push_back(Brick);
         Brick->setPos(125,125);
-        addItem(Brick);
+        addSceneObject(Brick);
 
         Wall *Brick2=new Wall;
         Brick2->Init();
-        Objects->push_back(Brick2);
         Brick2->setPos(100,175);
-        addItem(Brick2);
+        addSceneObject(Brick2);
 
 
     }else{
@@ -91,37 +89,10 @@ void Room::SetRoomPosition(int Pos){
     Position=Pos;
 }
 
-void Room::TESTdx(double dxnew){
-    // Armed with new knowledge we can tackle the problem
-    QList<QGraphicsItem *>Items=items();// returns a QList of all GraphicsItems in the
-    // Lets check what the type is of the item
-    QGraphicsItem *Item=Items.at(0);
-    if(Item->type()==SceneObject::Type){
-        std::cout<<"Type=SceneObject"<<std::endl;
-    }else if (Item->type()==TestQobject::Type) {
-        std::cout<<"Type=DummyEllipse"<<std::endl;
-        TestQobject *PElli=qgraphicsitem_cast<TestQobject *>(Item);// Works
-        PElli->TestFunc();
-        double dx=PElli->TestGetParm();
-        std::cout<<"Extracted Parameter dx="+std::to_string(dx)<<std::endl;
-    }
-    // Lets now see if casting to the SceneObject class is also https://doc.qt.io/qt-5/qlist.html#atpossible since we need to do it for the safe.
-    SceneObject *PObject=qgraphicsitem_cast<SceneObject *>(Item);
-    if(PObject==nullptr){// We cannot upcast to a base class !!. No biggy we just keep the vector with of SceneObjects.
-        std::cout<<"It Failed"<<std::endl;
-    }else{
-        // What is now the type?
-        if(PObject->type()==SceneObject::Type){
-            std::cout<<"Type= SceneObject"<<std::endl;
-        }else{
-            std::cout<<"Type != SceneObject"<<std::endl;
-        }
-        // What's the virtual function?
-        PObject->TestFunc();
-    }
-    std::cout<<"The End"<<std::endl;
+void Room::addSceneObject(SceneObject *NewObject){
+    // we don't do the init here, since one might first want to change some properties of the object
+    // Before adding to the scene.
+    Objects->push_back(NewObject);
+    addItem(NewObject);
 }
-
-
-
 

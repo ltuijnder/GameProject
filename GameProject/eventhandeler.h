@@ -13,7 +13,6 @@ class EventHandeler:public QObject{
 
 signals:
     // Press events
-    void UpKeyPressed();
     void PKeyPressed();
     void CKeyPressed();
 
@@ -22,11 +21,21 @@ signals:
     void QKeyPressed();// Left
     void DKeyPressed();// Right
 
+    void RAKeyPressed();// Right Arrow Key
+    void LAKeyPressed();// Left Arrow
+    void UAKeyPressed();// Up Arrow
+    void DAKeyPressed();// down Arrow
+
     // Release events
     void ZKeyReleased();
     void SKeyReleased();
     void QKeyReleased();
     void DKeyReleased();
+
+    void RAKeyReleased();
+    void LAKeyReleased();
+    void UAKeyReleased();
+    void DAKeyReleased();
 
 public:
     EventHandeler();
