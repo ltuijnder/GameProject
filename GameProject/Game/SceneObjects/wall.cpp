@@ -15,6 +15,7 @@ void Wall::Init(){
     // Set Default Values
     width=200;
     height=200;
+    //setRect(-width/2,-height/2,width,height);
     color.setNamedColor("Grey");
 
 }
@@ -27,9 +28,20 @@ void Wall::Init(){
 
 QRectF Wall::boundingRect() const{
     return QRectF(-width/2,-height/2,width,height);
+    //return *this;
 }
 
 void Wall::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *){
     painter->setBrush(color);
     painter->drawRect(-width/2,-height/2,width,height);
+    //painter->drawRect(*this);
+}
+
+
+float Wall::Width() const{
+    return width;
+}
+
+float Wall::Height() const{
+    return height;
 }

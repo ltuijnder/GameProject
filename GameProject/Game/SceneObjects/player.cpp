@@ -15,6 +15,7 @@ void Player::Init(){
     // Set Default Values
     speed=10; // Let 1 By normal
     size=50;
+    //setRect(-size/2,-size/2,size,size);
     health=5;
     strength=1.5;
     color.setNamedColor("blue");
@@ -47,11 +48,14 @@ void Player::RightKeyReleased(){right=0;}
 // drawings
 QRectF Player::boundingRect() const{
     return QRectF(-size/2,-size/2,size,size);
+    //return *this;
 }
 
 void Player::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *){
     painter->setBrush(color);
     painter->drawRect(-size/2,-size/2,size,size);
+    //painter->drawRect(*this);
+
 }
 
 // Dynamics
@@ -66,19 +70,30 @@ void Player::advance(int Phase){
     float modulo=sqrt(dx*dx+dy*dy);
 
     if(modulo!=0){// The player does not stand still so we are going to move
-        dx*=speed/modulo;
+        dx*=speed/modulo;// Normalise it
         dy*=speed/modulo;
         QPointF DiffPoint(dx,dy);
         setPos(pos()+DiffPoint);// Get position alter is by Diffpoint and then set it equal to that.
     }
+
     // Now check if collisions are happening
     QList<QGraphicsItem *> CollideList=CurrentScene->collidingItems(this);
     for(auto CollidingItem: CollideList){
         if(CollidingItem->type()==Wall::Type){
-            std::cout<<"Collision!!"<<std::endl;
+            // Look for the smallest error.
+            Wall *wall=qgraphicsitem_cast<Wall *>(CollidingItem);
+            double Errorx=(wall->Width()+size)/2-abs(wall->pos().x()-pos().x());
+            double Errory=(wall->Height()+size)/2-abs(wall->pos().y()-pos().y());
+            if(Errory>Errorx){
+                QPointF DiffPoint((wall->pos().x()<pos().x())?Errorx:-1*Errorx,0);
+                setPos(pos()+DiffPoint);
+            }else{
+                QPointF DiffPoint(0,(wall->pos().y()<pos().y())?Errory:-1*Errory);
+                setPos(pos()+DiffPoint);
+            }
+
         }
     }
-    std::cout<<"yup"<<std::endl;
 }
 
 

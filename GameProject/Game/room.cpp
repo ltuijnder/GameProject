@@ -54,6 +54,14 @@ void Room::FillUp(){
         Objects->push_back(Brick);
         Brick->setPos(125,125);
         addItem(Brick);
+
+        Wall *Brick2=new Wall;
+        Brick2->Init();
+        Objects->push_back(Brick2);
+        Brick2->setPos(100,175);
+        addItem(Brick2);
+
+
     }else{
         TestQobject *Elli1=new TestQobject;
         Elli1->Init();// Important

@@ -8,7 +8,7 @@
 #include <QPainter>
 #include <QColor>
 
-class Wall : public SceneObject
+class Wall : public SceneObject//, public QRectF
 {
     Q_OBJECT
 
@@ -35,6 +35,9 @@ public:
     // typing
     enum{Typpe=UserType+10};// Let 10 Be walls
     int type() const override {return Type;}
+
+    float Width() const;
+    float Height() const;
 
 };
 
