@@ -6,6 +6,7 @@
 #include <QGraphicsItem>
 #include <QGraphicsObject>
 #include <vector>
+#include <algorithm>
 #include <QList>
 
 #include "labyrinthclass.h" //This is needed to declare friendships!
@@ -26,6 +27,7 @@ signals:
 
 public slots:
     void FillUp();
+    void DeleteSceneObject(SceneObject *);
 
 private:
     //Flags

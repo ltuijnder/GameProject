@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QGraphicsItem>
 #include <iostream>
+#include "../room.h"
 
 class SceneObject : public QObject, public QGraphicsItem
 {
@@ -18,11 +19,12 @@ protected:
     //Flags
     bool IsWritten;
     bool IsInit=0;// Important That is default value 0!! Else its possible that Init() gets not triggerd
+    Room *CurrentRoom;
 
 public:
     // essential
     explicit SceneObject(QObject *parent = nullptr);
-    virtual void Init();// can't be constant since we change variables
+    virtual void Init(Room *);// can't be constant since we change variables
     enum {Type= UserType+0};// Define number 0 as the SceneObject
     int type() const override { return Type;} // Use override to tell that the function Type() is still virtual, use const sine thats the signature of the function
 

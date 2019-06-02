@@ -33,7 +33,7 @@ public:
     LabyrinthClass *Labyrinth;
     Player *Lennart;
     //DummyEllipse *Ellli;
-    TestQobject *plswork;
+    //TestQobject *plswork;
 
 
     explicit GameClass(QObject *parent = nullptr);

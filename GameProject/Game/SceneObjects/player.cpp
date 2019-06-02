@@ -1,5 +1,6 @@
 #include "player.h"
 #include "wall.h"
+#include "projectile.h"
 
 /******* Essential Functions *******/
 
@@ -8,28 +9,34 @@ Player::Player(QObject *parent) : SceneObject(parent)
 
 }
 
-void Player::Init(){
-    SceneObject::Init();
+void Player::Init(Room *room){
+    SceneObject::Init(room);
     if(IsInit) return;
 
     // Set Default Values
+    // Associated to player
     speed=10; // Let 1 By normal
     size=50;
-    //setRect(-size/2,-size/2,size,size);
     health=5;
-    strength=1.5;
     color.setNamedColor("blue");
+
+    //Associated to shooting
+    strength=1.5;
+    ShotSpeed=15;
+    RelatifStartingPos=size+5;// Should be in function of size;
+    FlightFrame=2*30;// Not fps General!
+    FireRate=14;// Default value for default framerate (30 fps)
+    Cooldown=0;
+    IsShooting=0;// We don't set ShotDirection since it should always be checked with this flag.
 
     // Flags
     up=0;
     down=0;
     left=0;
     right=0;
-    ShootRight=0;
-    ShootLeft=0;
-    ShootUp=0;
-    ShootDown=0;
     RoomIsSet=0;
+
+    IsInit=1;
 }
 
 
@@ -46,14 +53,14 @@ void Player::LeftKeyReleased(){left=0;}
 void Player::RightKeyReleased(){right=0;}
 
 // Shooting
-void Player::ShotRightPressed(){ShootRight=1;}// Come up with a method such that only 1 direction can be shot at a time
-void Player::ShotLeftPressed(){ShootLeft=1;}
-void Player::ShotUpPressed(){ShootUp=1;}
-void Player::ShotDownPressed(){ShootDown=1;}
-void Player::ShotRightReleased(){ShootRight=0;}
-void Player::ShotLeftReleased(){ShootLeft=0;}
-void Player::ShotUpReleased(){ShootUp=0;}
-void Player::ShotDownReleased(){ShootDown=0;}
+void Player::ShotRightPressed(){ShotDirection=Player::ShotRight;IsShooting++;}
+void Player::ShotLeftPressed(){ShotDirection=Player::ShotLeft;IsShooting++;}
+void Player::ShotUpPressed(){ShotDirection=Player::ShotUp;IsShooting++;}
+void Player::ShotDownPressed(){ShotDirection=Player::ShotDown;IsShooting++;}
+void Player::ShotRightReleased(){IsShooting--;}
+void Player::ShotLeftReleased(){IsShooting--;}
+void Player::ShotUpReleased(){IsShooting--;}
+void Player::ShotDownReleased(){IsShooting--;}
 
 /******* Functions *******/
 
@@ -108,20 +115,36 @@ void Player::advance(int Phase){
     }
     // Now we check the shooting.
 
-    if(ShootUp||ShootDown||ShootRight||ShootLeft){// Do this better then ifs
-        std::cout<<ShootUp<<ShootDown<<ShootRight<<ShootLeft<<std::endl;
-        // then We should do a case study.
-        Wall *TESTWALL=new Wall;
-        TESTWALL->Init();// First load everything to a default state
-        TESTWALL->SetGeometry(30,30);// Small walls;
-        if(ShootUp||ShootDown){
-            QPointF RelPos(0,(ShootUp)?-1*(size+25):size+25);// Remember y-axis is inverted
-            TESTWALL->setPos(pos()+RelPos);
-        }else{
-            QPointF RelPos((ShootLeft)?-1*(size+25):size+25,0);
-            TESTWALL->setPos(pos()+RelPos);
+    if(!Cooldown){// Zero cooldown -> Allowed to shoot.
+        if(IsShooting){
+            Projectile *Bullet=new Projectile;
+            Bullet->Init(CurrentRoom);
+            Bullet->SetProperties(ShotSpeed,strength,FlightFrame);// Do this with string.
+            QPointF RelPos(0,0);
+            switch (ShotDirection) {
+            case Player::ShotRight:
+                RelPos.setX(RelatifStartingPos);
+                Bullet->SetDirection(Player::ShotRight);
+                break;
+            case Player::ShotLeft:
+                RelPos.setX(-RelatifStartingPos);
+                Bullet->SetDirection(Player::ShotLeft);
+                break;
+            case Player::ShotUp:
+                RelPos.setY(-RelatifStartingPos);
+                Bullet->SetDirection(Player::ShotUp);
+                break;
+            case Player::ShotDown:
+                RelPos.setY(RelatifStartingPos);
+                Bullet->SetDirection(Player::ShotDown);
+                break;
+            }
+            Bullet->setPos(pos()+RelPos);
+            CurrentRoom->addSceneObject(Bullet);
+            Cooldown=FireRate;
         }
-        CurrentRoom->addSceneObject(TESTWALL);
+    }else{
+        Cooldown--;// Lower the cooldown time. by 1 frame.
     }
 }
 

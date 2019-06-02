@@ -34,7 +34,8 @@ SOURCES += \
     Game/SceneObjects/sceneobject.cpp \
     Game/SceneObjects/testqobject.cpp \
     Game/SceneObjects/player.cpp \
-    Game/SceneObjects/wall.cpp
+    Game/SceneObjects/wall.cpp \
+    Game/SceneObjects/projectile.cpp
 
 HEADERS += \
         gamewindow.h \
@@ -46,7 +47,8 @@ HEADERS += \
     Game/SceneObjects/sceneobject.h \
     Game/SceneObjects/testqobject.h \
     Game/SceneObjects/player.h \
-    Game/SceneObjects/wall.h
+    Game/SceneObjects/wall.h \
+    Game/SceneObjects/projectile.h
 
 FORMS += \
         gamewindow.ui

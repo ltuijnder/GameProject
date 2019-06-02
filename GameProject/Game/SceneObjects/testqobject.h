@@ -31,7 +31,7 @@ public slots:
 
 public:
     explicit TestQobject(QObject *parent = nullptr);
-    void Init() override;// We want it to be again virtual
+    void Init(Room *) override;// We want it to be again virtual
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) override;
     enum {Type=UserType+1};// Let 1 by the dummy class

@@ -44,36 +44,47 @@ void Room::FillUp(){
     // For now just use 2 rooms, With room 0 being type 0 and room 1 being type 1;
     if(RoomType==0){
         TestQobject *Elli0=new TestQobject;
-        Elli0->Init();// Important     
+        Elli0->Init(this);// Important
         Objects->push_back(Elli0);// Here DummyEllipse gets converted to SceneObject
         Elli0->setPos(200,-200);
         addItem(Elli0);
 
         Wall *Brick=new Wall;
-        Brick->Init();
+        Brick->Init(this);
         Brick->setPos(125,125);
         addSceneObject(Brick);
 
         Wall *Brick2=new Wall;
-        Brick2->Init();
+        Brick2->Init(this);
         Brick2->setPos(100,175);
         addSceneObject(Brick2);
 
 
     }else{
         TestQobject *Elli1=new TestQobject;
-        Elli1->Init();// Important
+        Elli1->Init(this);// Important
         Elli1->setPos(200,-200);
         Objects->push_back(Elli1);// Here DummyEllipse gets converted to SceneObject
         addItem(Elli1);
 
         Wall *Brick=new Wall;
-        Brick->Init();
+        Brick->Init(this);
         Objects->push_back(Brick);
         Brick->setPos(-125,-125);
         addItem(Brick);
     }
     IsFilled=1;
+}
+
+void Room::DeleteSceneObject(SceneObject *ToDelete){
+    auto it = std::find(Objects->begin(), Objects->end(), ToDelete);
+    if(it != Objects->end()){
+        Objects->erase(it);// Remove Object from the Objects list
+    }else{
+        std::cout<<"ERROR in Room class: Wanted to delete object that is not in the list"<<std::endl;
+    }
+    removeItem(ToDelete);// Remove the QGraphicsItems from scene
+    delete ToDelete;// Finally delete de dynamicly allocated memory.
 }
 
 

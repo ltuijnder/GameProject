@@ -26,7 +26,7 @@ private:
 public:
     // Essential Functions
     explicit Wall(QObject *parent = nullptr);
-    void Init() override;
+    void Init(Room *) override;
 
     // Drawing
     QRectF boundingRect() const override;

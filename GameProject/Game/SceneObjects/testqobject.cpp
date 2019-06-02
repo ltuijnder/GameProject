@@ -15,9 +15,9 @@ void TestQobject::SomeTestSlot(){
 
 /******* Functions *******/
 
-void TestQobject::Init(){
+void TestQobject::Init(Room *room){
 
-    SceneObject::Init();//Do the initialise of the base class (aka Set the basis parameters)
+    SceneObject::Init(room);//Do the initialise of the base class (aka Set the basis parameters)
     // Set the parameters specific for this class
     if(IsInit) return; // Actually really nice place to do error handeling with throw and catch
     ObjectType=-1;// Does not matter, Delete
@@ -34,6 +34,7 @@ void TestQobject::Init(){
     // the coördinate system is positif to right under. while the first coordinates are the top left corner
     // So top left should be negatif. hence We need to move our transformation origin now twice in the other direction
 
+    IsInit=1;
 }
 
 QRectF TestQobject::boundingRect() const {

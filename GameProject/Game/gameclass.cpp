@@ -22,11 +22,11 @@ void GameClass::Setup(GameWindow *gamewindow){
     Labyrinth=new LabyrinthClass;
     Lennart=new Player;
     //Ellli= new DummyEllipse;
-    plswork= new TestQobject;
+    //plswork= new TestQobject;
     SManager->Setup(this);
     Labyrinth->Setup(this);
-    Lennart->Init();
-    plswork->Init();
+    Lennart->Init(nullptr);// For now just null pointer
+    //plswork->Init();
     //Ellli->Init();
 
     IsRunning=0;// The Game is not running, It has just been Setup, Nothing more.

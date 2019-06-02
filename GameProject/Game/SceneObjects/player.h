@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include "sceneobject.h"
-#include "../room.h"
+//#include "../room.h"
 #include <QRectF>
 #include <QPointF>
 #include <QPainter>
@@ -38,16 +38,23 @@ public slots:
 
 
 private:
+    // Associated to player
     float health;
     float speed;
     float size;
+    QColor color;
+
+    // Associated to shooting
     float strength;
     float ShotSpeed;
-    float FireRate;
-    QColor color;
-    Room *CurrentRoom;
-    //enum direction{Non,Right,Left,Up,Down} // Let it Only shoot in 1 direction
-    //int ShootDirection;
+    float RelatifStartingPos;
+    unsigned FlightFrame; // Not FPS general.
+    unsigned FireRate;// Firerate is frames per shot.
+    unsigned Cooldown;// Howmany frames left before you can shoot again.
+    // Reason why I work with cooldown per frame rate instead of a timer, Well you can only shoot per frame, since thats when the update happens.
+    // I could put the firing on a different time clock. But if your frame rate goes lower, then the game should also go slower (including shots)
+    int ShotDirection;// This reflects that you can only shoot in 1 Direction!
+    unsigned IsShooting;// the reason why not a bool, since we should keep track of how many buttons are pushed down before we can set it to zero.
 
     // Flags
     // Movement
@@ -55,11 +62,6 @@ private:
     int down;
     int left;
     int right;
-
-    bool ShootRight;
-    bool ShootLeft;
-    bool ShootUp;
-    bool ShootDown;
 
     bool RoomIsSet;
 
@@ -71,7 +73,7 @@ protected:
 public:
     // Essential Functions
     explicit Player(QObject *parent = nullptr);
-    void Init() override;
+    void Init(Room *) override;
 
     // Drawing
     QRectF boundingRect() const override;
@@ -83,6 +85,7 @@ public:
 
     // The rest
     void SetRoom(Room *NewRoom);
+    enum{ShotRight,ShotLeft,ShotUp,ShotDown}; // Create these variables to create readable code
 };
 
 #endif // PLAYER_H

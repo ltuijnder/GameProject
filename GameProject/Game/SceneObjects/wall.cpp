@@ -8,8 +8,8 @@ Wall::Wall(QObject *parent) : SceneObject(parent)
 }
 
 
-void Wall::Init(){
-    SceneObject::Init();
+void Wall::Init(Room *room){
+    SceneObject::Init(room);
     if(IsInit) return;
 
     // Set Default Values
@@ -18,6 +18,7 @@ void Wall::Init(){
     //setRect(-width/2,-height/2,width,height);
     color.setNamedColor("Grey");
 
+    IsInit=1;
 }
 
 
