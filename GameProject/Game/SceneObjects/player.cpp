@@ -84,7 +84,7 @@ void Player::advance(int Phase){
     if(!Phase) return;// At Phase 0 we don't do anything
     if(!RoomIsSet) return; //In case an error was made, and the pointer was not set.
     // Calculate movement
-    // We should also watch out for the fps!
+    // We should also watch out for the fps! -> We keep it 30 fps fixed
     float dx=1*right-1*left;
     float dy=1*down-1*up;
     float modulo=sqrt(dx*dx+dy*dy);
@@ -119,7 +119,7 @@ void Player::advance(int Phase){
         if(IsShooting){
             Projectile *Bullet=new Projectile;
             Bullet->Init(CurrentRoom);
-            Bullet->SetProperties(ShotSpeed,strength,FlightFrame);// Do this with string.
+            Bullet->SetProperties(ShotSpeed,strength,FlightFrame,Projectile::Player);// Do this with string.
             QPointF RelPos(0,0);
             switch (ShotDirection) {
             case Player::ShotRight:

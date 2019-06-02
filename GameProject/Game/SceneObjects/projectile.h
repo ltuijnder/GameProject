@@ -28,13 +28,13 @@ private:
     unsigned direction;//0=right, 1=left, 2=up, 3=down
     unsigned FramesLeft;
     QColor color;
-
+    unsigned Team;// Eg. Player, Enemies Such that we now to whom the bullet belongs to.
 
     unsigned Mode;
     enum{Linear};// Allow for complexer modes.
 
     // Flags
-    bool IsSetup;
+    bool IsSetup;// Use this later on. Maybe do a global type bool?
 
     // Function
     QPointF Velocity();
@@ -55,9 +55,10 @@ public:
     enum{Type=UserType+100};// Let 100 be projectiles
     int type() const override {return Type;}
 
-    void SetProperties(float _speed,float _damage,unsigned _FrameLeft);// Temporarily do this better;
+    // rest
+    void SetProperties(float _speed, float _damage, unsigned _FrameLeft, unsigned _Team);// Temporarily do this better;
     void SetDirection(unsigned _direction);
-
+    enum{Player,Enemies};
 
 };
 

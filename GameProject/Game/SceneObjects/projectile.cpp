@@ -45,10 +45,11 @@ void Projectile::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWid
     painter->drawEllipse(-size/2,-size/2,size,size);// Just for now draw a rect
 }
 
-void Projectile::SetProperties(float _speed, float _damage, unsigned _FramesLeft){
+void Projectile::SetProperties(float _speed, float _damage, unsigned _FramesLeft, unsigned _Team){
     speed=_speed;// Maybe directly in the constructor.
     Damage=_damage;
     FramesLeft=_FramesLeft;
+    Team=_Team;
 }
 
 void Projectile::SetDirection(unsigned _direction){// Do this better
