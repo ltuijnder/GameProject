@@ -4,23 +4,24 @@
 #include <QObject>
 #include "../sceneobject.h"
 #include "../player.h"
+#include "../collisionclass.h"
 #include <QRectF>
+#include <QList>
 
-class Enemies : public SceneObject
+class Enemies : public SceneObject, public LivingClass, public CollisionClass
 {
     Q_OBJECT
 
 signals:
-    void DeleteMe(SceneObject *);// We should be able to delete Enemies
+    void Died(SceneObject *);// We should be able to delete Enemies
 
 public slots:
 
 protected:
-    float width;// EVERY enemey will have a width and height
-    float height; // Creating square you just put width and height equal
-    float health; // EVERY enemy will have health
-
     Player *ThePlayer; // Every enemy should be aware of the player.
+    bool PlayerIsSet; // Just a bool to see if ThePlayer Is set
+
+    void CheckDied();// This is stupid but QT does not allow QObject to be multi inherented.
 
 public:
     // Essential Functions
@@ -33,15 +34,13 @@ public:
 
     // typing
     enum{Type_Enemies=100};
-    enum{Type=UserType+Type_Enemies};// let enemies be between 100 and 200
+    enum{Type=UserType+Type_Enemies,Type_EnemiesMAX=UserType+Type_Enemies+100};// let enemies be between 100 and 200
     int type() const override {return Type;}
 
     // Rest
-    void TakeDamage(float Damage);// Every enemy should be able to take damage.
     void SetPlayer(Player *_ThePlayer);
+    void SetPlayerViaRoom();
 
-    // Flags
-    bool IsSpecial;// Have a Is Special flag to let other classes now they should go more precise then just base enemy class (for instance costum damage taking)
-};
+ };
 
 #endif // ENEMIES_H

@@ -38,9 +38,6 @@ private:
     //Variables
     int RoomType;
     int Position;
-    // We now have one vector of the Scene Objects, But it would be perfectly possible to be more specific
-    // For instance make vector of Enemies/ Temporarily/ Wall
-    std::vector<SceneObject *> *Objects;
 
     //Functions
     void SetRoomType(int Type);
@@ -53,7 +50,10 @@ public:
     void Setup();
 
     // Functions
-    void addSceneObject(SceneObject *);
+
+    int NumberOfEnemies();
+    std::vector<SceneObject *> collidingObjects(SceneObject *);
+    void TestDowncast();// Delete This!
 
 };
 

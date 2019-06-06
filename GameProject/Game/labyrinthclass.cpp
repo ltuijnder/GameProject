@@ -33,6 +33,8 @@ void LabyrinthClass::Setup(GameClass *Game){
     //GenerateLayout();
     BuildFloor();
 
+    Floor->at(0)->TestDowncast();// THIS WORKS (DELETE THIS) HEY YOU YEAH YOU DELETE THIS
+
     //Links
     QObject::connect(this,SIGNAL(ChangeScene(Room*)),Game->SManager,SLOT(ChangeCurrentScene(Room*)));
     QObject::connect(Game,SIGNAL(GameHasStarted()),this,SLOT(StartLayout()));
@@ -90,9 +92,6 @@ void LabyrinthClass::BuildFloor(){
     if(FloorIsGenerated) ClearFloor(); //Clear previous floor (if there is one)
     GenerateLayout();
     emit GenerateRooms();
-
-    QRectF getrekt=Floor->at(0)->sceneRect();
-    std::cout<<"SceneRect: "<<getrekt.y()<<std::endl;
     FloorIsGenerated=1;
 }
 

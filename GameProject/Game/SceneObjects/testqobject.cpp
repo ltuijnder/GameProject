@@ -21,6 +21,7 @@ void TestQobject::Init(Room *room){
     // Set the parameters specific for this class
     if(IsInit) return; // Actually really nice place to do error handeling with throw and catch
     ObjectType=-1;// Does not matter, Delete
+    IsCollisionClass=0;
     // Set default values on its private variables;
     dx=5;
     w=200;

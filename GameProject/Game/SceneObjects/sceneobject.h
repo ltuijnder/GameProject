@@ -13,12 +13,13 @@ class SceneObject : public QObject, public QGraphicsItem
 signals:
 
 public slots:
-    //virtual void TestSlot();
 
 protected:
     //Flags
     bool IsWritten;
     bool IsInit=0;// Important That is default value 0!! Else its possible that Init() gets not triggerd
+    int Team;// equal SceneObject::NoTeam,SceneObject::TeamPlayer, SceneObject::TeamEnemy
+
     Room *CurrentRoom;
 
 public:
@@ -35,8 +36,16 @@ public:
 
     // Functions
     virtual void TestFunc();
+    int GetTeam();
     // Write also virtual
     // Read also virtual
+
+    // Flags
+    bool IsCollisionClass;// It inherents from the Collision class.
+    bool IsLiving;// It inherents from the LivingClass.
+
+    enum{NoTeam,TeamPlayer,TeamEnemy};
+
 };
 
 #endif // SCENEOBJECT_H

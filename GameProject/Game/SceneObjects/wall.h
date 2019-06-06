@@ -3,12 +3,13 @@
 
 #include <QObject>
 #include "sceneobject.h"
+#include "collisionclass.h"
 #include <QRectF>
 #include <QPointF>
 #include <QPainter>
 #include <QColor>
 
-class Wall : public SceneObject//, public QRectF
+class Wall : public SceneObject, public CollisionClass
 {
     Q_OBJECT
 
@@ -18,8 +19,8 @@ signals:
 public slots:
 
 private:
-    float width;
-    float height;
+    //float width;
+    //float height;
     QColor color;
 
 
@@ -36,9 +37,9 @@ public:
     enum{Typpe=UserType+10};// Let 10 Be walls
     int type() const override {return Type;}
 
-    float Width() const;
-    float Height() const;
-    void SetGeometry(float newwidth, float newheight);
+    //float Width() const;
+    //float Height() const;
+    //void SetGeometry(float newwidth, float newheight);
 
 };
 

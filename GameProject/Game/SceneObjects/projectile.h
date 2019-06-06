@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include "sceneobject.h"
+#include "collisionclass.h"
 #include <QString>
 #include <QRectF>
 #include <QPointF>
@@ -11,7 +12,7 @@
 
 
 
-class Projectile : public SceneObject
+class Projectile : public SceneObject, public CollisionClass
 {
     Q_OBJECT
 
@@ -22,22 +23,21 @@ public slots:
 
 
 private:
-    float size;
+    // Stats
     float speed;
     float Damage;
+
+    // Appearence & Dynamics
+    unsigned Mode;
+    enum{Linear};// Allow for complexer modes.
     unsigned direction;//0=right, 1=left, 2=up, 3=down
     unsigned FramesLeft;
     QColor color;
-    unsigned Team;// Eg. Player, Enemies Such that we now to whom the bullet belongs to.
-
-    unsigned Mode;
-    enum{Linear};// Allow for complexer modes.
+    QPointF Velocity();
 
     // Flags
     bool IsSetup;// Use this later on. Maybe do a global type bool?
 
-    // Function
-    QPointF Velocity();
 
 protected:
     void advance(int) override;
@@ -58,7 +58,7 @@ public:
     // rest
     void SetProperties(float _speed, float _damage, unsigned _FrameLeft, unsigned _Team);// Temporarily do this better;
     void SetDirection(unsigned _direction);
-    enum{Player,Enemies};
+    enum{TPlayer,TEnemies};
 
 };
 

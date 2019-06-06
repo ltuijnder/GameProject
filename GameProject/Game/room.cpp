@@ -4,6 +4,8 @@
 #include "SceneObjects/testqobject.h"
 #include "SceneObjects/player.h"
 #include "SceneObjects/wall.h"
+#include "SceneObjects/Enemies/enemies.h"
+#include "SceneObjects/Enemies/runner.h"
 
 /******* Essential Functions *******/
 
@@ -13,7 +15,7 @@ Room::Room(QObject *parent) : QGraphicsScene(parent)
 }
 
 Room::~Room(){
-    delete Objects;// Deletes the vector, but not the Objects in the vector! However this is done by the scene automaticly.
+    //delete Objects;// Deletes the vector, but not the Objects in the vector! However this is done by the scene automaticly.
 }
 
 void Room::Setup(){
@@ -28,7 +30,7 @@ void Room::Setup(){
     // Variables
     RoomType=0;
     Position=0;
-    Objects=new std::vector<SceneObject*>;// Dynamically allocate the vector.
+    //Objects=new std::vector<SceneObject*>;// Dynamically allocate the vector.
 
     IsSetup=1;
 }
@@ -45,31 +47,33 @@ void Room::FillUp(){
     if(RoomType==0){
         TestQobject *Elli0=new TestQobject;
         Elli0->Init(this);// Important
-        Objects->push_back(Elli0);// Here DummyEllipse gets converted to SceneObject
         Elli0->setPos(200,-200);
         addItem(Elli0);
 
         Wall *Brick=new Wall;
         Brick->Init(this);
         Brick->setPos(125,125);
-        addSceneObject(Brick);
+        addItem(Brick);
 
         Wall *Brick2=new Wall;
         Brick2->Init(this);
         Brick2->setPos(100,175);
-        addSceneObject(Brick2);
+        addItem(Brick2);
 
+        // Ad our first enemy.
+        Runner *Satan= new Runner;
+        Satan->Init(this);
+        Satan->setPos(-400,-400);
+        addItem(Satan);
 
     }else{
         TestQobject *Elli1=new TestQobject;
         Elli1->Init(this);// Important
         Elli1->setPos(200,-200);
-        Objects->push_back(Elli1);// Here DummyEllipse gets converted to SceneObject
         addItem(Elli1);
 
         Wall *Brick=new Wall;
         Brick->Init(this);
-        Objects->push_back(Brick);
         Brick->setPos(-125,-125);
         addItem(Brick);
     }
@@ -77,12 +81,6 @@ void Room::FillUp(){
 }
 
 void Room::DeleteSceneObject(SceneObject *ToDelete){
-    auto it = std::find(Objects->begin(), Objects->end(), ToDelete);
-    if(it != Objects->end()){
-        Objects->erase(it);// Remove Object from the Objects list
-    }else{
-        std::cout<<"ERROR in Room class: Wanted to delete object that is not in the list"<<std::endl;
-    }
     removeItem(ToDelete);// Remove the QGraphicsItems from scene
     delete ToDelete;// Finally delete de dynamicly allocated memory.
 }
@@ -100,10 +98,33 @@ void Room::SetRoomPosition(int Pos){
     Position=Pos;
 }
 
-void Room::addSceneObject(SceneObject *NewObject){
-    // we don't do the init here, since one might first want to change some properties of the object
-    // Before adding to the scene.
-    Objects->push_back(NewObject);
-    addItem(NewObject);
+int Room::NumberOfEnemies(){
+    int Amount=0;
+    QList<QGraphicsItem *> ItemsList=items();
+    for(auto Item:ItemsList){
+        int type=Item->type();
+        if(type>=Enemies::Type && type<Enemies::Type_EnemiesMAX){
+            Amount++;
+        }
+    }
+    return Amount;
 }
 
+std::vector<SceneObject *> Room::collidingObjects(SceneObject *Object){
+    QList<QGraphicsItem *> GraphicsItemsList=collidingItems(Object);
+    std::vector<SceneObject *> ObjectsList;
+    for(auto GraphicsItem:GraphicsItemsList){
+        ObjectsList.push_back(dynamic_cast<SceneObject *>(GraphicsItem));
+    }
+    return ObjectsList;
+}
+
+
+void Room::TestDowncast(){// Delete this
+     QList<QGraphicsItem *> ItemsList=items();
+     for(auto Item:ItemsList){
+         // Down try to down cast. And not do QGraphcisCast.
+         SceneObject* MySceneObject=dynamic_cast<SceneObject *>(Item);
+         MySceneObject->TestFunc();
+     }
+}

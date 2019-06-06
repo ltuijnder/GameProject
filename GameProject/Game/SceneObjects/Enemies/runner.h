@@ -4,6 +4,8 @@
 #include <QObject>
 #include "enemies.h"
 #include <QColor>
+#include <cmath>
+#include "../wall.h"
 
 class Runner : public Enemies
 {

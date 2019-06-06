@@ -4,7 +4,7 @@
 
 /******* Essential Functions *******/
 
-Player::Player(QObject *parent) : SceneObject(parent)
+Player::Player(QObject *parent) : SceneObject(parent),LivingClass(),CollisionClass()
 {
 
 }
@@ -14,16 +14,25 @@ void Player::Init(Room *room){
     if(IsInit) return;
 
     // Set Default Values
-    // Associated to player
+    // Associated to Living
+    IsLiving=1;
+    Team=SceneObject::TeamPlayer;
+    InitLiving(Team,5);
+    BreathingRoom=2*30;// Give 2 seconds of breathing room
+
+    // Asosciated to Collision
+    IsCollisionClass=1;
+    InitCollision(50,50,Team);
+
+    // Associated to player.
     speed=10; // Let 1 By normal
-    size=50;
-    health=5;
+    //size=50;
     color.setNamedColor("blue");
 
     //Associated to shooting
-    strength=1.5;
+    strength=10;
     ShotSpeed=15;
-    RelatifStartingPos=size+5;// Should be in function of size;
+    RelatifStartingPos=w()+5;// Should be in function of size;
     FlightFrame=2*30;// Not fps General!
     FireRate=14;// Default value for default framerate (30 fps)
     Cooldown=0;
@@ -67,14 +76,12 @@ void Player::ShotDownReleased(){IsShooting--;}
 
 // drawings
 QRectF Player::boundingRect() const{
-    return QRectF(-size/2,-size/2,size,size);
-    //return *this;
+    return QRectF(-w()/2,-h()/2,w(),h());
 }
 
 void Player::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *){
     painter->setBrush(color);
-    painter->drawRect(-size/2,-size/2,size,size);
-    //painter->drawRect(*this);
+    painter->drawRect(-w()/2,-h()/2,w(),h());
 
 }
 
@@ -97,20 +104,13 @@ void Player::advance(int Phase){
     }
 
     // Now check if collisions are happening
-    QList<QGraphicsItem *> CollideList=CurrentRoom->collidingItems(this);
-    for(auto CollidingItem: CollideList){
-        if(CollidingItem->type()==Wall::Type){
-            // Look for the smallest error.
-            Wall *wall=qgraphicsitem_cast<Wall *>(CollidingItem);
-            double Errorx=(wall->Width()+size)/2-abs(wall->pos().x()-pos().x());
-            double Errory=(wall->Height()+size)/2-abs(wall->pos().y()-pos().y());
-            if(Errory>Errorx){
-                QPointF DiffPoint((wall->pos().x()<pos().x())?Errorx:-1*Errorx,0);// Just some conditional statement if it should be + or -
-                setPos(pos()+DiffPoint);
-            }else{
-                QPointF DiffPoint(0,(wall->pos().y()<pos().y())?Errory:-1*Errory);
-                setPos(pos()+DiffPoint);
-            }
+    std::vector<SceneObject *> ObjectList=CurrentRoom->collidingObjects(this);
+    for(auto Object: ObjectList){
+        if(!Object->IsCollisionClass) continue;
+        if(Object->IsLiving&&Object->GetTeam()==SceneObject::TeamEnemy)continue; // We don't move arround enemies, else THEY can push us around. which we don't want
+        if(Object->type()==Wall::Type){// this is STUPID I can not go directly to. I am not going to change it now... the cost is just a few extra lines
+            Wall *wall=static_cast<Wall *>(Object);
+            setPos(pos()+DiffPoint(this,this,wall,wall));
         }
     }
     // Now we check the shooting.
@@ -119,7 +119,7 @@ void Player::advance(int Phase){
         if(IsShooting){
             Projectile *Bullet=new Projectile;
             Bullet->Init(CurrentRoom);
-            Bullet->SetProperties(ShotSpeed,strength,FlightFrame,Projectile::Player);// Do this with string.
+            Bullet->SetProperties(ShotSpeed,strength,FlightFrame,Projectile::TPlayer);// Do this with string.
             QPointF RelPos(0,0);
             switch (ShotDirection) {
             case Player::ShotRight:
@@ -140,12 +140,15 @@ void Player::advance(int Phase){
                 break;
             }
             Bullet->setPos(pos()+RelPos);
-            CurrentRoom->addSceneObject(Bullet);
+            CurrentRoom->addItem(Bullet);
             Cooldown=FireRate;
         }
     }else{
         Cooldown--;// Lower the cooldown time. by 1 frame.
     }
+
+    // Next we update the damage cooldown, if any.
+    if(DamageCooldown>0) DamageCooldown--;
 }
 
 
@@ -153,4 +156,3 @@ void Player::SetRoom(Room *NewRoom){
     CurrentRoom=NewRoom;
     RoomIsSet=1;
 }
-

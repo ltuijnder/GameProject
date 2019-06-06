@@ -3,7 +3,8 @@
 
 #include <QObject>
 #include "sceneobject.h"
-//#include "../room.h"
+#include "livingclass.h"
+#include "collisionclass.h"
 #include <QRectF>
 #include <QPointF>
 #include <QPainter>
@@ -11,11 +12,12 @@
 #include <math.h>
 #include <QList>
 
-class Player : public SceneObject
+class Player : public SceneObject, public LivingClass, public CollisionClass
 {
     Q_OBJECT
 
 signals:
+    //void Died();
 
 public slots:
     void UpKeyPressed();
@@ -39,9 +41,11 @@ public slots:
 
 private:
     // Associated to player
-    float health;
+    //unsigned health;// We will have integer amount of heath no float.
+    //unsigned BreathingRoom;// Amount of frames we allow the player to be unvernable after taking damage.
+    //unsigned DamageCooldown;
     float speed;
-    float size;
+    //float size;
     QColor color;
 
     // Associated to shooting

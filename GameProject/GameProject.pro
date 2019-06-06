@@ -37,7 +37,9 @@ SOURCES += \
     Game/SceneObjects/wall.cpp \
     Game/SceneObjects/projectile.cpp \
     Game/SceneObjects/Enemies/enemies.cpp \
-    Game/SceneObjects/Enemies/runner.cpp
+    Game/SceneObjects/Enemies/runner.cpp \
+    Game/SceneObjects/livingclass.cpp \
+    Game/SceneObjects/collisionclass.cpp
 
 HEADERS += \
         gamewindow.h \
@@ -52,7 +54,9 @@ HEADERS += \
     Game/SceneObjects/wall.h \
     Game/SceneObjects/projectile.h \
     Game/SceneObjects/Enemies/enemies.h \
-    Game/SceneObjects/Enemies/runner.h
+    Game/SceneObjects/Enemies/runner.h \
+    Game/SceneObjects/livingclass.h \
+    Game/SceneObjects/collisionclass.h
 
 FORMS += \
         gamewindow.ui

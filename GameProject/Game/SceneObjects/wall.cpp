@@ -2,7 +2,7 @@
 
 /******* Essential Functions *******/
 
-Wall::Wall(QObject *parent) : SceneObject(parent)
+Wall::Wall(QObject *parent) : SceneObject(parent),CollisionClass()
 {
 
 }
@@ -13,9 +13,8 @@ void Wall::Init(Room *room){
     if(IsInit) return;
 
     // Set Default Values
-    width=200;
-    height=200;
-    //setRect(-width/2,-height/2,width,height);
+    Team=SceneObject::NoTeam;
+    InitCollision(200,200,Team);
     color.setNamedColor("Grey");
 
     IsInit=1;
@@ -28,26 +27,26 @@ void Wall::Init(Room *room){
 /******* Functions *******/
 
 QRectF Wall::boundingRect() const{
-    return QRectF(-width/2,-height/2,width,height);
+    return QRectF(-w()/2,-h()/2,w(),h());
     //return *this;
 }
 
 void Wall::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *){
     painter->setBrush(color);
-    painter->drawRect(-width/2,-height/2,width,height);
+    painter->drawRect(-w()/2,-h()/2,w(),h());
     //painter->drawRect(*this);
 }
 
 
-float Wall::Width() const{
-    return width;
-}
+//float Wall::Width() const{
+//    return width;
+//}
 
-float Wall::Height() const{
-    return height;
-}
+//float Wall::Height() const{
+//    return height;
+//}
 
-void Wall::SetGeometry(float newwidth, float newheight){
-    width=newwidth;
-    height=newheight;
-}
+//void Wall::SetGeometry(float newwidth, float newheight){
+//    width=newwidth;
+//    height=newheight;
+//}
