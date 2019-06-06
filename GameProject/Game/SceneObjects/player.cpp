@@ -4,7 +4,7 @@
 
 /******* Essential Functions *******/
 
-Player::Player(QObject *parent) : SceneObject(parent),LivingClass(),CollisionClass()
+Player::Player(QObject *parent) : LivingClass(parent)//SceneObject(parent),LivingClass(),CollisionClass()
 {
 
 }
@@ -15,14 +15,12 @@ void Player::Init(Room *room){
 
     // Set Default Values
     // Associated to Living
-    IsLiving=1;
     Team=SceneObject::TeamPlayer;
-    InitLiving(Team,5);
+    InitLiving(5);
     BreathingRoom=2*30;// Give 2 seconds of breathing room
 
     // Asosciated to Collision
-    IsCollisionClass=1;
-    InitCollision(50,50,Team);
+    InitCollision(50,50);
 
     // Associated to player.
     speed=10; // Let 1 By normal
@@ -106,11 +104,11 @@ void Player::advance(int Phase){
     // Now check if collisions are happening
     std::vector<SceneObject *> ObjectList=CurrentRoom->collidingObjects(this);
     for(auto Object: ObjectList){
-        if(!Object->IsCollisionClass) continue;
+        if(!Object->IsCollisionClass) continue;       
         if(Object->IsLiving&&Object->GetTeam()==SceneObject::TeamEnemy)continue; // We don't move arround enemies, else THEY can push us around. which we don't want
-        if(Object->type()==Wall::Type){// this is STUPID I can not go directly to. I am not going to change it now... the cost is just a few extra lines
-            Wall *wall=static_cast<Wall *>(Object);
-            setPos(pos()+DiffPoint(this,this,wall,wall));
+        CollisionClass *Body=static_cast<CollisionClass *>(Object);
+        if(!Body->IsPenetrable(Team)){
+            setPos(pos()+DiffPoint(Body));
         }
     }
     // Now we check the shooting.

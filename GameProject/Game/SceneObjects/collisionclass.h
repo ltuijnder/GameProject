@@ -4,28 +4,28 @@
 #include <QPointF>
 #include "sceneobject.h"
 
-class CollisionClass
+class CollisionClass: public SceneObject
 {
-
+    Q_OBJECT
 
 private:
     float width;
     float height;
 
     bool Penetrable;
-    int TeamCollision;
 
 protected:
-    QPointF DiffPoint(SceneObject *This,CollisionClass *ThisCol, SceneObject *Other,CollisionClass *OtherCol) const;
+    QPointF DiffPoint(CollisionClass *Object) const;
 
 public:
-    CollisionClass();
-    void InitCollision(float w, float h, int team);
+    explicit CollisionClass(QObject *parent= nullptr);
+    void InitCollision(float w, float h);
 
     float w() const;
     float h() const;
     void SetGeometry(float NewWidth,float NewHeight);
     void SetTeamCollision(int Team);
+    void SetPenetrability(bool Pen);
 
     bool IsPenetrable(int Team) const;
 };

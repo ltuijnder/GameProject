@@ -6,9 +6,10 @@
 
 /******* Essential Functions *******/
 
-Projectile::Projectile(QObject *parent) : SceneObject(parent),CollisionClass()
+Projectile::Projectile(QObject *parent) : CollisionClass(parent)//SceneObject(parent),CollisionClass()
 {
-
+    speed=0;
+    Damage=0;
 }
 
 void Projectile::Init(Room *room){
@@ -16,12 +17,8 @@ void Projectile::Init(Room *room){
     if(IsInit) return;
     // Set Default Values
     // Collision
-    IsCollisionClass=1;
-    InitCollision(15,15,Team);
-
-    // stats
-    speed=0;
-    Damage=0;
+    SetPenetrability(1);// We allow other objects to go through bullets. Else you could stop people with bullets.
+    InitCollision(15,15);
 
     //Dynamcis
     direction=Player::ShotRight;
@@ -58,7 +55,6 @@ void Projectile::SetProperties(float _speed, float _damage, unsigned _FramesLeft
     Damage=_damage;
     FramesLeft=_FramesLeft;
     Team=_Team;
-    SetTeamCollision(_Team);
 }
 
 void Projectile::SetDirection(unsigned _direction){// Do this better
@@ -97,19 +93,15 @@ void Projectile::advance(int Phase){
     std::vector<SceneObject *> ObjectList=CurrentRoom->collidingObjects(this);
     for(auto Object: ObjectList){
         if(!Object->IsCollisionClass) continue;// If not collision full, then we should not check anything.
-        if(Object->IsLiving){// This is badly done. :(
-            if(Object->GetTeam()!=Team){
-                emit DeleteMe(this);
-                if(Object->type()==SceneObject::TeamPlayer){
-                    Player *player=static_cast<Player *>(Object);
-                    player->TakeDamage(1);
-                    continue;
-                }
-                Enemies *badguy=static_cast<Enemies *>(Object);
-                badguy->TakeDamage(Damage);
-            }
-            continue;
-        }emit DeleteMe(this);
+        CollisionClass *Body=static_cast<CollisionClass *>(Object);
+        if(!Body->IsPenetrable(Team)){
+            emit DeleteMe(this);// Not penetrable so its dead.
+        }
+        // Now check if that what we hit was of living object of the opposing team.
+        if(Body->IsLiving&&Body->GetTeam()!=Team){
+            LivingClass *Being=static_cast<LivingClass*>(Body);
+            Being->TakeDamage(Damage);
+        }
     }
 
     if(!FramesLeft){// This sets a limiting life time on the bullet

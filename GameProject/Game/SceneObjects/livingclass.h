@@ -2,11 +2,11 @@
 #define LIVINGCLASS_H
 
 #include <QObject>
-#include "sceneobject.h"
+#include "collisionclass.h"
 
-class LivingClass //: public QObject
+class LivingClass: public CollisionClass
 {
-//    Q_OBJECT
+    Q_OBJECT
 
 //signals:
 //    void Died();
@@ -19,14 +19,14 @@ private:
 
 protected:
     // Settings
-    int TeamBeing;
+    //int TeamBeing;
     unsigned BreathingRoom;// Amount of frames we allow the being to be unvernable after taking damage.
     unsigned DamageCooldown;
 
-    void InitLiving(int Team,int health);
+    void InitLiving(int health);
 public:
-//    explicit LivingClass(QObject *parent = nullptr);
-    LivingClass();
+    explicit LivingClass(QObject *parent = nullptr);
+    //LivingClass();
     void TakeDamage(int Damage);
     void SetHealth(int health);
     int GetHealt()const;

@@ -2,7 +2,7 @@
 
 /******* Essential Functions *******/
 
-Enemies::Enemies(QObject *parent) : SceneObject(parent), LivingClass(), CollisionClass()
+Enemies::Enemies(QObject *parent) : LivingClass(parent)//SceneObject(parent), LivingClass(), CollisionClass()
 {
 
 }
@@ -13,12 +13,10 @@ void Enemies::Init(Room *room){
 
     // Associated to livining
     Team=SceneObject::TeamEnemy;
-    IsLiving=1;
-    InitLiving(Team,0);// Set Health to 0 for now.
+    InitLiving(0);// Set Health to 0 for now.
 
     // Associated to CollisionClass
-    IsCollisionClass=1;
-    InitCollision(0,0,Team);// For now set geometry to zero.
+    InitCollision(0,0);// For now set geometry to zero.
 
     ThePlayer=nullptr;
     PlayerIsSet=0;

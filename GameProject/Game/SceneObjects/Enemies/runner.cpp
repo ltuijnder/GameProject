@@ -22,8 +22,6 @@ void Runner::Init(Room *room){
 
 /******* SLOTS *******/
 
-
-
 /******* Functions *******/
 
 void Runner::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *){
@@ -51,18 +49,13 @@ void Runner::advance(int Phase){
     std::vector<SceneObject *> ObjectList=CurrentRoom->collidingObjects(this);
     for(auto Object: ObjectList){// Collision should be done better
         if(!Object->IsCollisionClass) continue;// If not collision full, then we should not check anything.
-        if(Object->IsLiving){// This is badly done :(
-            if(Object->GetTeam()==SceneObject::TeamPlayer){
-                Player *player=static_cast<Player *>(Object);
-                player->TakeDamage(1);
-                setPos(pos()+DiffPoint(this,this,player,player));
-                continue;
-            }
-            Enemies *goodguy=static_cast<Enemies *>(Object);
-            setPos(pos()+DiffPoint(this,this,goodguy,goodguy));
-        }else if(Object->type()==Wall::Type){
-            Wall *wall=static_cast<Wall *>(Object);
-            setPos(pos()+DiffPoint(this,this,wall,wall));
+        CollisionClass *Body=static_cast<CollisionClass *>(Object);
+        if(!Body->IsPenetrable(Team)){
+            setPos(pos()+DiffPoint(Body));
+        }
+        if(Body->IsLiving&&Body->GetTeam()==SceneObject::TeamPlayer){
+            LivingClass *badguys=static_cast<LivingClass*>(Body);
+            badguys->TakeDamage(1);
         }
     }
 

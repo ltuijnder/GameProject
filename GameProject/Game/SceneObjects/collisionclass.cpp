@@ -2,16 +2,15 @@
 
 // **** Essential **** //
 
-CollisionClass::CollisionClass()
+CollisionClass::CollisionClass(QObject *parent) : SceneObject(parent)
 {
-    Penetrable=0;
-    TeamCollision=SceneObject::NoTeam;
+    Penetrable=0;// More then often not penetrable
+    IsCollisionClass=1;
 }
 
-void CollisionClass::InitCollision(float w, float h, int team){
+void CollisionClass::InitCollision(float w, float h){
     width=w;
     height=h;
-    TeamCollision=team;
 }
 
 // **** Slots **** //
@@ -31,27 +30,24 @@ void CollisionClass::SetGeometry(float NewWidth,float NewHeight){
     height=NewHeight;
 }
 
-void CollisionClass::SetTeamCollision(int Team){
-    TeamCollision=Team;
+void CollisionClass::SetPenetrability(bool Pen){
+    Penetrable=Pen;
 }
 
-bool CollisionClass::IsPenetrable(int Team) const{
-    if(TeamCollision==SceneObject::TeamPlayer&&Team==SceneObject::TeamPlayer){
+bool CollisionClass::IsPenetrable(int TeamOther) const{
+    if(Team==SceneObject::TeamPlayer&&TeamOther==SceneObject::TeamPlayer){
         // If both colliding objects are of team Player, they are allowed to pass through each other;
         return 1;
     }else{
         return Penetrable;
     }
 }
-
-// The function DiffPoint is a bit of a pickle since you need the position information.
-// I went for the sollution where we upcast 2 times. since others seemed more complex.
-QPointF CollisionClass::DiffPoint(SceneObject *This,CollisionClass *ThisCol, SceneObject *Other,CollisionClass *OtherCol) const{
-    float Errorx=(OtherCol->w()+ThisCol->w())/2-abs(Other->pos().x()-This->pos().x());
-    float Errory=(OtherCol->h()+ThisCol->w())/2-abs(Other->pos().y()-This->pos().y());
+QPointF CollisionClass::DiffPoint(CollisionClass *Object) const{
+    float Errorx=(Object->w()+w())/2-abs(Object->pos().x()-pos().x());
+    float Errory=(Object->h()+w())/2-abs(Object->pos().y()-pos().y());
     if(Errory>Errorx){
-        return QPointF((Other->pos().x()<This->pos().x())?Errorx:-1*Errorx,0);
+        return QPointF((Object->pos().x()<pos().x())?Errorx:-1*Errorx,0);
     }else{
-        return QPointF(0,(Other->pos().y()<This->pos().y())?Errory:-1*Errory);
+        return QPointF(0,(Object->pos().y()<pos().y())?Errory:-1*Errory);
     }
 }

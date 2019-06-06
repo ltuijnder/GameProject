@@ -2,7 +2,6 @@
 #define PROJECTILE_H
 
 #include <QObject>
-#include "sceneobject.h"
 #include "collisionclass.h"
 #include <QString>
 #include <QRectF>
@@ -12,7 +11,7 @@
 
 
 
-class Projectile : public SceneObject, public CollisionClass
+class Projectile : public CollisionClass//public SceneObject, public CollisionClass
 {
     Q_OBJECT
 

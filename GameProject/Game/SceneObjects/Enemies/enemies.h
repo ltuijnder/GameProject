@@ -2,13 +2,13 @@
 #define ENEMIES_H
 
 #include <QObject>
-#include "../sceneobject.h"
+//#include "../sceneobject.h"
 #include "../player.h"
-#include "../collisionclass.h"
+//#include "../collisionclass.h"
 #include <QRectF>
 #include <QList>
 
-class Enemies : public SceneObject, public LivingClass, public CollisionClass
+class Enemies : public LivingClass//public SceneObject, public LivingClass, public CollisionClass
 {
     Q_OBJECT
 

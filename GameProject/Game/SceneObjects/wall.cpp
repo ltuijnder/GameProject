@@ -2,7 +2,7 @@
 
 /******* Essential Functions *******/
 
-Wall::Wall(QObject *parent) : SceneObject(parent),CollisionClass()
+Wall::Wall(QObject *parent) : CollisionClass(parent)//SceneObject(parent),CollisionClass()
 {
 
 }
@@ -14,7 +14,7 @@ void Wall::Init(Room *room){
 
     // Set Default Values
     Team=SceneObject::NoTeam;
-    InitCollision(200,200,Team);
+    InitCollision(200,200);
     color.setNamedColor("Grey");
 
     IsInit=1;
@@ -34,19 +34,4 @@ QRectF Wall::boundingRect() const{
 void Wall::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *){
     painter->setBrush(color);
     painter->drawRect(-w()/2,-h()/2,w(),h());
-    //painter->drawRect(*this);
 }
-
-
-//float Wall::Width() const{
-//    return width;
-//}
-
-//float Wall::Height() const{
-//    return height;
-//}
-
-//void Wall::SetGeometry(float newwidth, float newheight){
-//    width=newwidth;
-//    height=newheight;
-//}

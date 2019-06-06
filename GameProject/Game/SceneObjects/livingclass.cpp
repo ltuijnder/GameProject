@@ -6,17 +6,18 @@
 //{
 
 //}
-LivingClass::LivingClass(){
+LivingClass::LivingClass(QObject *parent): CollisionClass(parent)
+{
     Health=0;
-    TeamBeing=SceneObject::NoTeam;
     DamageCooldown=0;// Set these equal to zero.
     BreathingRoom=0; // Be specific in the subclass. Most often BreathingRoom =0;
+    IsLiving=1;// Aka it inherents from the class;
     IsAlive=0;
 }
 
-void LivingClass::InitLiving(int Team,int health){
+void LivingClass::InitLiving(int health){
 
-    TeamBeing=Team;
+    //TeamBeing=Team;
     //std::cout<<"Team"<<TeamBeing<<std::endl;
     SetHealth(health);
 }
@@ -28,7 +29,7 @@ void LivingClass::InitLiving(int Team,int health){
 void LivingClass::TakeDamage(int Damage){
     if(DamageCooldown) return;
     if(!IsAlive) return;// If it is dead taking damage is uncessary.
-    if(TeamBeing==SceneObject::TeamPlayer){
+    if(Team==SceneObject::TeamPlayer){
         Health--;// Player has int value health
     }else{
         Health-=Damage;
@@ -40,9 +41,9 @@ void LivingClass::TakeDamage(int Damage){
     DamageCooldown=BreathingRoom;
 }
 
-int LivingClass::GetTeamBeing() const{
-    return TeamBeing;
-}
+//int LivingClass::GetTeamBeing() const{
+//    return TeamBeing;
+//}
 
 int LivingClass::GetHealt() const{
     return Health;

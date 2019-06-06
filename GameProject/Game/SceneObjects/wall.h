@@ -2,14 +2,14 @@
 #define WALL_H
 
 #include <QObject>
-#include "sceneobject.h"
+//#include "sceneobject.h"
 #include "collisionclass.h"
 #include <QRectF>
 #include <QPointF>
 #include <QPainter>
 #include <QColor>
 
-class Wall : public SceneObject, public CollisionClass
+class Wall : public CollisionClass//public SceneObject, public CollisionClass
 {
     Q_OBJECT
 
@@ -19,8 +19,6 @@ signals:
 public slots:
 
 private:
-    //float width;
-    //float height;
     QColor color;
 
 
@@ -36,10 +34,6 @@ public:
     // typing
     enum{Typpe=UserType+10};// Let 10 Be walls
     int type() const override {return Type;}
-
-    //float Width() const;
-    //float Height() const;
-    //void SetGeometry(float newwidth, float newheight);
 
 };
 
