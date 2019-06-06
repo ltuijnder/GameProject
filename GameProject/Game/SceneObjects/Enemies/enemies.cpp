@@ -36,6 +36,7 @@ void Enemies::Init(Room *room){
 void Enemies::CheckDied(){
     if(FlagIsAlive()) return;
     emit Died(this);
+    CurrentRoom->CheckClear();
 }
 
 QRectF Enemies::boundingRect() const{

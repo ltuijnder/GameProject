@@ -1,11 +1,11 @@
 #include "room.h"
 #include "SceneObjects/sceneobject.h"
-//#include "SceneObjects/dummyellipse.h"
 #include "SceneObjects/testqobject.h"
 #include "SceneObjects/player.h"
 #include "SceneObjects/wall.h"
 #include "SceneObjects/Enemies/enemies.h"
 #include "SceneObjects/Enemies/runner.h"
+#include "SceneObjects/door.h"
 
 /******* Essential Functions *******/
 
@@ -26,6 +26,7 @@ void Room::Setup(){
     // Bools
     IsFilled=0;
     RoomTypeIsSet=0;
+    IsCleared=0;
 
     // Variables
     RoomType=0;
@@ -66,6 +67,12 @@ void Room::FillUp(){
         Satan->setPos(-400,-400);
         addItem(Satan);
 
+        // Ad our first Door.
+        Door *deur= new Door;
+        deur->Init(this);
+        deur->setPos(-300,-300);
+        addItem(deur);
+
     }else{
         TestQobject *Elli1=new TestQobject;
         Elli1->Init(this);// Important
@@ -85,7 +92,14 @@ void Room::DeleteSceneObject(SceneObject *ToDelete){
     delete ToDelete;// Finally delete de dynamicly allocated memory.
 }
 
-
+void Room::CheckClear(){
+    int NumberEnemies=NumberOfEnemies();
+    if(!NumberEnemies){
+        std::cout<<NumberEnemies<<std::endl;
+        emit RoomIsCleared();
+        IsCleared=1;
+    }
+}
 /******* Functions *******/
 
 

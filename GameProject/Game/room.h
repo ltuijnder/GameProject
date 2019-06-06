@@ -23,17 +23,20 @@ friend class LabyrinthClass;// Only LabyringhtClass should be allowed to fidle w
 // one could solve this by letting generateLayout be public in Labyrinthclass, which is a no no.
 
 signals:
+    void RoomIsCleared();
 
 
 public slots:
     void FillUp();
     void DeleteSceneObject(SceneObject *);
+    void CheckClear();
 
 private:
     //Flags
     bool IsSetup=0;
     bool IsFilled;
     bool RoomTypeIsSet;
+    bool IsCleared;
 
     //Variables
     int RoomType;

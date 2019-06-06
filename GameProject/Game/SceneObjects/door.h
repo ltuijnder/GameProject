@@ -1,30 +1,25 @@
-#ifndef WALL_H
-#define WALL_H
+#ifndef DOOR_H
+#define DOOR_H
 
 #include <QObject>
-//#include "sceneobject.h"
 #include "collisionclass.h"
-#include <QRectF>
-#include <QPointF>
 #include <QPainter>
 #include <QColor>
 
-class Wall : public CollisionClass//public SceneObject, public CollisionClass
+class Door : public CollisionClass
 {
     Q_OBJECT
 
 signals:
 
-
 public slots:
+    void OpenDoors();
 
 private:
     QColor color;
 
-
 public:
-    // Essential Functions
-    explicit Wall(QObject *parent = nullptr);
+    explicit Door(QObject *parent = nullptr);
     void Init(Room *) override;
 
     // Drawing
@@ -32,9 +27,9 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) override;
 
     // typing
-    enum{Type=UserType+10};// Let 10 Be walls
+    enum{Type=UserType+11};// let 11 be doors (just after wall)
     int type() const override {return Type;}
 
 };
 
-#endif // WALL_H
+#endif // DOOR_H

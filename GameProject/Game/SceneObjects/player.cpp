@@ -28,7 +28,7 @@ void Player::Init(Room *room){
     color.setNamedColor("blue");
 
     //Associated to shooting
-    strength=10;
+    strength=50;
     ShotSpeed=15;
     RelatifStartingPos=w()+5;// Should be in function of size;
     FlightFrame=2*30;// Not fps General!

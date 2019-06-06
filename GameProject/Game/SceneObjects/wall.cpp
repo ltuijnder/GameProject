@@ -2,7 +2,7 @@
 
 /******* Essential Functions *******/
 
-Wall::Wall(QObject *parent) : CollisionClass(parent)//SceneObject(parent),CollisionClass()
+Wall::Wall(QObject *parent) : CollisionClass(parent)
 {
 
 }
@@ -28,7 +28,6 @@ void Wall::Init(Room *room){
 
 QRectF Wall::boundingRect() const{
     return QRectF(-w()/2,-h()/2,w(),h());
-    //return *this;
 }
 
 void Wall::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *){

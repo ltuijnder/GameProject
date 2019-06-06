@@ -39,7 +39,8 @@ SOURCES += \
     Game/SceneObjects/Enemies/enemies.cpp \
     Game/SceneObjects/Enemies/runner.cpp \
     Game/SceneObjects/livingclass.cpp \
-    Game/SceneObjects/collisionclass.cpp
+    Game/SceneObjects/collisionclass.cpp \
+    Game/SceneObjects/door.cpp
 
 HEADERS += \
         gamewindow.h \
@@ -56,7 +57,8 @@ HEADERS += \
     Game/SceneObjects/Enemies/enemies.h \
     Game/SceneObjects/Enemies/runner.h \
     Game/SceneObjects/livingclass.h \
-    Game/SceneObjects/collisionclass.h
+    Game/SceneObjects/collisionclass.h \
+    Game/SceneObjects/door.h
 
 FORMS += \
         gamewindow.ui
