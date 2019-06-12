@@ -142,3 +142,18 @@ void Room::TestDowncast(){// Delete this
          MySceneObject->TestFunc();
      }
 }
+
+
+QString Room::SaveObjects(){
+    QString stringobjects("");
+    QList<QGraphicsItem *> GraphicsItemsList=items();
+    SceneObject *Object;
+    for(auto GraphicsItem:GraphicsItemsList){
+        if(GraphicsItem->type()==Player::Type) continue; // The player will not be safed in here it is safed differently.
+        Object=dynamic_cast<SceneObject *>(GraphicsItem);
+        stringobjects.append("***SceneObject***\n");
+        stringobjects.append(Object->Save());
+        stringobjects.append("***SceneObject***\n");
+    }
+    return stringobjects;
+}

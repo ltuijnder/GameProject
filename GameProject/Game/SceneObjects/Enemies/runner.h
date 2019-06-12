@@ -34,7 +34,8 @@ public:
     enum{Type=UserType+Type_Enemies+1};// Let the runner be 101
     int type() const override {return Type;}
 
-    // The rest
+    // Save
+    QString Save() override;
 };
 
 #endif // RUNNER_H

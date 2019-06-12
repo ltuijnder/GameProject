@@ -36,8 +36,10 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) override;
     enum {Type=UserType+1};// Let 1 by the dummy class
     int type() const override { return Type;}
+    virtual QString Save();
 
     double TestGetParm() const;
+
 
 };
 

@@ -10,6 +10,8 @@
 #include <QGraphicsScene>
 #include <QRectF>
 #include <iostream>
+#include <string>
+#include <QDir>
 
 
 // Declare that the following classes exist with there respectif name space and such. Only include the .h file in the .cpp file (see explanation above)
@@ -37,17 +39,20 @@ public slots:
     void PauzeGame();// And Unpauze!
     void SlotStartGame();
     void ChangeCurrentScene(QGraphicsScene* NewScene);
+    void SaveGame();
 
 private:
     Ui::GameWindow *ui;
     //TestClass *Test;
     EventHandeler *EventH;
     QRectF SceneRect;// Dimensions of the Scene that will be vieuwed.
+    std::string SafeFileName;
 
 
 public:
     // For now make them public But They actually have to be private, but when they make connection they need to be linked
     GameClass *Game;
+    QDir ProjectRoot;
 
     explicit GameWindow(QWidget *parent = 0);
     ~GameWindow();

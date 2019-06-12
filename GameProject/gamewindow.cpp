@@ -16,10 +16,9 @@ GameWindow::GameWindow(QWidget *parent) :
     Game(new GameClass){
 
     ui->setupUi(this);// initiate all the graphical elements. !!
-    //SceneRect=ui->graphicsView->sceneRect();
     Game->Setup(this);
     SceneRect.setRect(0,0,100,100);// Its unclear what happens when I change this , I do not understand it. But it fixes the vieuw, which is what I wanted.
-    //std::cout<<SceneRect.height()<<std::endl;
+    SafeFileName="SafeFile.txt";
     ui->graphicsView->setSceneRect(SceneRect);
     ui->graphicsView->setFocusPolicy(Qt::NoFocus);// We don't want the graphicsview to gain input. This may result in no reaction of some buttons (arrow keys)
     //Test->Setup(this);
@@ -70,4 +69,8 @@ void GameWindow::SlotStartGame(){
 
 void GameWindow::ChangeCurrentScene(QGraphicsScene *NewScene){
     ui->graphicsView->setScene(NewScene);
+}
+
+void GameWindow::SaveGame(){
+    Game->Save(SafeFileName);
 }

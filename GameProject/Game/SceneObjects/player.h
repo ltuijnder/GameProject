@@ -88,6 +88,10 @@ public:
     // The rest
     void SetRoom(Room *NewRoom);
     enum{ShotRight,ShotLeft,ShotUp,ShotDown}; // Create these variables to create readable code
+
+    // Saving
+    QString Save() override;
+
 };
 
 #endif // PLAYER_H

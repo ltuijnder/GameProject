@@ -56,6 +56,17 @@ void TestQobject::advance(int Phase){
     setRotation(rotation()+dx);
 }
 
+QString TestQobject::Save(){
+    QString savestring("");
+    // Always first type.
+    savestring.append("--");// "--" will be the separator between type and eventually the correct string.
+    savestring.append(QString::number(type()));
+    savestring.append("--");
+    savestring.append("This is a TestQobject!");// Put here information for the wall.
+    savestring.append("--\n");
+    return savestring;
+}
+
 
 double TestQobject::TestGetParm() const{// const is part of the function name
     return dx;

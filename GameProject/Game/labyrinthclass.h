@@ -5,6 +5,7 @@
 #include <vector>
 #include <QGraphicsScene>// Not needed this is just for the demo right now
 #include <QRectF>
+#include <QString>
 
 class GameClass;// Declare that these classes exist, since the header is contained in the .cpp file
 class Room;
@@ -44,6 +45,8 @@ public:
     explicit LabyrinthClass(QObject *parent = nullptr);
     ~LabyrinthClass();
     void Setup(GameClass *Game);
+
+    QString SaveRooms();
 };
 
 #endif // LABYRINTHCLASS_H

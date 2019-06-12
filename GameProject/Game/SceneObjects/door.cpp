@@ -40,3 +40,14 @@ void Door::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
     painter->setBrush(color);
     painter->drawRect(-w()/2,-h()/2,w(),h());
 }
+
+QString Door::Save(){
+    QString savestring("");
+    // Always first type.
+    savestring.append("--");// "--" will be the separator between type and eventually the correct string.
+    savestring.append(QString::number(type()));
+    savestring.append("--");
+    savestring.append("This is a Door!");// Put here information for the wall.
+    savestring.append("--\n");
+    return savestring;
+}

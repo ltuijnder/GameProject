@@ -4,6 +4,11 @@
 #include <QObject>
 #include <iostream>
 
+#include <QFile>
+#include <QTextStream>
+#include <fstream>
+#include <QDir>
+
 class GameWindow;
 class SceneManager;
 class LabyrinthClass;
@@ -39,6 +44,8 @@ public:
     explicit GameClass(QObject *parent = nullptr);
     ~GameClass();
     void Setup(GameWindow *gamewindow);
+
+    void Save(std::string NameSafeFile);
 
 
 

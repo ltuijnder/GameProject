@@ -37,3 +37,14 @@ void SceneObject::TestFunc(){
 int SceneObject::GetTeam(){
     return Team;
 }
+
+QString SceneObject::Save(){
+    QString savestring("");
+    // Always first type.
+    savestring.append("--");// "--" will be the separator between type and eventually the correct string.
+    savestring.append(QString::number(type()));
+    savestring.append("--");
+    // Here comes really the important stuff! that saves the object.
+    savestring.append("--\n");
+    return savestring;
+}

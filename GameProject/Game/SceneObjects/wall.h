@@ -35,6 +35,9 @@ public:
     enum{Type=UserType+10};// Let 10 Be walls
     int type() const override {return Type;}
 
+    // Saving
+    QString Save() override;
+
 };
 
 #endif // WALL_H

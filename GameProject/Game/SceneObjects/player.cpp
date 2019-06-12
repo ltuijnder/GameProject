@@ -154,3 +154,14 @@ void Player::SetRoom(Room *NewRoom){
     CurrentRoom=NewRoom;
     RoomIsSet=1;
 }
+
+QString Player::Save(){
+    QString savestring("");
+    // Always first type.
+    savestring.append("--");// "--" will be the separator between type and eventually the correct string.
+    savestring.append(QString::number(type()));
+    savestring.append("--");
+    savestring.append("This is a Player!");// Put here information for the wall.
+    savestring.append("--\n");
+    return savestring;
+}

@@ -60,3 +60,15 @@ void Runner::advance(int Phase){
     }
 
 }
+
+
+QString Runner::Save(){
+    QString savestring("");
+    // Always first type.
+    savestring.append("--");// "--" will be the separator between type and eventually the correct string.
+    savestring.append(QString::number(type()));
+    savestring.append("--");
+    savestring.append("This is a Runner!");// Put here information for the wall.
+    savestring.append("--\n");
+    return savestring;
+}

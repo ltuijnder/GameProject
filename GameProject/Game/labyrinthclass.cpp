@@ -105,3 +105,16 @@ void LabyrinthClass::ClearFloor(){// Probabibly some deletes here.
     LayoutIsGenerated=0;
     FloorIsGenerated=0;
 }
+
+QString LabyrinthClass::SaveRooms(){
+    QString stringrooms("");
+    for(auto room:*Floor){
+        stringrooms.append("**Room**\n");
+        stringrooms.append("***RoomHeader***\n");
+        //stringrooms.append(room->SaveHeader());// This all information just associated to the room it self.
+        stringrooms.append("***RoomHeader***\n");
+        stringrooms.append(room->SaveObjects());
+        stringrooms.append("**Room**\n");
+    }
+    return stringrooms;
+}

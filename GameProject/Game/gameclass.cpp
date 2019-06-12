@@ -49,4 +49,52 @@ void GameClass::PauzeGame(){
 void GameClass::ResumeGame(){
     SManager->StartClock();
 }
+
+void GameClass::Save(std::string NameSafeFile){
+    // First see if the directory exist and if not create it.
+    QDir dir=QDir::home();// Start from home folder.
+    if(!dir.cd(".GameProject")) dir.mkdir(".GameProject");
+    dir.cd(".GameProject");
+    if(!dir.cd("SaveFiles")) dir.mkdir("SaveFiles");
+    dir.cd("SaveFiles");
+    std::string Path=dir.path().toStdString();
+
+    // Create save file.
+    std::string filename(Path+"/"+NameSafeFile);
+    std::ofstream file(filename.c_str());
+    if(!file){
+        std::cout<<"Warning couldn't open file"<<filename<<std::endl;
+        return;
+    }
+    // First the Header is created.
+    QString Header("");
+    Header.append("*Header*\n");
+    Header.append("**Names**\n");
+    // Add The naming and stuff. FileName, GameName, PlayerName,...
+    QString FileName = QString::fromUtf8(NameSafeFile.c_str());
+    Header.append(","+FileName+",");// information is always between commas
+    Header.append("**Names**\n");
+    Header.append("**Stats**\n");
+    // Do the stats stuff. Kills,
+    Header.append("**Stats**\n");
+    Header.append("**Labirinth**\n");
+    //Header.append(Labyrinth->SafeLab());// Add information for labirtn Level, seed.
+    Header.append("**Labirinth**\n");
+    Header.append("**Player**\n");
+    Header.append(Lennart->Save());// All the information of the player class.
+    Header.append("**Player**\n");
+    Header.append("*Header*\n");
+    // Next we create the string that holds all the information of the rooms in labyrinth.
+    QString Lab("");// Lab=Labyrinth
+    Lab.append("*Labyrinth*\n");
+    Lab.append(Labyrinth->SaveRooms());
+    Lab.append("*Labyrinth*\n");
+
+    QString ToSafe=Header+Lab;
+    file<<ToSafe.toStdString();
+
+    file.close();
+
+}
+
 /******* Functions *******/

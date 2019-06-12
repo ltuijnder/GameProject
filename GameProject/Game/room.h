@@ -8,6 +8,7 @@
 #include <vector>
 #include <algorithm>
 #include <QList>
+#include <QString>
 
 #include "labyrinthclass.h" //This is needed to declare friendships!
 
@@ -57,6 +58,8 @@ public:
     int NumberOfEnemies();
     std::vector<SceneObject *> collidingObjects(SceneObject *);
     void TestDowncast();// Delete This!
+    QString SaveObjects();
+
 
 };
 

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1242</width>
-    <height>817</height>
+    <height>825</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -36,7 +36,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="StartPage">
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -596,7 +596,7 @@ test        </string>
      <x>0</x>
      <y>0</y>
      <width>1242</width>
-     <height>32</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>
@@ -620,8 +620,8 @@ test        </string>
    <slot>GoToGameSelectPage()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>821</x>
-     <y>514</y>
+     <x>819</x>
+     <y>516</y>
     </hint>
     <hint type="destinationlabel">
      <x>1156</x>
@@ -636,8 +636,8 @@ test        </string>
    <slot>GoToGamePage()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>821</x>
-     <y>514</y>
+     <x>571</x>
+     <y>442</y>
     </hint>
     <hint type="destinationlabel">
      <x>1060</x>
@@ -652,8 +652,8 @@ test        </string>
    <slot>GoToStartPage()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>310</x>
-     <y>643</y>
+     <x>366</x>
+     <y>670</y>
     </hint>
     <hint type="destinationlabel">
      <x>1204</x>
@@ -668,8 +668,8 @@ test        </string>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>821</x>
-     <y>646</y>
+     <x>819</x>
+     <y>648</y>
     </hint>
     <hint type="destinationlabel">
      <x>1181</x>
@@ -684,8 +684,8 @@ test        </string>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>330</x>
-     <y>747</y>
+     <x>366</x>
+     <y>778</y>
     </hint>
     <hint type="destinationlabel">
      <x>1237</x>
@@ -700,8 +700,8 @@ test        </string>
    <slot>SlotStartGame()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>810</x>
-     <y>469</y>
+     <x>571</x>
+     <y>442</y>
     </hint>
     <hint type="destinationlabel">
      <x>1239</x>
@@ -716,12 +716,44 @@ test        </string>
    <slot>PauzeGame()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1155</x>
-     <y>708</y>
+     <x>1174</x>
+     <y>750</y>
     </hint>
     <hint type="destinationlabel">
      <x>1238</x>
      <y>661</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>GameWindow</receiver>
+   <slot>SaveGame()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>462</x>
+     <y>627</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1239</x>
+     <y>606</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>GameWindow</receiver>
+   <slot>SaveGame()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>327</x>
+     <y>731</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1239</x>
+     <y>729</y>
     </hint>
    </hints>
   </connection>
@@ -733,5 +765,6 @@ test        </string>
   <slot>GoToGamePage()</slot>
   <slot>SlotStartGame()</slot>
   <slot>PauzeGame()</slot>
+  <slot>SaveGame()</slot>
  </slots>
 </ui>
