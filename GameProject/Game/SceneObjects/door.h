@@ -32,6 +32,8 @@ public:
 
     // Save
     QString Save() override;
+    QString SaveDoor();
+    void Load(QString str);
 
 };
 

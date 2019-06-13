@@ -49,12 +49,26 @@ void Room::FillUp(){
         TestQobject *Elli0=new TestQobject;
         Elli0->Init(this);// Important
         Elli0->setPos(200,-200);
-        addItem(Elli0);
+        //addItem(Elli0);
+        QString Savestring=Elli0->SaveTestQobject();
+        delete Elli0;
+
+        TestQobject *Elli=new TestQobject;
+        Elli->Init(this);
+        Elli->Load(Savestring);
+        addItem(Elli);
 
         Wall *Brick=new Wall;
         Brick->Init(this);
         Brick->setPos(125,125);
-        addItem(Brick);
+        //addItem(Brick);
+        Savestring=Brick->SaveWall();
+        delete Brick;
+
+        Wall *LoadBrick=new Wall;
+        LoadBrick->Init(this);
+        LoadBrick->Load(Savestring);
+        addItem(LoadBrick);
 
         Wall *Brick2=new Wall;
         Brick2->Init(this);
@@ -65,13 +79,27 @@ void Room::FillUp(){
         Runner *Satan= new Runner;
         Satan->Init(this);
         Satan->setPos(-400,-400);
-        addItem(Satan);
+        //addItem(Satan);
+        Savestring=Satan->SaveRunner();
+        delete Satan;
+
+        Runner *Lucifer= new Runner;
+        Lucifer->Init(this);
+        Lucifer->Load(Savestring);
+        addItem(Lucifer);
 
         // Ad our first Door.
         Door *deur= new Door;
         deur->Init(this);
         deur->setPos(-300,-300);
-        addItem(deur);
+        //addItem(deur);
+        Savestring=deur->SaveDoor();
+        delete deur;
+
+        Door *porte= new Door;
+        porte->Init(this);
+        porte->Load(Savestring);
+        addItem(porte);
 
     }else{
         TestQobject *Elli1=new TestQobject;

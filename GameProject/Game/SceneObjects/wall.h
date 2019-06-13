@@ -22,6 +22,7 @@ private:
     QColor color;
 
 
+
 public:
     // Essential Functions
     explicit Wall(QObject *parent = nullptr);
@@ -37,6 +38,8 @@ public:
 
     // Saving
     QString Save() override;
+    QString SaveWall();
+    void Load(QString ) override;
 
 };
 

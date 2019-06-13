@@ -36,6 +36,9 @@ public:
 
     // Save
     QString Save() override;
+    QString SaveRunner();
+    void Load(QString str);
+
 };
 
 #endif // RUNNER_H

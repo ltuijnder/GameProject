@@ -48,3 +48,7 @@ QString SceneObject::Save(){
     savestring.append("--\n");
     return savestring;
 }
+
+void SceneObject::Load(QString LoadString){
+    std::cout<<"Warning SceneObject::Load was used instead of a derived load"<<std::endl;
+}

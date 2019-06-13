@@ -81,7 +81,7 @@ void GameClass::Save(std::string NameSafeFile){
     //Header.append(Labyrinth->SafeLab());// Add information for labirtn Level, seed.
     Header.append("**Labirinth**\n");
     Header.append("**Player**\n");
-    Header.append(Lennart->Save());// All the information of the player class.
+    Header.append(Lennart->SavePlayer());// All the information of the player class.
     Header.append("**Player**\n");
     Header.append("*Header*\n");
     // Next we create the string that holds all the information of the rooms in labyrinth.

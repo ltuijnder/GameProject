@@ -37,8 +37,9 @@ public:
     // Functions
     virtual void TestFunc();// Delete this
     int GetTeam();
+
     virtual QString Save();
-    // Read also virtual
+    virtual void Load(QString LoadString);
 
     // Flags
     bool IsCollisionClass;// It inherents from the Collision class.

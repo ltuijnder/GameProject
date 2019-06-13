@@ -91,6 +91,8 @@ public:
 
     // Saving
     QString Save() override;
+    QString SavePlayer();
+    void Load(QString str);
 
 };
 

@@ -110,3 +110,56 @@ void Projectile::advance(int Phase){
         FramesLeft--;
     }
 }
+
+QString Projectile::Save(){
+    QString savestring("");
+    // Always first type.
+    savestring.append("--");// "--" will be the separator between type and eventually the correct string.
+    savestring.append(QString::number(type()));
+    savestring.append("--");
+    savestring.append(SaveProjectile());// Put here information for the wall.
+    savestring.append("--\n");
+    return savestring;
+}
+
+QString Projectile::SaveProjectile(){// Create a sperate save function since this will be extremely analogue to Load.
+    QString savestring("");// the position of of information is extremely important and should be closely analogue to the function load.
+    savestring.append(",");// Seperation in this string will be ","
+    // First save the QGraphicsItem infromation
+    savestring.append(QString::number(pos().rx())+","+QString::number(pos().ry())+",");// Save the position
+    // Next SceneObject Information
+    savestring.append(QString::number(Team)+",");// The rest is all default value so don't save those.
+    // Next CollisionClass
+    savestring.append(QString::number(w())+","+QString::number(h())+",");// Geometry
+    savestring.append(QString::number(IsPenetrable(0))+",");// With bullets this is usually not the default !! So important to set!.
+    // Next Projectile information.
+    savestring.append(QString::number(speed)+","+QString::number(Damage)+",");// Variable that the player set
+    savestring.append(QString::number(Mode)+",");
+    savestring.append(QString::number(direction)+",");
+    savestring.append(QString::number(FramesLeft)+",");
+    savestring.append(QString::number(color.red())+","+QString::number(color.green())+","+QString::number(color.blue())+",");// Save the color.
+
+    return savestring;
+}
+
+void Projectile::Load(QString str){
+    if(!IsInit){
+        std::cout<<"Error in Projectile::Load, Object calls load while it was not Init first"<<std::endl;
+        return;
+    }
+    QStringList strL=str.split(",");
+    // First QGraphicsItem Information
+    setPos(strL[1].toFloat(),strL[2].toFloat());// at(0) is Before the first , which is garbage we don't want.
+    // Next SceneObject Information
+    Team=strL[3].toInt();// there is no coversion to bool.
+    //Next CollisionCLass information.
+    SetGeometry(strL[4].toFloat(),strL[5].toFloat());// Set Geometery
+    SetPenetrability(strL[6].toInt());// Set Penetrablility.
+    // Next Projectile information.
+    speed=strL[7].toFloat();
+    Damage=strL[8].toFloat();
+    Mode=strL[9].toInt();
+    direction=strL[10].toInt();
+    FramesLeft=strL[11].toInt();
+    color.setRgb(strL[12].toInt(),strL[13].toInt(),strL[14].toInt());
+}

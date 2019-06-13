@@ -59,6 +59,10 @@ public:
     void SetDirection(unsigned _direction);
     enum{TPlayer,TEnemies};
 
+    // Save
+    QString Save() override;
+    QString SaveProjectile();
+    void Load(QString str);
 };
 
 #endif // PROJECTILE_H

@@ -24,7 +24,7 @@ public:
     float w() const;
     float h() const;
     void SetGeometry(float NewWidth,float NewHeight);
-    void SetTeamCollision(int Team);
+    void SetTeamCollision(int Team);// Delete this!!
     void SetPenetrability(bool Pen);
 
     bool IsPenetrable(int Team) const;
