@@ -24,6 +24,9 @@ protected:
     unsigned DamageCooldown;
 
     void InitLiving(int health);
+
+    QString SaveLivingClass();
+    void LoadLivingClass(QString str);
 public:
     explicit LivingClass(QObject *parent = nullptr);
     //LivingClass();

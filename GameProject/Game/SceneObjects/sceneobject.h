@@ -22,6 +22,9 @@ protected:
 
     Room *CurrentRoom;
 
+    QString SaveSceneObject();
+    void LoadSceneObject(QString str);
+
 public:
     // essential
     explicit SceneObject(QObject *parent = nullptr);

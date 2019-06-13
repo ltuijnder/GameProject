@@ -74,22 +74,15 @@ QString Runner::Save(){
 }
 
 QString Runner::SaveRunner(){// Create a sperate save function since this will be extremely analogue to Load.
-    QString savestring("");// the position of of information is extremely important and should be closely analogue to the function load.
-    savestring.append(",");// Seperation in this string will be ","
-    // First save the QGraphicsItem infromation
-    savestring.append(QString::number(pos().rx())+","+QString::number(pos().ry())+",");// Save the position
-    // Next SceneObject Information
-    savestring.append(QString::number(Team)+",");// The rest is all default value so don't save those.
-    // Next CollisionClass
-    savestring.append(QString::number(w())+","+QString::number(h())+",");// Geometry
-    savestring.append(QString::number(IsPenetrable(0))+",");// With bullets this is usually not the default !! So important to set!.
-    // Next Livingclass
-    savestring.append(QString::number(GetHealt())+",");
-    savestring.append(QString::number(BreathingRoom)+","+QString::number(DamageCooldown)+",");
-    // Next Runner information.
+    QString savestring("%");// Seperation between the inherentace classes will be "%"
+    savestring.append(SaveSceneObject()+"%");
+    savestring.append(SaveCollisionClass()+"%");
+    savestring.append(SaveLivingClass()+"%");
+    // Runner information.
+    savestring.append(",");// always have a separator in front ! Else you also have garbage
     savestring.append(QString::number(speed)+",");// Variable that the player set
     savestring.append(QString::number(color.red())+","+QString::number(color.green())+","+QString::number(color.blue())+",");// Save the color.
-
+    savestring.append("%");
     return savestring;
 }
 
@@ -98,19 +91,12 @@ void Runner::Load(QString str){
         std::cout<<"Error in Runner::Load, Object calls load while it was not Init first"<<std::endl;
         return;
     }
-    QStringList strL=str.split(",");
-    // First QGraphicsItem Information
-    setPos(strL[1].toFloat(),strL[2].toFloat());// at(0) is Before the first , which is garbage we don't want.
-    // Next SceneObject Information
-    Team=strL[3].toInt();// there is no coversion to bool.
-    //Next CollisionCLass information.
-    SetGeometry(strL[4].toFloat(),strL[5].toFloat());// Set Geometery
-    SetPenetrability(strL[6].toInt());// Set Penetrablility.
-    // Next LivingClass
-    SetHealth(strL[7].toInt());
-    BreathingRoom=strL[8].toInt();
-    DamageCooldown=strL[9].toInt();
-    // Next Projectile information.
-    speed=strL[10].toFloat();
-    color.setRgb(strL[11].toInt(),strL[12].toInt(),strL[13].toInt());
+    QStringList sL1=str.split("%");
+    LoadSceneObject(sL1[1]);
+    LoadCollisionClass(sL1[2]);
+    LoadLivingClass(sL1[3]);
+    // Runner information.
+    QStringList sL2=sL1[4].split(",");
+    speed=sL2[1].toFloat();
+    color.setRgb(sL2[2].toInt(),sL2[3].toInt(),sL2[4].toInt());
 }

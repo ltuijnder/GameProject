@@ -17,6 +17,19 @@ void CollisionClass::InitCollision(float w, float h){
 
 // **** Functions **** //
 
+QString CollisionClass::SaveCollisionClass(){
+    QString savestring(",");
+    savestring.append(QString::number(w())+","+QString::number(h())+",");// Geometry
+    savestring.append(QString::number(IsPenetrable(0))+",");// With bullets this is usually not the default !! So important to set!.
+    return savestring;
+}
+
+void CollisionClass::LoadCollisionClass(QString str){
+    QStringList strL=str.split(",");
+    SetGeometry(strL[1].toFloat(),strL[2].toFloat());// Set Geometery
+    SetPenetrability(strL[3].toInt());// Set Penetrablility.
+}
+
 float CollisionClass::w() const{
     return width;
 }

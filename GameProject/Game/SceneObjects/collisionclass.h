@@ -17,6 +17,9 @@ private:
 protected:
     QPointF DiffPoint(CollisionClass *Object) const;
 
+    QString SaveCollisionClass();
+    void LoadCollisionClass(QString str);
+
 public:
     explicit CollisionClass(QObject *parent= nullptr);
     void InitCollision(float w, float h);
@@ -24,7 +27,6 @@ public:
     float w() const;
     float h() const;
     void SetGeometry(float NewWidth,float NewHeight);
-    void SetTeamCollision(int Team);// Delete this!!
     void SetPenetrability(bool Pen);
 
     bool IsPenetrable(int Team) const;

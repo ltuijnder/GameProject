@@ -26,6 +26,20 @@ void LivingClass::InitLiving(int health){
 
 // *** Funcions *** /
 
+QString LivingClass::SaveLivingClass(){
+    QString savestring(",");
+    savestring.append(QString::number(GetHealt())+",");
+    savestring.append(QString::number(BreathingRoom)+","+QString::number(DamageCooldown)+",");
+    return savestring;
+}
+
+void LivingClass::LoadLivingClass(QString str){
+    QStringList strL=str.split(",");
+    SetHealth(strL[1].toInt());
+    BreathingRoom=strL[2].toInt();
+    DamageCooldown=strL[3].toInt();
+}
+
 void LivingClass::TakeDamage(int Damage){
     if(DamageCooldown) return;
     if(!IsAlive) return;// If it is dead taking damage is uncessary.
@@ -40,10 +54,6 @@ void LivingClass::TakeDamage(int Damage){
     }
     DamageCooldown=BreathingRoom;
 }
-
-//int LivingClass::GetTeamBeing() const{
-//    return TeamBeing;
-//}
 
 int LivingClass::GetHealt() const{
     return Health;

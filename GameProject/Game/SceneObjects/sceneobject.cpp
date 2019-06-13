@@ -52,3 +52,24 @@ QString SceneObject::Save(){
 void SceneObject::Load(QString LoadString){
     std::cout<<"Warning SceneObject::Load was used instead of a derived load"<<std::endl;
 }
+
+QString SceneObject::SaveSceneObject(){
+    QString savestring(",");
+    // In SceneObject we save the position also direct
+    savestring.append(QString::number(pos().rx())+","+QString::number(pos().ry())+",");// Save the position
+    // Next SceneObject Information
+    savestring.append(QString::number(Team)+",");// The rest is all default value so don't save those.
+    savestring.append(QString::number(IsCollisionClass)+","+QString::number(IsLiving)+",");
+
+    return savestring;
+}
+
+void SceneObject::LoadSceneObject(QString str){
+    QStringList strL=str.split(",");
+    // First QQGraphicsItem
+    setPos(strL[1].toFloat(),strL[2].toFloat());// at(0) is Before the first , which is garbage we don't want.
+    // Next SceneObject Information
+    Team=strL[3].toInt();// there is no coversion to bool.
+    IsCollisionClass=strL[4].toInt();
+    IsLiving=strL[5].toInt();
+}

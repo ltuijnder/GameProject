@@ -167,27 +167,19 @@ QString Player::Save(){
 }
 
 QString Player::SavePlayer(){// Create a sperate save function since this will be extremely analogue to Load.
-    QString savestring("");// the position of of information is extremely important and should be closely analogue to the function load.
-    savestring.append(",");// Seperation in this string will be ","
-    // First save the QGraphicsItem infromation
-    savestring.append(QString::number(pos().rx())+","+QString::number(pos().ry())+",");// Save the position
-    // Next SceneObject Information
-    savestring.append(QString::number(Team)+",");// The rest is all default value so don't save those.
-    // Next CollisionClass
-    savestring.append(QString::number(w())+","+QString::number(h())+",");// Geometry
-    savestring.append(QString::number(IsPenetrable(0))+",");// With bullets this is usually not the default !! So important to set!.
-    // Next Livingclass
-    savestring.append(QString::number(GetHealt())+",");
-    savestring.append(QString::number(BreathingRoom)+","+QString::number(DamageCooldown)+",");
-    // Next Player information.
+    QString savestring("%");// Seperation in this string will be "%"
+    savestring.append(SaveSceneObject()+"%");
+    savestring.append(SaveCollisionClass()+"%");
+    savestring.append(SaveLivingClass()+"%");
+    // Player information.
+    savestring.append(",");// always have a separator in front ! Else you also have garbage
     savestring.append(QString::number(speed)+",");// Variable that the player set
     savestring.append(QString::number(color.red())+","+QString::number(color.green())+","+QString::number(color.blue())+",");// Save the color.
-
     // Associated to schooting;
     savestring.append(QString::number(strength)+","+QString::number(ShotSpeed)+",");
     savestring.append(QString::number(FlightFrame)+","+QString::number(FireRate)+","+QString::number(Cooldown)+",");
     // Don't save the rest since it is either extremly default or has to do with instant button presses which ofcourse don't need to be safed.
-
+    savestring.append("%");
     return savestring;
 }
 
@@ -196,26 +188,18 @@ void Player::Load(QString str){
         std::cout<<"Error in Player::Load, Object calls load while it was not Init first"<<std::endl;
         return;
     }
-    QStringList strL=str.split(",");
-    // First QGraphicsItem Information
-    setPos(strL[1].toFloat(),strL[2].toFloat());// at(0) is Before the first , which is garbage we don't want.
-    // Next SceneObject Information
-    Team=strL[3].toInt();// there is no coversion to bool.
-    //Next CollisionCLass information.
-    SetGeometry(strL[4].toFloat(),strL[5].toFloat());// Set Geometery
-    SetPenetrability(strL[6].toInt());// Set Penetrablility.
-    // Next LivingClass
-    SetHealth(strL[7].toInt());
-    BreathingRoom=strL[8].toInt();
-    DamageCooldown=strL[9].toInt();
-    // Next Player information.
-    speed=strL[10].toFloat();
-    color.setRgb(strL[11].toInt(),strL[12].toInt(),strL[13].toInt());
-
+    QStringList sL1=str.split("%");
+    LoadSceneObject(sL1[1]);
+    LoadCollisionClass(sL1[2]);
+    LoadLivingClass(sL1[3]);
+    // Player information.
+    QStringList sL2=sL1[4].split(",");
+    speed=sL2[1].toFloat();
+    color.setRgb(sL2[2].toInt(),sL2[3].toInt(),sL2[4].toInt());
     // Next Associated to schooting
-    strength=strL[14].toFloat();
-    ShotSpeed=strL[15].toFloat();
-    FlightFrame=strL[16].toInt();
-    FireRate=strL[17].toInt();
-    Cooldown=strL[18].toInt();
+    strength=sL2[5].toFloat();
+    ShotSpeed=sL2[6].toFloat();
+    FlightFrame=sL2[7].toInt();
+    FireRate=sL2[8].toInt();
+    Cooldown=sL2[9].toInt();
 }
