@@ -29,11 +29,6 @@ void SceneObject::Init(Room *room){// For some weird reason one can not let an v
 /******* Functions *******/
 
 
-void SceneObject::TestFunc(){
-    std::cout<<"SceneObject::TestFunc()"<<std::endl;
-}
-
-
 int SceneObject::GetTeam(){
     return Team;
 }

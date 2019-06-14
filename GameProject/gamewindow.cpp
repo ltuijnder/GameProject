@@ -74,3 +74,10 @@ void GameWindow::ChangeCurrentScene(QGraphicsScene *NewScene){
 void GameWindow::SaveGame(){
     Game->Save(SafeFileName);
 }
+
+void GameWindow::LoadGame(){
+    Game->LoadFile(SafeFileName);
+    // For now also emit signalStartGame Because the Load button will straight takes us to the game thingy.
+    emit SignalStartGame();
+
+}

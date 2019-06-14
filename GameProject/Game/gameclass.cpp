@@ -13,7 +13,7 @@ GameClass::GameClass(QObject *parent) : QObject(parent){
 GameClass::~GameClass(){
     delete SManager;
     delete Labyrinth;
-    //delete Lennart; We do not delete lennart since items in a scena automaticlly get deleted.
+    //delete Lennart; We do not delete lennart since items in a scene automaticlly get deleted.
 }
 
 void GameClass::Setup(GameWindow *gamewindow){
@@ -21,19 +21,18 @@ void GameClass::Setup(GameWindow *gamewindow){
     SManager=new SceneManager;
     Labyrinth=new LabyrinthClass;
     Lennart=new Player;
-    //Ellli= new DummyEllipse;
-    //plswork= new TestQobject;
     SManager->Setup(this);
     Labyrinth->Setup(this);
     Lennart->Init(nullptr);// For now just null pointer
-    //plswork->Init();
-    //Ellli->Init();
 
     IsRunning=0;// The Game is not running, It has just been Setup, Nothing more.
+    IsLoaded=0;
     // Create the needed links towards the gamewindow (always let the object that is last created make the link)
     QObject::connect(gamewindow,SIGNAL(SignalStartGame()),this,SLOT(StartGame()));
     QObject::connect(gamewindow,SIGNAL(SignalPauzeGame()),this,SLOT(PauzeGame()));
     QObject::connect(gamewindow,SIGNAL(SignalUnPauzeGame()),this,SLOT(ResumeGame()));
+
+    IsSetup=1;
 }
 
 /******* SLOTS *******/
@@ -49,6 +48,8 @@ void GameClass::PauzeGame(){
 void GameClass::ResumeGame(){
     SManager->StartClock();
 }
+
+/******* Functions *******/
 
 void GameClass::Save(std::string NameSafeFile){
     // First see if the directory exist and if not create it.
@@ -78,7 +79,7 @@ void GameClass::Save(std::string NameSafeFile){
     // Do the stats stuff. Kills,
     Header.append("**Stats**\n");
     Header.append("**Labirinth**\n");
-    //Header.append(Labyrinth->SafeLab());// Add information for labirtn Level, seed.
+    Header.append(Labyrinth->SaveHeader());// Add information for labirtn Level, seed. The Layout !! important.
     Header.append("**Labirinth**\n");
     Header.append("**Player**\n");
     Header.append(Lennart->SavePlayer());// All the information of the player class.
@@ -86,15 +87,55 @@ void GameClass::Save(std::string NameSafeFile){
     Header.append("*Header*\n");
     // Next we create the string that holds all the information of the rooms in labyrinth.
     QString Lab("");// Lab=Labyrinth
-    Lab.append("*Labyrinth*\n");
+    Lab.append("*Floor*\n");
     Lab.append(Labyrinth->SaveRooms());
-    Lab.append("*Labyrinth*\n");
+    Lab.append("*Floor*\n");
 
     QString ToSafe=Header+Lab;
     file<<ToSafe.toStdString();
-
     file.close();
-
 }
 
-/******* Functions *******/
+void GameClass::LoadFile(std::string NameFile){
+    if(!IsSetup){// If NOT setup then not peruist
+        std::cout<<"Error GameClass::loadfile was not setup so can not load file"<<std::endl;
+        return;
+    }if(IsLoaded){// If IS loaded then not persuit
+        std::cout<<"Error GameClass::loadfile GameClass was already loaded"<<std::endl;
+        return;
+    }if(IsRunning){// if IS running then not persuit
+        std::cout<<"Error GameClass::loadfile GameClass was already running"<<std::endl;
+        return;
+    }
+    QDir dir=QDir::home();// Start from home folder.
+    if(!dir.cd(".GameProject")) return;
+    dir.cd(".GameProject");
+    if(!dir.cd("SaveFiles")) return;
+    dir.cd("SaveFiles");
+    std::string Path=dir.path().toStdString();
+
+    std::string filename(Path+"/"+NameFile);
+    std::ifstream file(filename.c_str());
+    if(!file){
+        std::cout<<"Warning couldn't open file"<<filename<<std::endl;
+        return;
+    }
+    std::stringstream buffer;// The reason for this very complicated conversion thing is can be motivated by the following
+    buffer<< file.rdbuf();// https://stackoverflow.com/questions/2602013/read-whole-ascii-file-into-c-stdstring second answer
+    std::string stdstring=buffer.str();// https://stackoverflow.com/questions/662976/how-do-i-convert-from-stringstream-to-string-in-c
+    QString FileContent=QString::fromUtf8(stdstring.data(),stdstring.size());// https://stackoverflow.com/questions/4338067/convert-stdstring-to-qstring with comment
+    QString Names=FileContent.section("**Names**",1,1);
+    // I don't know what exactly to do with it but we have it.
+    QString Stats=FileContent.section("**Stats**",1,1);
+    // If we have a stats class load it.
+    QString Labirinth=FileContent.section("**Labirinth**",1,1);
+    // Do stuff with load labyrinth Important ! because it needs to load the layout.
+    Labyrinth->LoadHeader(Labirinth);
+    QString player=FileContent.section("**Player**",1,1);
+    Lennart->Load(player);
+    QString Floor=FileContent.section("*Floor*",1,1);
+    Labyrinth->LoadFloor(Floor);
+
+    IsLoaded=1;
+}
+

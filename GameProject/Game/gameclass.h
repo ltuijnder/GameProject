@@ -7,6 +7,7 @@
 #include <QFile>
 #include <QTextStream>
 #include <fstream>
+#include <sstream>
 #include <QDir>
 
 class GameWindow;
@@ -29,6 +30,8 @@ public slots:
 private:
     // Flags
     bool IsRunning;// The game can be in an idle state, (when we are still in the menus)
+    bool IsSetup=0;
+    bool IsLoaded;// Use this to check wetter it should "generate"
     // Objects
 
 
@@ -37,8 +40,6 @@ public:
     SceneManager *SManager;
     LabyrinthClass *Labyrinth;
     Player *Lennart;
-    //DummyEllipse *Ellli;
-    //TestQobject *plswork;
 
 
     explicit GameClass(QObject *parent = nullptr);
@@ -46,6 +47,7 @@ public:
     void Setup(GameWindow *gamewindow);
 
     void Save(std::string NameSafeFile);
+    void LoadFile(std::string NameFile);
 
 
 

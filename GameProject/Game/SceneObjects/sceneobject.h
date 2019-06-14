@@ -38,7 +38,6 @@ public:
     int ObjectType;// Unnecesary delete it
 
     // Functions
-    virtual void TestFunc();// Delete this
     int GetTeam();
 
     virtual QString Save();

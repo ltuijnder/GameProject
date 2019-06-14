@@ -23,27 +23,29 @@ void LabyrinthClass::Setup(GameClass *Game){
     LayoutIsGenerated=0;
     FloorIsGenerated=0;
     IsStarted=0;
+    IsLoaded=0;
 
     //Variables
     NextLevel=0;
     Floor=new std::vector<Room*>;// Change QGraphicsScene to Room
     TESTCurrentNumber=0;// REMOVE
 
-    // Generate SUch that Floor is filled:
-    //GenerateLayout();
-    BuildFloor();
-
-    Floor->at(0)->TestDowncast();// THIS WORKS (DELETE THIS) HEY YOU YEAH YOU DELETE THIS
-
     //Links
     QObject::connect(this,SIGNAL(ChangeScene(Room*)),Game->SManager,SLOT(ChangeCurrentScene(Room*)));
     QObject::connect(Game,SIGNAL(GameHasStarted()),this,SLOT(StartLayout()));
+
+    IsSetup=1;
 
 }
 
 /******* SLOTS *******/
 
 void LabyrinthClass::StartLayout(){
+    // Maybe emit Loading screen!
+    //
+    if(!IsLoaded){// if no previous game has been loaded we random generate a new one.
+        GenerateNewFloor();
+    }
     // The we send the StartSecen to Scene Manager
     emit ChangeScene(Floor->at(TESTCurrentNumber));
     IsStarted=1;
@@ -64,6 +66,12 @@ void LabyrinthClass::RoomTransfer(char Direction){
     // Pass
 }
 
+void LabyrinthClass::GenerateNewFloor(){
+    if(FloorIsGenerated) ClearFloor(); //Clear previous floor (if there is one)
+    GenerateLayout();
+    emit GenerateRooms();
+    FloorIsGenerated=1;
+}
 
 /******* Functions *******/
 
@@ -88,13 +96,6 @@ void LabyrinthClass::GenerateLayout(){
     LayoutIsGenerated=1;
 }
 
-void LabyrinthClass::BuildFloor(){
-    if(FloorIsGenerated) ClearFloor(); //Clear previous floor (if there is one)
-    GenerateLayout();
-    emit GenerateRooms();
-    FloorIsGenerated=1;
-}
-
 void LabyrinthClass::ClearFloor(){// Probabibly some deletes here.
     if(LayoutIsGenerated){// clear Layout
         //Pass
@@ -106,15 +107,83 @@ void LabyrinthClass::ClearFloor(){// Probabibly some deletes here.
     FloorIsGenerated=0;
 }
 
+QString LabyrinthClass::SaveLayout(){
+    return QString("");
+}
+
+void LabyrinthClass::LoadLayout(QString str){
+    //Pass
+}
+
+
+QString LabyrinthClass::SaveHeader(){
+    QString savestring("");
+    savestring.append("--");// Let "," be the splitter on this level
+    // Save information just from LabyrinthClass
+    savestring.append(",");
+    savestring.append(QString::number(NextLevel));
+    savestring.append(",");
+    // Save Layout
+    savestring.append("--");
+    savestring.append(SaveLayout());
+    savestring.append("--");
+    return savestring;
+}
+
+void LabyrinthClass::LoadHeader(QString str){
+    if(!IsSetup){// if NOT setup then not persuit
+        std::cout<<"Error LabyrinthClass::LoadHeader the class was not setup"<<std::endl;
+        return;
+    }else if(LayoutIsGenerated){// if IS generated then not persuit
+        std::cout<<"Error LabyrinthClass::LoadHeader the layout was already generated"<<std::endl;
+        return;
+    }
+    QStringList strL=str.split("--");
+    QStringList strL2=strL[1].split(",");
+    // Load specific information
+    NextLevel=strL2[1].toInt();
+
+    // Load Layout
+    LoadLayout(strL[2]);
+
+    LayoutIsGenerated=1;
+}
+
+
+
 QString LabyrinthClass::SaveRooms(){
     QString stringrooms("");
+    stringrooms.append("**Room**\n");
     for(auto room:*Floor){
-        stringrooms.append("**Room**\n");
         stringrooms.append("***RoomHeader***\n");
-        //stringrooms.append(room->SaveHeader());// This all information just associated to the room it self.
+        stringrooms.append(room->SaveHeader());// This all information just associated to the room it self.
         stringrooms.append("***RoomHeader***\n");
         stringrooms.append(room->SaveObjects());
+        stringrooms.append("***RoomHeader***\n");
         stringrooms.append("**Room**\n");
     }
     return stringrooms;
+}
+
+void LabyrinthClass::LoadFloor(QString str){
+    if(!IsSetup){// if NOT setup then not persuit
+        std::cout<<"Error LoadFloor, the labyrinthClass was not setup!"<<std::endl;
+        return;
+    }if(FloorIsGenerated){// if IS generated then not persuit
+        std::cout<<"Error LoadFloor, the labyrinthClass floor was already generated."<<std::endl;
+        return;
+    }
+    QStringList strL=str.split("**Room**");
+    for(int i=1;i<strL.size()-1;i++ ){// Work for int rather then range based loop since we want don't want to accest the first and the last element
+        QString RoomHeader=strL[i].section("***RoomHeader***",1,1);
+        QString SceneObjects=strL[i].section("***RoomHeader***",2,2);
+        Room *newRoom =new Room;
+        newRoom->Setup();
+
+        newRoom->LoadHeader(RoomHeader);
+        newRoom->LoadObjects(SceneObjects);
+        Floor->push_back(newRoom);
+    }
+    FloorIsGenerated=1;
+    IsLoaded=1;
 }

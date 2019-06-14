@@ -37,15 +37,11 @@ private:
     bool IsSetup=0;
     bool IsFilled;
     bool RoomTypeIsSet;
-    bool IsCleared;
 
     //Variables
+    bool IsCleared;// Just check how many enemies there are
     int RoomType;
     int Position;
-
-    //Functions
-    void SetRoomType(int Type);
-    void SetRoomPosition(int Pos);// Let the type be what it needs to be.
 
 public:
     // Essential
@@ -57,9 +53,15 @@ public:
 
     int NumberOfEnemies();
     std::vector<SceneObject *> collidingObjects(SceneObject *);
-    void TestDowncast();// Delete This!
-    QString SaveObjects();
 
+    void SetRoomType(int Type);
+    void SetRoomPosition(int Pos);// Let the type be what it needs to be.
+
+    QString SaveHeader();
+    void LoadHeader(QString str);
+
+    QString SaveObjects();
+    void LoadObjects(QString str);
 
 };
 

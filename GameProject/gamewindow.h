@@ -40,6 +40,7 @@ public slots:
     void SlotStartGame();
     void ChangeCurrentScene(QGraphicsScene* NewScene);
     void SaveGame();
+    void LoadGame();
 
 private:
     Ui::GameWindow *ui;
@@ -52,7 +53,6 @@ private:
 public:
     // For now make them public But They actually have to be private, but when they make connection they need to be linked
     GameClass *Game;
-    QDir ProjectRoot;
 
     explicit GameWindow(QWidget *parent = 0);
     ~GameWindow();

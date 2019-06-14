@@ -5,6 +5,7 @@
 #include "SceneObjects/wall.h"
 #include "SceneObjects/Enemies/enemies.h"
 #include "SceneObjects/Enemies/runner.h"
+#include "SceneObjects/projectile.h"
 #include "SceneObjects/door.h"
 
 /******* Essential Functions *******/
@@ -131,14 +132,6 @@ void Room::CheckClear(){
 /******* Functions *******/
 
 
-void Room::SetRoomType(int Type){
-    RoomType=Type;
-    RoomTypeIsSet=1;
-}
-
-void Room::SetRoomPosition(int Pos){
-    Position=Pos;
-}
 
 int Room::NumberOfEnemies(){
     int Amount=0;
@@ -161,14 +154,26 @@ std::vector<SceneObject *> Room::collidingObjects(SceneObject *Object){
     return ObjectsList;
 }
 
+void Room::SetRoomType(int Type){
+    RoomType=Type;
+    RoomTypeIsSet=1;
+}
 
-void Room::TestDowncast(){// Delete this
-     QList<QGraphicsItem *> ItemsList=items();
-     for(auto Item:ItemsList){
-         // Down try to down cast. And not do QGraphcisCast.
-         SceneObject* MySceneObject=dynamic_cast<SceneObject *>(Item);
-         MySceneObject->TestFunc();
-     }
+void Room::SetRoomPosition(int Pos){
+    Position=Pos;
+}
+
+
+QString Room::SaveHeader(){
+    return QString("");
+}
+
+void Room::LoadHeader(QString str){
+    if(!IsSetup){// if NOT setup then not persuit.
+        std::cout<<"Error Room::LoadHeader room was not setup so cannot load"<<std::endl;
+        return;
+    }
+    //pass
 }
 
 
@@ -176,12 +181,73 @@ QString Room::SaveObjects(){
     QString stringobjects("");
     QList<QGraphicsItem *> GraphicsItemsList=items();
     SceneObject *Object;
+    stringobjects.append("***SceneObject***\n");
     for(auto GraphicsItem:GraphicsItemsList){
         if(GraphicsItem->type()==Player::Type) continue; // The player will not be safed in here it is safed differently.
         Object=dynamic_cast<SceneObject *>(GraphicsItem);
-        stringobjects.append("***SceneObject***\n");
         stringobjects.append(Object->Save());
         stringobjects.append("***SceneObject***\n");
     }
     return stringobjects;
+}
+
+void Room::LoadObjects(QString str){
+    if(!IsSetup){// If NOT setup then not peruist
+        std::cout<<"Error LoadObject room was not setup so cannot load "<<std::endl;
+        return;
+    }if(IsFilled){// if IS filled up then not persuit
+        std::cout<<"Error LoadObject is already filled up cannot load"<<std::endl;
+    }
+    QStringList strL=str.split("***SceneObject***");
+    int type=0;// instead of makint them in every for loop which is unnecesarry just make it once here
+    QString loadstring("");
+    for(int i=1;i<strL.size()-1;i++){// We don't want the first and last
+        type=strL[i].section("--",1,1).toInt();
+        loadstring=strL[i].section("--",2,2);
+        // Now based on the type we need to already explicit new that type
+        // else init and load would never know which class to pick. In downcasting you ALWAYS need to specific.
+
+        // Check if enemy
+        SceneObject *TheObject=nullptr;
+        if(type>Enemies::Type&&type<Enemies::Type_EnemiesMAX){// Don't switch this since switches are bad with condition
+            switch (type) {
+            case Runner::Type:
+                Runner *Satan=new Runner;
+                TheObject=Satan;
+                break;
+            }
+        }
+        switch (type) {
+        case Wall::Type:{// We have to be explicit with the scopes in the scope else error: see https://stackoverflow.com/questions/5685471/error-jump-to-case-label
+            Wall *TrumpWall=new Wall;
+            TheObject=TrumpWall;
+            break;
+        }
+        case Door::Type:{
+            Door *porte=new Door;
+            TheObject=porte;
+            break;
+        }
+        case TestQobject::Type:{
+            TestQobject *letest=new TestQobject;
+            TheObject=letest;
+            break;
+        }
+        case Projectile::Type:{
+            Projectile *bullet=new Projectile;
+            TheObject=bullet;
+            break;
+        }
+        }
+        if(TheObject!=nullptr){
+            TheObject->Init(this);
+            TheObject->Load(loadstring);
+            addItem(TheObject);
+        }else{
+            std::cout<<"Warning Room::LoadObjects an object was not loaded with type number: "<<type<<std::endl;
+        }
+    }
+
+    IsFilled=1;
+
 }
