@@ -1,5 +1,6 @@
 #include "player.h"
 #include "wall.h"
+#include "door.h"
 #include "projectile.h"
 
 /******* Essential Functions *******/
@@ -109,6 +110,10 @@ void Player::advance(int Phase){
         CollisionClass *Body=static_cast<CollisionClass *>(Object);
         if(!Body->IsPenetrable(Team)){
             setPos(pos()+DiffPoint(Body));
+        }
+        if(Body->type()==Door::Type){
+            Door *deur=static_cast<Door *>(Body);
+            deur->Trespas();// We trespas the door so let the door know that such that it can take action.
         }
     }
     // Now we check the shooting.

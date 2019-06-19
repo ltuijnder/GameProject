@@ -89,11 +89,22 @@ void SceneManager::BreakConnection(){
 
 
 void SceneManager::TransferPlayer(Room *NewRoom){
-    // Get position of player.
-    // Do something like, Remove QgraphicsItem from scene. (Player QgraphicsItem is hold by GameClass)
-    // Then add in to then new scene
-    // Change it position. Depending on it's original position.
-
+    float posx=PointerToGame->Lennart->x();
+    float posy=PointerToGame->Lennart->y();
+    // Now we test where lennart is. !! This is Coordinate dependend which is not been figured out correctly yet.
+    if(posx>850){//Aka the right door  At the moment the ratios of the screen are totally off so for now do it this way.
+        QPointF diff(-1645,0);// 870+775 is the current horizontal difference between the doors. Coordinate dependend !
+        PointerToGame->Lennart->setPos(PointerToGame->Lennart->pos()+diff);
+    }else if(posx<-750){// Aka the left door
+        QPointF diff(1645,0);
+        PointerToGame->Lennart->setPos(PointerToGame->Lennart->pos()+diff);
+    }else if(posy>350){// aka the down door
+        QPointF diff(0,-710);// 375+335 is the current vertical difference.
+        PointerToGame->Lennart->setPos(PointerToGame->Lennart->pos()+diff);
+    }else if(posy<-300){
+        QPointF diff(0,710);
+        PointerToGame->Lennart->setPos(PointerToGame->Lennart->pos()+diff);
+    }
     // For now just add it.
     NewRoom->addItem(PointerToGame->Lennart); // Actually we don't need to worry that To first remove it from another scene since this is done
     PointerToGame->Lennart->SetRoom(NewRoom);

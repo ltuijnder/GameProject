@@ -19,7 +19,7 @@ Room::~Room(){
     //delete Objects;// Deletes the vector, but not the Objects in the vector! However this is done by the scene automaticly.
 }
 
-void Room::Setup(){
+void Room::Setup(LabyrinthClass *ptoLaby){
     if(IsSetup){//  let rooms only be setup once.
         std::cout<<"ERROR: In Class Room: Room was already Setup"<<std::endl;
         return;
@@ -32,6 +32,7 @@ void Room::Setup(){
     // Variables
     RoomType=0;
     Position=0;
+    PointerToLaby=ptoLaby;
     //Objects=new std::vector<SceneObject*>;// Dynamically allocate the vector.
 
     IsSetup=1;
@@ -71,36 +72,26 @@ void Room::FillUp(){
         LoadBrick->Load(Savestring);
         addItem(LoadBrick);
 
-//        Wall *Brick2=new Wall;
-//        Brick2->Init(this);
-//        Brick2->setPos(100,175);
-//        addItem(Brick2);
-
         // Ad our first enemy.
         Runner *Satan= new Runner;
         Satan->Init(this);
-        Satan->setPos(-400,-400);
-        //addItem(Satan);
-        Savestring=Satan->SaveRunner();
-        delete Satan;
+        Satan->setPos(400,400);
+        addItem(Satan);
 
-        Runner *Lucifer= new Runner;
-        Lucifer->Init(this);
-        Lucifer->Load(Savestring);
-        addItem(Lucifer);
+        // Add our first Door
 
-        // Ad our first Door.
-        Door *deur= new Door;
+        Door *deur=new Door;
         deur->Init(this);
-        deur->setPos(-300,-300);
-        //addItem(deur);
-        Savestring=deur->SaveDoor();
-        delete deur;
+        deur->setPos(945,0);
+        deur->SetGeometry(100,200);
+        deur->setDirection(Door::Right);
+        addItem(deur);
 
-        Door *porte= new Door;
-        porte->Init(this);
-        porte->Load(Savestring);
-        addItem(porte);
+        Door *deur2=new Door;
+        deur2->Init(this);
+        deur2->setPos(0,450);
+        deur2->setDirection(Door::Down);
+        addItem(deur2);
 
     }else{
         TestQobject *Elli1=new TestQobject;
@@ -128,6 +119,10 @@ void Room::CheckClear(){
         emit RoomIsCleared();
         IsCleared=1;
     }
+}
+
+void Room::DoorWasEntered(unsigned Direction){
+    PointerToLaby->ChangeRoom(Direction);
 }
 /******* Functions *******/
 

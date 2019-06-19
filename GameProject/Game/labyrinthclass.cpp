@@ -2,6 +2,7 @@
 #include "gameclass.h"
 #include "scenemanager.h"
 #include "room.h"
+#include "labyrinthclass.h"
 
 /******* Essential Functions *******/
 
@@ -30,7 +31,7 @@ void LabyrinthClass::Setup(GameClass *Game){
     Level=0;
     Floor=new std::vector<Room*>;// Change QGraphicsScene to Room
     Floorplan=new Layout;
-    Floorplan->SetUp();
+    Floorplan->SetUp(this);
     Floorplan->setSideLength(Level);// Important set the level.
     TESTCurrentNumber=0;// REMOVE
 
@@ -100,7 +101,7 @@ void LabyrinthClass::GenerateLayout(){
     Floor->push_back(new Room);
     Floor->push_back(new Room);
     for(auto PointerToRoom:*Floor){// Loop over the "empty" Rooms
-        PointerToRoom->Setup();// First setup should always be called to set all the default values of room good
+        PointerToRoom->Setup(this);// First setup should always be called to set all the default values of room good
         // Set up the type based on the layout generated? Then maybe for needs to changed... for now do it outside the forloop
         QObject::connect(this,SIGNAL(GenerateRooms()),PointerToRoom,SLOT(FillUp()));// Establish connection allowing the rooms to generate
     }
@@ -192,7 +193,7 @@ void LabyrinthClass::LoadFloor(QString str){
         QString RoomHeader=strL[i].section("***RoomHeader***",1,1);
         QString SceneObjects=strL[i].section("***RoomHeader***",2,2);
         Room *newRoom =new Room;
-        newRoom->Setup();
+        newRoom->Setup(this);
 
         newRoom->LoadHeader(RoomHeader);
         newRoom->LoadObjects(SceneObjects);

@@ -16,6 +16,7 @@
 #include "layoutelement.h"
 
 class Room;// Just declare that there is a class room in the the .cpp we include the header
+class LabyrinthClass;
 
 class Layout
 {
@@ -30,7 +31,9 @@ private:
     int floor_Index;
     int layoutIndex;
     int SideLength;
+    LabyrinthClass *PointerToLaby;// We need this since we connect the room with labyrinthclass in order to change rooms.
     std::vector<Layoutelement *> *layout;// This is representation of the 2D Floorlayer, However we represent it here in 1D vector. since nested vectors are ineffecient.
+
 
     // Functions
     int to1D(unsigned row, unsigned column);// think Matrix notation.
@@ -53,7 +56,7 @@ public:
     // essential
     Layout();
     ~Layout();
-    void SetUp();
+    void SetUp(LabyrinthClass *ptoLaby);
 
     // Public Functions
     bool ValidDirection(unsigned Direction);// To check that we are not at the edge or something.

@@ -25,12 +25,14 @@ friend class LabyrinthClass;// Only LabyringhtClass should be allowed to fidle w
 
 signals:
     void RoomIsCleared();
+    //void DoorWasEntered(unsigned Direction);
 
 
 public slots:
     void FillUp();
     void DeleteSceneObject(SceneObject *);
     void CheckClear();
+    void DoorWasEntered(unsigned Direction);
 
 private:
     //Flags
@@ -42,12 +44,13 @@ private:
     bool IsCleared;// Just check how many enemies there are
     int RoomType;
     int Position;
+    LabyrinthClass *PointerToLaby;
 
 public:
     // Essential
     explicit Room(QObject *parent = nullptr);
     ~Room();
-    void Setup();
+    void Setup(LabyrinthClass *ptoLaby);
 
     // Functions
 

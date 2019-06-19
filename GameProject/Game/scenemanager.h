@@ -5,6 +5,7 @@
 #include <QTimer>
 #include <QMetaObject>
 #include <QGraphicsScene>
+#include <QPointF>
 
 class GameClass;
 class Room;

@@ -11,11 +11,15 @@ class Door : public CollisionClass
     Q_OBJECT
 
 signals:
+    void IsTrespassed(unsigned Direction);
 
 public slots:
     void OpenDoors();
+    void Trespas();// Player can call this function.
 
 private:
+    unsigned Direction;
+    bool IsOpen;
     QColor color;
 
 public:
@@ -35,6 +39,11 @@ public:
     QString SaveDoor();
     void Load(QString str);
 
+    // Direction
+    enum{Right,Left,Up,Down};
+    void setDirection(unsigned dir);
+
+    bool isOpen(){return IsOpen;}
 };
 
 #endif // DOOR_H

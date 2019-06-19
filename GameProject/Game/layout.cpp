@@ -15,13 +15,14 @@ Layout::~Layout(){
 
 }
 
-void Layout::SetUp(){
+void Layout::SetUp(LabyrinthClass *ptoLaby){
     LayoutIsGenerated=0;
     LayoutIsAllocated=0;
 
     floor_Index=-1;
     layoutIndex=-1;
     SideLength=0;
+    PointerToLaby=ptoLaby;
     layout=new std::vector<Layoutelement *>;
 
     IsSetup=1;
@@ -247,7 +248,7 @@ void Layout::FillFloor(std::vector<Room *> *Floor){
             // Finally after a long series of conversion and openings we allocate the new room and load it. Then add it to Floor.
             //std::cout<<FileContent.toStdString()<<std::endl;
             Room *newRoom=new Room;
-            newRoom->Setup();
+            newRoom->Setup(PointerToLaby);
             QString RoomHeader=FileContent.section("***RoomHeader***",1,1);
             QString SceneObjects=FileContent.section("***RoomHeader***",2,2);
             newRoom->LoadHeader(RoomHeader);
