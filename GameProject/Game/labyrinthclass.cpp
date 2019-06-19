@@ -16,6 +16,7 @@ LabyrinthClass::~LabyrinthClass(){
         delete PointerToRoom;
     }
     delete Floor;
+    delete Floorplan;// calls the deconstructor of Floorplan
 }
 
 void LabyrinthClass::Setup(GameClass *Game){
@@ -26,8 +27,11 @@ void LabyrinthClass::Setup(GameClass *Game){
     IsLoaded=0;
 
     //Variables
-    NextLevel=0;
+    Level=0;
     Floor=new std::vector<Room*>;// Change QGraphicsScene to Room
+    Floorplan=new Layout;
+    Floorplan->SetUp();
+    Floorplan->setSideLength(Level);// Important set the level.
     TESTCurrentNumber=0;// REMOVE
 
     //Links
@@ -42,12 +46,16 @@ void LabyrinthClass::Setup(GameClass *Game){
 
 void LabyrinthClass::StartLayout(){
     // Maybe emit Loading screen!
-    //
     if(!IsLoaded){// if no previous game has been loaded we random generate a new one.
-        GenerateNewFloor();
+        //GenerateNewFloor();
+        Floorplan->generateLayout();
+        Floorplan->FillFloor(Floor);
+        FloorIsGenerated=1;
     }
-    // The we send the StartSecen to Scene Manager
-    emit ChangeScene(Floor->at(TESTCurrentNumber));
+    // The we send the StartSecene to Scene Manager
+    emit ChangeScene(Floor->at(Floorplan->FloorIndex()));
+
+    //emit ChangeScene(Floor->at(TESTCurrentNumber));
     IsStarted=1;
 }
 
@@ -62,8 +70,12 @@ void LabyrinthClass::TESTPressedC(){// REMOVE ME
     }
 }
 
-void LabyrinthClass::RoomTransfer(char Direction){
-    // Pass
+void LabyrinthClass::ChangeRoom(unsigned Direction){
+    if(!Floorplan->ValidDirection(Direction)){
+        std::cout<<"Error LabyrinthClass::ChangeRoom invalid direction "<<std::endl;
+        return;
+    }
+    emit ChangeScene(Floor->at(Floorplan->NextRoomIndex(Direction)));
 }
 
 void LabyrinthClass::GenerateNewFloor(){
@@ -75,6 +87,8 @@ void LabyrinthClass::GenerateNewFloor(){
 
 /******* Functions *******/
 
+// This is outdated. But is still used for manual making.
+// But to create really you shoot use Floorplan->Layout.
 void LabyrinthClass::GenerateLayout(){
     if(LayoutIsGenerated){
         std::cout<<"Error: Layout has already been generated, First delete the old floor"<<std::endl;
@@ -121,7 +135,7 @@ QString LabyrinthClass::SaveHeader(){
     savestring.append("--");// Let "," be the splitter on this level
     // Save information just from LabyrinthClass
     savestring.append(",");
-    savestring.append(QString::number(NextLevel));
+    savestring.append(QString::number(Level));
     savestring.append(",");
     // Save Layout
     savestring.append("--");
@@ -141,7 +155,7 @@ void LabyrinthClass::LoadHeader(QString str){
     QStringList strL=str.split("--");
     QStringList strL2=strL[1].split(",");
     // Load specific information
-    NextLevel=strL2[1].toInt();
+    Level=strL2[1].toInt();
 
     // Load Layout
     LoadLayout(strL[2]);

@@ -71,10 +71,10 @@ void Room::FillUp(){
         LoadBrick->Load(Savestring);
         addItem(LoadBrick);
 
-        Wall *Brick2=new Wall;
-        Brick2->Init(this);
-        Brick2->setPos(100,175);
-        addItem(Brick2);
+//        Wall *Brick2=new Wall;
+//        Brick2->Init(this);
+//        Brick2->setPos(100,175);
+//        addItem(Brick2);
 
         // Ad our first enemy.
         Runner *Satan= new Runner;

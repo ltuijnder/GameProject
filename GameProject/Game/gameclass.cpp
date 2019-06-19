@@ -117,10 +117,10 @@ void GameClass::LoadFile(std::string NameFile){
     std::string filename(Path+"/"+NameFile);
     std::ifstream file(filename.c_str());
     if(!file){
-        std::cout<<"Warning couldn't open file"<<filename<<std::endl;
+        std::cout<<"Warning couldn't open file "<<filename<<std::endl;
         return;
     }
-    std::stringstream buffer;// The reason for this very complicated conversion thing is can be motivated by the following
+    std::stringstream buffer;// The reason for this very complicated conversion thing can be motivated by the following
     buffer<< file.rdbuf();// https://stackoverflow.com/questions/2602013/read-whole-ascii-file-into-c-stdstring second answer
     std::string stdstring=buffer.str();// https://stackoverflow.com/questions/662976/how-do-i-convert-from-stringstream-to-string-in-c
     QString FileContent=QString::fromUtf8(stdstring.data(),stdstring.size());// https://stackoverflow.com/questions/4338067/convert-stdstring-to-qstring with comment
