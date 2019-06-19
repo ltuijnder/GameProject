@@ -51,6 +51,9 @@ private:
     void FurtherThenFromLayout(int d, std::vector<int> &Solution);// Does not work needs to be fixed.
     void ClosestRooms(int Lindex,std::vector<int> &Solution);
 
+    // Save
+    QString SaveLayout();
+    void LoadLayout(QString str);
 
 public:
     // essential
@@ -62,12 +65,16 @@ public:
     bool ValidDirection(unsigned Direction);// To check that we are not at the edge or something.
     unsigned NextRoomIndex(unsigned Direction);
 
-    //unsigned getSideLength(){return SideLength;}
     void setSideLength(int level);
     bool generateLayout();
     void FillFloor(std::vector<Room *> *Floor);
     bool IsLayoutGenerated();
     int FloorIndex();
+
+    // save
+    QString Save();
+    void Load(QString str);
+
 };
 
 #endif // LAYOUT_H

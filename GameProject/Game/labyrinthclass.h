@@ -45,9 +45,6 @@ private:
     void ClearFloor();// If we go to the next floor we should be able to delete the previous.
     void GenerateNewFloor();
 
-    QString SaveLayout();// Saves the layout
-    void LoadLayout(QString str);
-
 public:
     explicit LabyrinthClass(QObject *parent = nullptr);
     ~LabyrinthClass();

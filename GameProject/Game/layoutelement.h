@@ -2,6 +2,8 @@
 #define ROOMINF_H
 
 #include <iostream>
+#include <QString>
+#include <QStringList>
 
 class Layoutelement
 {
@@ -27,6 +29,10 @@ public:
     void setFIndex(int Findex);
     void setLIndex(int Lindex);
     void setDoorType(int type);
+
+    // Save
+    QString Save();
+    void Load(QString str);
 
 };
 

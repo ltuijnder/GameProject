@@ -122,15 +122,6 @@ void LabyrinthClass::ClearFloor(){// Probabibly some deletes here.
     FloorIsGenerated=0;
 }
 
-QString LabyrinthClass::SaveLayout(){
-    return QString("");
-}
-
-void LabyrinthClass::LoadLayout(QString str){
-    //Pass
-}
-
-
 QString LabyrinthClass::SaveHeader(){
     QString savestring("");
     savestring.append("--");// Let "," be the splitter on this level
@@ -140,7 +131,7 @@ QString LabyrinthClass::SaveHeader(){
     savestring.append(",");
     // Save Layout
     savestring.append("--");
-    savestring.append(SaveLayout());
+    savestring.append(Floorplan->Save());
     savestring.append("--");
     return savestring;
 }
@@ -159,7 +150,8 @@ void LabyrinthClass::LoadHeader(QString str){
     Level=strL2[1].toInt();
 
     // Load Layout
-    LoadLayout(strL[2]);
+    Floorplan->Load(strL[2]);
+    //LoadLayout(strL[2]);
 
     LayoutIsGenerated=1;
 }

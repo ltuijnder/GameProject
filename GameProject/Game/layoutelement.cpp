@@ -33,3 +33,22 @@ int Layoutelement::Row(unsigned sidelength){
 int Layoutelement::Col(unsigned sidelength){
     return Layoutindex%sidelength;
 }
+
+
+QString Layoutelement::Save(){
+    QString savestring;
+    savestring.append(",");
+    savestring.append(QString::number(isRoom)+",");
+    savestring.append(QString::number(Floorindex)+",");
+    savestring.append(QString::number(Layoutindex)+",");
+    savestring.append(QString::number(DoorType)+",");
+    return savestring;
+}
+
+void Layoutelement::Load(QString str){
+    QStringList strL=str.split(",");
+    isRoom=strL[1].toInt();
+    Floorindex=strL[2].toInt();
+    Layoutindex=strL[3].toInt();
+    DoorType=strL[4].toInt();
+}

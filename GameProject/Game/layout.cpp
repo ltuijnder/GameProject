@@ -270,6 +270,52 @@ int Layout::FloorIndex(){
     return floor_Index;
 }
 
+// Saving stuff
+
+QString Layout::Save(){
+    QString stringlayout("");
+    stringlayout.append("**Layout**");
+    stringlayout.append(QString::number(floor_Index)+"**Layout**");
+    stringlayout.append(QString::number(layoutIndex)+"**Layout**");
+    stringlayout.append(QString::number(SideLength)+"**Layout**");
+    stringlayout.append(SaveLayout());
+    stringlayout.append("**Layout**");
+    return stringlayout;
+}
+
+void Layout::Load(QString str){
+    if(!IsSetup){
+        std::cout<<"Error Layout::Load, layout was not setup"<<std::endl;
+        return;
+    }
+    QStringList strL=str.split("**Layout**");
+    floor_Index=strL[1].toInt();
+    layoutIndex=strL[2].toInt();
+    SideLength=strL[3].toInt();
+    LoadLayout(strL[4]);
+
+    LayoutIsGenerated=1;
+}
+
+QString Layout::SaveLayout(){
+    QString stringlayout("");
+    stringlayout.append("%");
+    for(auto elem:*layout){// this could be done much more efficient by just saving the ones that are non zero. however because of the current time pressure I can't.
+        stringlayout.append(elem->Save());
+        stringlayout.append("%");
+    }
+    return stringlayout;
+}
+
+void Layout::LoadLayout(QString str){
+    QStringList strL=str.split("%");
+    for(int i=1;i<strL.size()-1;i++){// We don't want first and last
+        Layoutelement *newelement=new Layoutelement;
+        newelement->Load(strL[i]);
+        layout->push_back(newelement);
+    }
+}
+
 //---------------------------------
 /**** Random number generation ****/
 //---------------------------------
