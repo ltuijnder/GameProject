@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1242</width>
+    <width>1245</width>
     <height>825</height>
    </rect>
   </property>
@@ -26,8 +26,8 @@
    <property name="autoFillBackground">
     <bool>true</bool>
    </property>
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
+   <layout class="QVBoxLayout" name="verticalLayout_5">
+    <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -583,6 +583,101 @@ test        </string>
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="GameOver">
+       <layout class="QVBoxLayout" name="verticalLayout_6">
+        <item>
+         <widget class="QLabel" name="GameTitle_3">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:100pt; font-style:italic; color:#aa0000;&quot;&gt;Game Over&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_6">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <spacer name="horizontalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="GoTitleScreen">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>150</width>
+              <height>50</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">font: 75 24pt &quot;Noto Sans&quot;;</string>
+            </property>
+            <property name="text">
+             <string>Go to TitleScreen</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_6">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_5">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -595,7 +690,7 @@ test        </string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1242</width>
+     <width>1245</width>
      <height>25</height>
     </rect>
    </property>
@@ -652,8 +747,8 @@ test        </string>
    <slot>GoToStartPage()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>308</x>
-     <y>150</y>
+     <x>375</x>
+     <y>670</y>
     </hint>
     <hint type="destinationlabel">
      <x>937</x>
@@ -684,8 +779,8 @@ test        </string>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>308</x>
-     <y>150</y>
+     <x>366</x>
+     <y>778</y>
     </hint>
     <hint type="destinationlabel">
      <x>937</x>
@@ -716,8 +811,8 @@ test        </string>
    <slot>PauzeGame()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>158</x>
-     <y>100</y>
+     <x>1174</x>
+     <y>755</y>
     </hint>
     <hint type="destinationlabel">
      <x>937</x>
@@ -732,8 +827,8 @@ test        </string>
    <slot>SaveGame()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>308</x>
-     <y>150</y>
+     <x>375</x>
+     <y>670</y>
     </hint>
     <hint type="destinationlabel">
      <x>937</x>
@@ -748,8 +843,8 @@ test        </string>
    <slot>SaveGame()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>308</x>
-     <y>150</y>
+     <x>366</x>
+     <y>778</y>
     </hint>
     <hint type="destinationlabel">
      <x>937</x>
@@ -789,6 +884,54 @@ test        </string>
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>GameWindow</receiver>
+   <slot>ResetGame()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>476</x>
+     <y>649</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1236</x>
+     <y>578</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>GoTitleScreen</sender>
+   <signal>clicked()</signal>
+   <receiver>GameWindow</receiver>
+   <slot>GoToStartPage()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>804</x>
+     <y>490</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1241</x>
+     <y>486</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>GoTitleScreen</sender>
+   <signal>clicked()</signal>
+   <receiver>GameWindow</receiver>
+   <slot>ResetGame()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>767</x>
+     <y>535</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1243</x>
+     <y>540</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>SignalStartGame()</signal>
@@ -799,5 +942,6 @@ test        </string>
   <slot>PauzeGame()</slot>
   <slot>SaveGame()</slot>
   <slot>LoadGame()</slot>
+  <slot>ResetGame()</slot>
  </slots>
 </ui>

@@ -89,6 +89,9 @@ void Player::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget 
 void Player::advance(int Phase){
     if(!Phase) return;// At Phase 0 we don't do anything
     if(!RoomIsSet) return; //In case an error was made, and the pointer was not set.
+    if(!FlagIsAlive()){// If dead one should not continue.
+        emit Died();
+    }
     // Calculate movement
     // We should also watch out for the fps! -> We keep it 30 fps fixed
     float dx=1*right-1*left;

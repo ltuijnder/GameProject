@@ -41,7 +41,7 @@ public:
     EventHandeler();
     void PressInput(QKeyEvent *event);
     void ReleaseInput(QKeyEvent *event);
-    void Link(GameWindow *gamewindow);
+    void Link(GameWindow *gamewindow,bool IsReset);
 
 private:
     ///bool listen=1;// At the moment not needed.

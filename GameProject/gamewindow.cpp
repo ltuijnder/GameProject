@@ -21,12 +21,11 @@ GameWindow::GameWindow(QWidget *parent) :
     SafeFileName="SafeFile.txt";
     ui->graphicsView->setSceneRect(SceneRect);
     ui->graphicsView->setFocusPolicy(Qt::NoFocus);// We don't want the graphicsview to gain input. This may result in no reaction of some buttons (arrow keys)
-    //Test->Setup(this);
     setFocusPolicy(Qt::StrongFocus);// Important the GameWindow get's focus. Such that it can receive input from key and mouse
 
     // LINKS
     // Do this as last operatorion once everything is defind.
-    EventH->Link(this);
+    EventH->Link(this,0);// Give bool zero since this is not a reset and a first time start
     QObject::connect(Game->SManager,SIGNAL(CurrentSceneChanged(QGraphicsScene *)),this,SLOT(ChangeCurrentScene(QGraphicsScene*)));
 }
 
@@ -51,6 +50,7 @@ void GameWindow::GoToStartPage(){ui->stackedWidget->setCurrentWidget(ui->StartPa
 void GameWindow::GoToGamePage(){ui->stackedWidget->setCurrentWidget(ui->GamePage);}
 void GameWindow::GoToGameSelectPage(){ui->stackedWidget->setCurrentWidget(ui->GameSelectPage);}
 void GameWindow::GoToPauzePage(){ui->stackedWidget->setCurrentWidget(ui->PauzePage);}
+void GameWindow::GoToGameOverPage(){ui->stackedWidget->setCurrentWidget(ui->GameOver);}
 
 void GameWindow::PauzeGame(){
     if(ui->stackedWidget->currentWidget()==ui->GamePage){// Check if we are first on the correct Page, since "P" should not be called from everywhere.
@@ -80,4 +80,11 @@ void GameWindow::LoadGame(){
     // For now also emit signalStartGame Because the Load button will straight takes us to the game thingy.
     emit SignalStartGame();
 
+}
+
+void GameWindow::ResetGame(){
+    Game->ResetGame();
+    //Now we we need to relink everything
+    EventH->Link(this,1);
+    QObject::connect(Game->SManager, SIGNAL(CurrentSceneChanged(QGraphicsScene*)),this,SLOT(ChangeCurrentScene(QGraphicsScene*)));
 }

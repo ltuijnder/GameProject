@@ -22,10 +22,14 @@ class GameClass : public QObject
 
 signals:
     void GameHasStarted();
+    void GameOver();
+
 public slots:
     void StartGame();
     void PauzeGame();
     void ResumeGame();
+    void ResetGame();
+    void PlayerDied();
 
 private:
     // Flags

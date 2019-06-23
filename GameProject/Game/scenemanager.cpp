@@ -42,6 +42,7 @@ void SceneManager::StartSceneManager(){
             SceneManager::StartClock();
         }
     }
+    std::cout<<"I was here"<<std::endl;
     IsStarted=1;
 }
 
@@ -63,6 +64,7 @@ void SceneManager::ChangeCurrentScene(Room *NewRoom){// We need to have a room s
     if(SceneIsSet==0) SceneIsSet=1;// Now we can say for sure that the scene is set.
     CreateConnection();// Connect the new Scene to the clock
     emit CurrentSceneChanged(NewRoom); // Update the GraphicsView in UI::GameWindow to the new Scene:
+    std::cout<<"Changed Scene"<<std::endl;
     if(IsStarted) StartClock();// Only start the clock if the game has started. StartSceneManager will automaticly call startclock.
 }
 

@@ -15,7 +15,7 @@ class Player : public LivingClass//public SceneObject, public LivingClass, publi
     Q_OBJECT
 
 signals:
-    //void Died();
+    void Died();
 
 public slots:
     void UpKeyPressed();
@@ -39,9 +39,6 @@ public slots:
 
 private:
     // Associated to player
-    //unsigned health;// We will have integer amount of heath no float.
-    //unsigned BreathingRoom;// Amount of frames we allow the player to be unvernable after taking damage.
-    //unsigned DamageCooldown;
     float speed;
     //float size;
     QColor color;

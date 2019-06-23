@@ -36,11 +36,13 @@ public slots:
     void GoToGameSelectPage();
     void GoToGamePage();
     void GoToPauzePage();
+    void GoToGameOverPage();
     void PauzeGame();// And Unpauze!
     void SlotStartGame();
     void ChangeCurrentScene(QGraphicsScene* NewScene);
     void SaveGame();
     void LoadGame();
+    void ResetGame();
 
 private:
     Ui::GameWindow *ui;

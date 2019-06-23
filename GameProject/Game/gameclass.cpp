@@ -32,6 +32,10 @@ void GameClass::Setup(GameWindow *gamewindow){
     QObject::connect(gamewindow,SIGNAL(SignalPauzeGame()),this,SLOT(PauzeGame()));
     QObject::connect(gamewindow,SIGNAL(SignalUnPauzeGame()),this,SLOT(ResumeGame()));
 
+    QObject::connect(this,SIGNAL(GameOver()),gamewindow,SLOT(GoToGameOverPage()));
+
+    QObject::connect(Lennart,SIGNAL(Died()),this,SLOT(PlayerDied()));
+
     IsSetup=1;
 }
 
@@ -47,6 +51,29 @@ void GameClass::PauzeGame(){
 
 void GameClass::ResumeGame(){
     SManager->StartClock();
+}
+
+void GameClass::ResetGame(){
+    // Delete everything and re setup everything.
+    delete SManager;
+    delete Labyrinth;
+    SManager=new SceneManager;
+    Labyrinth=new LabyrinthClass;
+    Lennart=new Player;
+    SManager->Setup(this);
+    Labyrinth->Setup(this);
+    Lennart->Init(nullptr);
+
+    // Also reconnect the player to the PlayerDied Slot.
+    QObject::connect(Lennart,SIGNAL(Died()),this,SLOT(PlayerDied()));
+
+    IsRunning=0;
+    IsLoaded=0;
+}
+
+void GameClass::PlayerDied(){
+    SManager->StopClock();// Stop the clock
+    emit GameOver();
 }
 
 /******* Functions *******/
