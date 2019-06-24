@@ -200,14 +200,10 @@ void Layout::FillFloor(std::vector<Room *> *Floor){
     }
     // Go to the directory where the templates are.
     QDir dir=QDir::home();// Start from home folder.
-    try{
-        if(!dir.cd(".GameProject")) throw "HOME/.GameProject";
-        dir.cd(".GameProject");
-        if(!dir.cd("Templates")) throw "HOME/.GameProject/Templates";
-        dir.cd("Templates");
-    }catch(const char* msg){
-        std::cout<<"Error directory '"<<msg<<"' does not exist"<<std::endl;
-    }
+    if(!dir.cd(".GameProject")) dir.mkdir(".GameProject");
+    dir.cd(".GameProject");
+    if(!dir.cd("Templates")) dir.mkdir("Templates");
+    dir.cd("Templates");
     // Create the random number generator that will help us guide to pick the room.
     int seed=42;
     std::default_random_engine generator (seed);// For explanation look at: http://www.cplusplus.com/reference/random/uniform_int_distribution/operator()/
@@ -218,12 +214,13 @@ void Layout::FillFloor(std::vector<Room *> *Floor){
             try{
                 CdTemplateType(dir,room->doorType());
             }catch(int DoorType){
-                std::cout<<"Error Template directory '"<<DoorType<<"' does not exist"<<std::endl;
+                std::cout<<"Error Template directory '"<<DoorType<<"' will not have filles pls fill in the files."<<std::endl;
                 continue;
             }
             // Get a list of all the files While we also remove the 2 trivial ones
             QStringList StringList=dir.entryList(QStringList()<<"*.txt",QDir::Files);// We only want to look at files that end with .txt
             if(StringList.size()==0){
+                std::cout<<"Error in Layout::FillFloor directory: '"<< dir.path().toStdString()<<"' has no files"<<std::endl;
                 dir.cdUp();// Important go back up.
                 continue;//If no rooms are given we cannot go further
             }
@@ -478,67 +475,115 @@ void Layout::ConnectTwoPoints(int Lindex1, int Lindex2, bool b){
 void Layout::CdTemplateType(QDir &dir,int DoorType){
     switch (DoorType) {
     case 0:// No doors
-        if(!dir.cd("Plate_0")) throw DoorType;
+        if(!dir.cd("Plate_0")){
+            dir.mkdir("Plate_0");
+            throw DoorType;
+        }
         dir.cd("Plate_0");
         break;
     case 1:// Up
-        if(!dir.cd("Plate_1")) throw DoorType;
+        if(!dir.cd("Plate_1")){
+            dir.mkdir("Plate_1");
+            throw DoorType;
+        }
         dir.cd("Plate_1");
         break;
     case 2:// Right
-        if(!dir.cd("Plate_2")) throw DoorType;
+        if(!dir.cd("Plate_2")){
+            dir.mkdir("Plate_2");
+            throw DoorType;
+        }
         dir.cd("Plate_2");
         break;
     case 3:// Up+Right
-        if(!dir.cd("Plate_3")) throw DoorType;
+        if(!dir.cd("Plate_3")){
+            dir.mkdir("Plate_3");
+            throw DoorType;
+        }
         dir.cd("Plate_3");
         break;
     case 4:// Down
-        if(!dir.cd("Plate_4")) throw DoorType;
+        if(!dir.cd("Plate_4")){
+            dir.mkdir("Plate_4");
+            throw DoorType;
+        }
         dir.cd("Plate_4");
         break;
     case 5:// Down+Up
-        if(!dir.cd("Plate_5")) throw DoorType;
+        if(!dir.cd("Plate_5")){
+            dir.mkdir("Plate_5");
+            throw DoorType;
+        }
         dir.cd("Plate_5");
         break;
     case 6:// Down+Right
-        if(!dir.cd("Plate_6")) throw DoorType;
+        if(!dir.cd("Plate_6")){
+            dir.mkdir("Plate_6");
+            throw DoorType;
+        }
         dir.cd("Plate_6");
         break;
     case 7:// Down+Up+Right
-        if(!dir.cd("Plate_7")) throw DoorType;
+        if(!dir.cd("Plate_7")){
+            dir.mkdir("Plate_7");
+            throw DoorType;
+        }
         dir.cd("Plate_7");
         break;
     case 8:// Left
-        if(!dir.cd("Plate_8")) throw DoorType;
+        if(!dir.cd("Plate_8")){
+            dir.mkdir("Plate_8");
+            throw DoorType;
+        }
         dir.cd("Plate_8");
         break;
     case 9:// Left+Up
-        if(!dir.cd("Plate_9")) throw DoorType;
+        if(!dir.cd("Plate_9")){
+            dir.mkdir("Plate_9");
+            throw DoorType;
+        }
         dir.cd("Plate_9");
         break;
     case 10:// Left+Right
-        if(!dir.cd("Plate_10")) throw DoorType;
+        if(!dir.cd("Plate_10")){
+            dir.mkdir("Plate_10");
+            throw DoorType;
+        }
         dir.cd("Plate_10");
         break;
     case 11:// Left+Up+Right
-        if(!dir.cd("Plate_11")) throw DoorType;
+        if(!dir.cd("Plate_11")){
+            dir.mkdir("Plate_11");
+            throw DoorType;
+        }
         dir.cd("Plate_11");
         break;
     case 12:// Left+Down
-        if(!dir.cd("Plate_12")) throw DoorType;
+        if(!dir.cd("Plate_12")){
+            dir.mkdir("Plate_12");
+            throw DoorType;
+        }
         dir.cd("Plate_12");
         break;
     case 13:// Left+Down+Up
-        if(!dir.cd("Plate_13")) throw DoorType;
+        if(!dir.cd("Plate_13")){
+            dir.mkdir("Plate_13");
+            throw DoorType;
+        }
         dir.cd("Plate_13");
         break;
     case 14:// Left+Down+Right
-        if(!dir.cd("Plate_14")) throw DoorType;
+        if(!dir.cd("Plate_14")){
+            dir.mkdir("Plate_14");
+            throw DoorType;
+        }
         dir.cd("Plate_14");
         break;
     case 15:// Left+Down+Up+Right
-        if(!dir.cd("Plate_15")) throw DoorType;
+        if(!dir.cd("Plate_15")){
+            dir.mkdir("Plate_15");
+            throw DoorType;
+        }
         dir.cd("Plate_15");
         break;
     default:
